@@ -20,6 +20,32 @@ The goal is not only to provide answers, but to help learners connect concepts w
 
 A future ICH layer can use the same structure to connect living heritage with academic concepts—for example, a gong with acoustics and wave physics, or *tepa slira* with social science, empathy, and interpersonal relationships.
 
+## Phase 1 — Learning How to Live
+
+The first learning layer moves beyond factual knowledge into everyday conduct and adaptive behavior.
+
+### 1. Tepa Selira — Think Before You Speak
+
+A Javanese cultural expression used here as a context for perspective-taking: before speaking or acting, consider what the other person may experience, need, afford, or find difficult. The module turns this into practical questions rather than abstract moralizing:
+
+**What am I assuming? → What might be different for them? → Can I offer a choice? → What action preserves dignity?**
+
+One recurring scenario is invitation and spending: having enough money yourself is not evidence that another person has the same resources or comfort level. The educational focus is consideration, not pity or mind-reading. A person’s constraints should be acknowledged without making them feel inferior.
+
+### 2. Kōbō Fude o Erabazu — Learn to Use the Tool
+
+The Japanese proverb **「弘法筆を選ばず」 (Kōbō fude o erabazu)** is commonly explained as the idea that a skilled person can work well without blaming the quality of the tool. citeturn321746search0turn321746search3
+
+The module uses that proverb to teach adaptive agency:
+
+**Observe constraints → learn the controls → change technique → continue.**
+
+The lesson is deliberately not “tools never matter.” Historical commentary notes that Kūkai himself discussed choosing brushes carefully, so the educational interpretation is about adaptability rather than pretending all tools are equal. citeturn321746search0
+
+This principle is applied beyond physical tools: motorcycles, kitchens, cameras, maps, spreadsheets, databases, code, AI systems, projects, teams, institutions, and unfamiliar problems.
+
+**Adaptation also has a boundary:** when a limitation is genuinely unsafe, unfair, or structurally damaging, the appropriate response may be a better tool, additional resources, or a system-level change.
+
 ## Current capabilities
 
 - Interactive calculators and formula engines

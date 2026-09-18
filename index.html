@@ -2003,7 +2003,7 @@ const MODULES = [
     concepts: [
       'Filtrasi mekanis (mechanical filtration)',
       'Sedimentasi',
-      'Penjebakan partikel',
+      'Particle capture',
       'Adsorpsi (adsorption)',
       'Material berpori',
       'Speed aliran',
@@ -2436,7 +2436,7 @@ learn: {
         { id:'range', label:'Range', formula:{expr:'vx*tTot'}, unit:'m', hint:'Model ideal: tanpa hambatan udara, tanpa angin.' }
       ],
       notes:'Angles are calculated in degrees in this module (calculator angle mode does not affect this module).',
-      chart:{ title:'Jarak tempuh vs sudut lemparan', xLabel:'Angle (°)', yLabel:'Jarak (m)',
+      chart:{ title:'Range vs Launch Angle', xLabel:'Angle (°)', yLabel:'Range (m)',
         x:{ id:'angle', from:1, to:89, steps:44 },
         series:[{ label:'Range (m)', expr:'v0*cos(angle)*(v0*sin(angle)+sqrt((v0*sin(angle))^2+2*g*h0))/g', color:'#ea580c' }] }
     },
@@ -2456,8 +2456,8 @@ learn: {
     experiment:{
       type:'camera',
       title:'Ukur lintasan bola sungguhan',
-      steps:['Letakkan HP stabil, layar menghadap area lemparan (posisi menyamping).',
-             'Taruh objek acuan berukuran diketahui (mis. penggaris 30 cm) sejajar bidang lemparan.',
+      steps:['Place the phone on a stable surface with the screen facing the launch area (side view).',
+             'Place a reference object of known size (e.g. a 30 cm ruler) parallel to the launch plane.',
              'Tap <b>Calibrate</b>, then tap both ends of the reference object.',
              'Tap <b>Choose a color</b>, then tap the ball so the tracker knows the target color.',
              'Tap <b>Record</b>, throw the ball parallel to the calibration plane, then tap <b>Stop</b>.',
@@ -2506,7 +2506,7 @@ learn: {
       engine:'freefall', params:{ h:20, g:9.80665, drag:0.9 },
       controls:[
         { id:'h', label:'Height', min:2, max:60, step:1, unit:'m' },
-        { id:'g', label:'Gravity', min:1.6, max:25, step:0.01, unit:'m/s²', presets:[['Bumi',9.80665],['Bulan',1.62],['Mars',3.72]] },
+        { id:'g', label:'Gravity', min:1.6, max:25, step:0.01, unit:'m/s²', presets:[['Earth',9.80665],['Moon',1.62],['Mars',3.72]] },
         { id:'drag', label:'Hambatan udara "bulu"', min:0, max:3, step:0.05 }
       ],
       tip:'Set air resistance to 0 → both objects fall identically. That approximates the Moon-like vacuum condition.'
@@ -3377,7 +3377,7 @@ const Experiments = {
            <pre class="text-[10px] text-slate-500 overflow-x-auto">${esc(JSON.stringify(Recorder.meta(),null,1))}</pre></div>`;
       Progress.add(20, APP.state.moduleId+':experiment');
     } else {
-      $('ex-compare').innerHTML = `<div class="card p-4"><p class="text-[11px] font-bold text-slate-400 uppercase mb-2">Ringkasan pengukuran</p>
+      $('ex-compare').innerHTML = `<div class="card p-4"><p class="text-[11px] font-bold text-slate-400 uppercase mb-2">Measurement summary</p>
         <div class="grid grid-cols-2 gap-2 text-[12px]">${[['Rata-rata',st.mean],['Median',st.median],['Min',st.min],['Maks',st.max],['Std dev',st.sdS],['Sampel',st.n]]
         .map(([k,v])=>`<div class="flex justify-between bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5"><span class="text-slate-500 font-bold">${k}</span><span class="font-black text-slate-700 num">${Precision.format(v,{decimals:3})}</span></div>`).join('')}</div></div>`;
       Progress.add(15, APP.state.moduleId+':experiment');
@@ -3570,18 +3570,18 @@ const Games = {
         </div>
         <div class="grid grid-cols-2 gap-2 mb-4">
           <div class="bg-rose-50 border border-rose-200 rounded-xl p-3 text-center"><p class="text-[10px] font-bold text-rose-500 uppercase">Target</p><p id="g-target" class="text-xl font-black text-rose-700 num">—</p><p class="text-[10px] text-rose-400">meter</p></div>
-          <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-center"><p class="text-[10px] font-bold text-slate-400 uppercase">Percobaan</p><p id="g-try" class="text-xl font-black text-slate-700 num">0</p><p class="text-[10px] text-slate-400">tembakan</p></div>
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-center"><p class="text-[10px] font-bold text-slate-400 uppercase">Experiment</p><p id="g-try" class="text-xl font-black text-slate-700 num">0</p><p class="text-[10px] text-slate-400">shots</p></div>
         </div>
         <div class="mb-3"><div class="flex justify-between mb-1"><label class="text-[11px] font-bold text-slate-500 uppercase">Speed awal</label><span id="gv-v" class="text-xs font-black text-rose-600 num">25 m/s</span></div>
           <input type="range" id="g-v" min="5" max="60" step="1" value="25" oninput="document.getElementById('gv-v').textContent=this.value+' m/s'" class="w-full"></div>
         <div class="mb-4"><div class="flex justify-between mb-1"><label class="text-[11px] font-bold text-slate-500 uppercase">Angle</label><span id="gv-a" class="text-xs font-black text-rose-600 num">45°</span></div>
           <input type="range" id="g-a" min="5" max="85" step="1" value="45" oninput="document.getElementById('gv-a').textContent=this.value+'°'" class="w-full"></div>
         <div class="flex gap-2">
-          <button onclick="Games.fire()" class="flex-1 bg-gradient-to-r from-rose-500 to-orange-500 text-white font-bold py-3 rounded-xl text-sm shadow"><i class="fa-solid fa-crosshairs mr-1"></i>Tembak!</button>
+          <button onclick="Games.fire()" class="flex-1 bg-gradient-to-r from-rose-500 to-orange-500 text-white font-bold py-3 rounded-xl text-sm shadow"><i class="fa-solid fa-crosshairs mr-1"></i>Fire!</button>
           <button onclick="Games.newTarget()" class="px-4 bg-slate-100 text-slate-600 font-bold rounded-xl text-sm"><i class="fa-solid fa-dice"></i></button>
         </div>
         <div id="g-result" class="mt-3"></div>
-        <p class="text-[11px] text-slate-400 mt-3"><i class="fa-solid fa-lightbulb mr-1"></i>Petunjuk: pakai R = v₀²·sin(2θ)/g di tab Calculate untuk menembak tepat pada percobaan pertama.</p>
+        <p class="text-[11px] text-slate-400 mt-3"><i class="fa-solid fa-lightbulb mr-1"></i>Tip: use R = v₀²·sin(2θ)/g in the Calculate tab to hit the target on the first attempt.</p>
       </div>`;
   },
   score:0, tries:0, target:0,
@@ -3691,7 +3691,7 @@ const CUSTOM_VIEWS = {
     Runtime.after(()=>{ Viz.state('chart'); StatsView.run(); });
     return `<div class="card p-5 mb-3">
       <h3 class="font-bold text-slate-700 text-sm mb-2"><i class="fa-solid fa-table-list text-cyan-500 mr-1.5"></i>Data</h3>
-      <p class="text-[11px] text-slate-400 mb-2">Satu nilai per baris (atau pisah koma). Untuk regresi, tulis pasangan <code>x,y</code> per baris.</p>
+      <p class="text-[11px] text-slate-400 mb-2">One value per line (or comma-separated). For regression, enter each <code>x,y</code> pair on its own line.</p>
       <textarea id="st-data" rows="7" oninput="StatsView.run()" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 font-bold num text-[13px] outline-none focus:border-cyan-400">10
 12
 14
@@ -3701,7 +3701,7 @@ const CUSTOM_VIEWS = {
 21</textarea>
       <div class="flex flex-wrap gap-1.5 mt-2">
         <button onclick="StatsView.sample('nilai')" class="chipbtn">Contoh: nilai ujian</button>
-        <button onclick="StatsView.sample('pair')" class="chipbtn">Contoh: pasangan x,y</button>
+        <button onclick="StatsView.sample('pair')" class="chipbtn">Example: x,y pairs</button>
         <button onclick="StatsView.fromRecorder()" class="chipbtn"><i class="fa-solid fa-download mr-1"></i>Ambil data sensor terakhir</button>
       </div>
     </div>
@@ -3719,12 +3719,12 @@ const CUSTOM_VIEWS = {
       <div class="grid grid-cols-5 gap-2 items-end">
         <div class="col-span-3"><label class="text-[10px] font-bold text-slate-400 uppercase">Nilai</label>
           <input id="uc-val" type="number" value="1" oninput="UnitView.run()" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold num"></div>
-        <div class="col-span-2"><label class="text-[10px] font-bold text-slate-400 uppercase">Dari</label>
+        <div class="col-span-2"><label class="text-[10px] font-bold text-slate-400 uppercase">From</label>
           <select id="uc-from" onchange="UnitView.run()" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold"></select></div>
       </div>
       <div class="text-center my-3"><button onclick="UnitView.swap()" class="w-9 h-9 rounded-full bg-teal-100 text-teal-600 border border-teal-200"><i class="fa-solid fa-arrows-up-down"></i></button></div>
       <div class="grid grid-cols-5 gap-2 items-end">
-        <div class="col-span-3"><label class="text-[10px] font-bold text-slate-400 uppercase">Hasil</label>
+        <div class="col-span-3"><label class="text-[10px] font-bold text-slate-400 uppercase">Result</label>
           <div id="uc-result" class="w-full bg-teal-50 border border-teal-200 rounded-xl p-2.5 font-black text-teal-800 num">—</div></div>
         <div class="col-span-2"><label class="text-[10px] font-bold text-slate-400 uppercase">Ke</label>
           <select id="uc-to" onchange="UnitView.run()" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold"></select></div>
@@ -3762,7 +3762,7 @@ const CUSTOM_VIEWS = {
       </div>
       <div class="mt-4 text-left bg-slate-50 border border-slate-200 rounded-xl p-3">
         <p class="text-[11px] font-bold text-slate-500 uppercase mb-1">Challenge cepat</p>
-        <p class="text-[12px] text-slate-600">Ukur Jakarta → Surabaya, lalu bandingkan dengan jarak jalan darat (±780 km). Why are they different?</p>
+        <p class="text-[12px] text-slate-600">Measure Jakarta → Surabaya, then compare it with the road distance (about 780 km). Why are they different?</p>
       </div>
     </div>`;
   },
@@ -3783,7 +3783,7 @@ const CUSTOM_VIEWS = {
           <div class="gauge"><div id="slb-${f.k}" style="width:0%;background:${f.color}"></div></div></div>`).join('')}
       </div>
       <div class="flex gap-2 mt-4">
-        <button onclick="SensorLab.start()" class="flex-1 bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2.5 rounded-xl text-sm shadow"><i class="fa-solid fa-play mr-1"></i>Mulai</button>
+        <button onclick="SensorLab.start()" class="flex-1 bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2.5 rounded-xl text-sm shadow"><i class="fa-solid fa-play mr-1"></i>Start</button>
         <button onclick="SensorLab.stop()" class="flex-1 bg-slate-100 text-slate-700 font-bold py-2.5 rounded-xl text-sm"><i class="fa-solid fa-stop mr-1"></i>Stop</button>
       </div>
       <div class="flex gap-2 mt-2">
@@ -3796,7 +3796,7 @@ const CUSTOM_VIEWS = {
     <div class="card p-5">
       <h3 class="font-bold text-slate-700 text-sm mb-2"><i class="fa-solid fa-flask-vial text-emerald-500 mr-1.5"></i>Ide eksperimen</h3>
       <ol class="space-y-2">${cfg.ideas.map((i,ix)=>`<li class="flex gap-2.5 text-[12.5px] text-slate-600"><span class="shrink-0 w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-black flex items-center justify-center">${ix+1}</span><span>${i}</span></li>`).join('')}</ol>
-      <p class="text-[11px] text-slate-400 mt-3"><i class="fa-solid fa-circle-info mr-1"></i>Export CSV → buka modul <b>Statistika</b> → hitung rata-rata & standar deviasi pengukuranmu.</p>
+      <p class="text-[11px] text-slate-400 mt-3"><i class="fa-solid fa-circle-info mr-1"></i>Export CSV → open the <b>Statistics</b> module → calculate the mean and standard deviation of your measurements.</p>
     </div>`;
   }
 

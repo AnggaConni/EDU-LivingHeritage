@@ -350,8 +350,8 @@
         <p class="text-xs text-slate-500 mt-2 max-w-xs">Choose a module from the panel. This area can become a map, chart, simulation, camera, or sensor depending on the activity.</p>
         <div class="grid grid-cols-4 gap-2 mt-5 text-[10px] text-slate-500 font-semibold">
           <div class="card p-2"><i class="fa-solid fa-chart-line text-indigo-500 block mb-1"></i>Grafik</div>
-          <div class="card p-2"><i class="fa-solid fa-atom text-emerald-500 block mb-1"></i>Simulasi</div>
-          <div class="card p-2"><i class="fa-solid fa-camera text-rose-500 block mb-1"></i>Kamera</div>
+          <div class="card p-2"><i class="fa-solid fa-atom text-emerald-500 block mb-1"></i>Simulate</div>
+          <div class="card p-2"><i class="fa-solid fa-camera text-rose-500 block mb-1"></i>Camera</div>
           <div class="card p-2"><i class="fa-solid fa-wave-square text-amber-500 block mb-1"></i>Sensor</div>
         </div>
       </div>
@@ -885,12 +885,12 @@ const Capabilities = {
     if(s.camera) return 3;
     return 4;
   },
-  levelName(){ return ['','AR + Depth','Kamera + Sensor Gerak','Kamera saja','Manual / Simulasi'][this.level()]; },
+  levelName(){ return ['','AR + Depth','Camera + Motion Sensor','Camera only','Manual / Simulation'][this.level()]; },
   badge(list){
     return list.map(k=>{
       const on=this.has(k);
       return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${on?'bg-emerald-50 text-emerald-700 border-emerald-200':'bg-slate-100 text-slate-400 border-slate-200'}">
-        <i class="fa-solid ${on?'fa-check':'fa-xmark'} mr-1"></i>${({camera:'Kamera',motion:'Accelerometer',orientation:'Gyroscope',magnetometer:'Magnetometer',microphone:'Microphone',ar:'AR',depth:'Depth',nativeBridge:'Native'})[k]||k}</span>`;
+        <i class="fa-solid ${on?'fa-check':'fa-xmark'} mr-1"></i>${({camera:'Camera',motion:'Accelerometer',orientation:'Gyroscope',magnetometer:'Magnetometer',microphone:'Microphone',ar:'AR',depth:'Depth',nativeBridge:'Native'})[k]||k}</span>`;
     }).join('');
   }
 };
@@ -1064,7 +1064,7 @@ const SIM_ENGINES = {
         c.strokeStyle='#ef4444'; c.beginPath(); c.moveTo(X(s.x),Y(s.y)); c.lineTo(X(s.x),Y(s.y)+p.g*sc*k*0.6); c.stroke(); }
     },
     readout(s,p){ return [['t',s.t,'s'],['x',s.x,'m'],['y',s.y,'m'],
-      ['|v|',Math.hypot(s.vx,s.vy),'m/s'],['Jarak',s.landed?s.range:s.x,'m'],['Puncak',s.maxH,'m']]; }
+      ['|v|',Math.hypot(s.vx,s.vy),'m/s'],['Distance',s.landed?s.range:s.x,'m'],['Puncak',s.maxH,'m']]; }
   },
 
   /* ---------- FREE FALL (dua objek: bola vs bulu) ---------- */
@@ -1317,7 +1317,7 @@ const CameraLab = {
     this.video=$('cam-video'); this.overlay=$('cam-overlay'); this.octx=this.overlay.getContext('2d');
     try{
       this.stream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode:'environment', width:{ideal:1280} }, audio:false });
-    }catch(e){ UI.toast('Kamera unavailable bisa diakses: '+e.message,'rose'); return false; }
+    }catch(e){ UI.toast('Camera could not be accessed: '+e.message,'rose'); return false; }
     this.video.srcObject=this.stream; await this.video.play().catch(()=>{});
     this.video.onloadedmetadata = () => {
       $('cam-wrap').style.aspectRatio = `${this.video.videoWidth}/${this.video.videoHeight}`;
@@ -1328,7 +1328,7 @@ const CameraLab = {
       const r=this.overlay.getBoundingClientRect();
       this.tap((e.clientX-r.left)*this.overlay.width/r.width, (e.clientY-r.top)*this.overlay.height/r.height);
     };
-    $('cam-status').textContent='Kamera aktif';
+    $('cam-status').textContent='Camera active';
     this.work=document.createElement('canvas'); this.work.width=160; this.work.height=120;
     this.loop();
     return true;
@@ -1340,7 +1340,7 @@ const CameraLab = {
     if($('cam-status')) $('cam-status').textContent='Camera off'; },
 
   setMode(m){ this.mode=m; this.points=[]; this.render();
-    const msg={ calibrate:'Ketuk 2 ujung objek acuan', measure:'Ketuk 2 titik untuk mengukur', angle:'Ketuk 3 titik (sudut di titik ke-2)', pick:'Ketuk warna bola', track:'Siap merekam' }[m]||'';
+    const msg={ calibrate:'Tap both ends of the reference object', measure:'Tap 2 points to measure', angle:'Tap 3 points (angle at the second point)', pick:'Pick the ball color', track:'Ready to record' }[m]||'';
     $('cam-status').textContent=msg; },
 
   tap(x,y){
@@ -1557,7 +1557,7 @@ const MODULES = [
     ]},
     everyday:{ items:[
       { q:'The class average is 70, but you scored 70 and feel "below average." Is that possible?',
-        options:['Tidak mungkin','Mungkin, jika sebagian besar siswa bernilai lebih tinggi dari 70','Hanya jika gurunya salah hitung'],
+        options:['Not possible','Possible, if most students scored above 70','Only if the teacher calculated it incorrectly'],
         answer:1, concepts:['mean vs median','skewed distribution'],
         explain:'The mean can be pulled down by a few very low values. The class median could be 78 even when the mean is 70 — so 70 can still be below the majority.',
         tryIt:'Try this data: 20, 25, 78, 79, 80, 82 → calculate the mean and median in the Calculate tab.' }
@@ -2042,7 +2042,7 @@ const MODULES = [
   },
 
   note:
-    '💧 Eksperimen ini menunjukkan prinsip filtrasi dan adsorpsi, bukan pemurnian air minum. Air yang terlihat jernih masih dapat mengandung mikroorganisme, bahan kimia terlarut, atau kontaminan lain yang unavailable terlihat. Perlakukan air hasil eksperimen sebagai AIR NON-KONSUMSI.'
+    '💧 Experiment ini menunjukkan prinsip filtrasi dan adsorpsi, bukan pemurnian air minum. Air yang terlihat jernih masih dapat mengandung mikroorganisme, bahan kimia terlarut, atau kontaminan lain yang unavailable terlihat. Perlakukan air hasil eksperimen sebagai AIR NON-KONSUMSI.'
 },
     challenge:{ questions:[
       { q:'Which filter layer helps remove unpleasant odors and some dissolved compounds?', type:'choice', options:['Fine sand','Arang (Biochar)','Coarse stones'], answer:1, xp:15, why:'Charcoal/biochar can adsorb some compounds because its porous surface provides sites where molecules can bind.' },
@@ -2435,7 +2435,7 @@ learn: {
         { id:'tTot', label:'Flight time', formula:{expr:'(vy + sqrt(vy^2 + 2*g*h0))/g'}, unit:'s' },
         { id:'range', label:'Range', formula:{expr:'vx*tTot'}, unit:'m', hint:'Model ideal: tanpa hambatan udara, tanpa angin.' }
       ],
-      notes:'Angle dihitung dalam derajat pada modul ini (mode sudut kalkulator unavailable mempengaruhi).',
+      notes:'Angles are calculated in degrees in this module (calculator angle mode does not affect this module).',
       chart:{ title:'Jarak tempuh vs sudut lemparan', xLabel:'Angle (°)', yLabel:'Jarak (m)',
         x:{ id:'angle', from:1, to:89, steps:44 },
         series:[{ label:'Range (m)', expr:'v0*cos(angle)*(v0*sin(angle)+sqrt((v0*sin(angle))^2+2*g*h0))/g', color:'#ea580c' }] }
@@ -2458,10 +2458,10 @@ learn: {
       title:'Ukur lintasan bola sungguhan',
       steps:['Letakkan HP stabil, layar menghadap area lemparan (posisi menyamping).',
              'Taruh objek acuan berukuran diketahui (mis. penggaris 30 cm) sejajar bidang lemparan.',
-             'Tekan <b>Kalibrasi</b>, ketuk kedua ujung objek acuan.',
-             'Tekan <b>Choose a color</b>, ketuk bola supaya pelacak tahu warna targetnya.',
-             'Tekan <b>Rekam</b>, lemparkan bola sejajar bidang kalibrasi, lalu <b>Stop</b>.',
-             'Tekan <b>Analisis</b> untuk fitting parabola dan bandingkan dengan teori.'],
+             'Tap <b>Calibrate</b>, then tap both ends of the reference object.',
+             'Tap <b>Choose a color</b>, then tap the ball so the tracker knows the target color.',
+             'Tap <b>Record</b>, throw the ball parallel to the calibration plane, then tap <b>Stop</b>.',
+             'Tap <b>Analyze</b> to fit a parabola and compare it with theory.'],
       compare:{ measuredKey:'gMeas', theory:{constant:'g'}, unit:'ms2', label:'Percepatan gravitasi dari lintasan bola' }
     },
     challenge:{ game:'projectile-target' },
@@ -2515,9 +2515,9 @@ learn: {
       type:'sensor', sensor:'motion', field:'mag', measure:'mean',
       title:'Ukur g memakai akselerometer',
       unit:'ms2', label:'|a| (besar percepatan)',
-      steps:['Letakkan HP <b>diam</b> di meja datar.','Tekan Mulai, tunggu ±5 detik agar data stabil.','Tekan Stop, lihat rata-rata |a| — itu perkiraan g di lokasimu.'],
+      steps:['Letakkan HP <b>diam</b> di meja datar.','Tap Start and wait about 5 seconds for the data to stabilize.','Tap Stop and inspect the average |a| — this estimates g at your location.'],
       compare:{ theory:{constant:'g'}, unit:'ms2', label:'Percepatan gravitasi' },
-      note:'Sensor murah biasanya menyimpang 0.1–0.5 m/s². Coba juga miringkan HP dan lihat komponen X/Y/Z berubah walau |a| tetap.'
+      note:'Low-cost sensors can deviate by about 0.1–0.5 m/s². Tilt the phone and observe X/Y/Z components changing while |a| stays similar.'
     }
   }
 },
@@ -2557,9 +2557,9 @@ learn: {
       tip:'Bandingkan "T teori" dan "T terukur" pada HUD saat sudut awal besar.'
     },
     experiment:{
-      type:'timer', title:'Ukur g dari ayunan nyata', cyclesPerLap:1,
+      type:'timer', title:'Measure g with a real pendulum', cyclesPerLap:1,
       steps:['Build a pendulum with a string and a small weight. Measure L from the pivot to the center of mass.',
-             'Simpangkan ±10°, lepaskan.','Tekan <b>Lap</b> setiap kali beban kembali ke titik yang sama arah yang sama.',
+             'Displace it by about ±10° and release.','Tap <b>Lap</b> each time the weight returns to the same point in the same direction.',
              'Ambil minimal 10 lap agar rata-rata stabil, lalu Stop.'],
       inputs:[{ id:'L', label:'Length tali (m)', default:0.5, step:0.01 }],
       derive:[
@@ -2577,7 +2577,7 @@ learn: {
   modes:{
     learn:{ blocks:[
       {t:'h', text:'Water analogy'},
-      {t:'kv', items:[['Tegangan (V)','tekanan air / dorongan listrik'],['Arus (I)','debit air yang mengalir'],['Hambatan (R)','pipa yang menyempit']]},
+      {t:'kv', items:[['Voltage (V)','water pressure / electrical push'],['Current (I)','flow rate of water'],['Resistance (R)','a narrowed pipe']]},
       {t:'formula', tex:'V = I × R', desc:'Increase pressure → flow increases. Narrow the pipe → flow decreases.'},
       {t:'formula', tex:'P = V × I = I²R', desc:'Power = the rate at which energy is converted into light, heat, or motion.'},
       {t:'note', tone:'warn', text:'Do not experiment with 220 V mains electricity. Use a 1.5–9 V battery for learning.'}
@@ -2693,7 +2693,7 @@ learn: {
         { id:'lambda', label:'Length gelombang λ', min:0.5, max:6, step:0.1, unit:'m' },
         { id:'f', label:'Frekuensi', min:0.1, max:4, step:0.1, unit:'Hz' }
       ],
-      tip:'Naikkan f → gelombang bergerak lebih cepat (v = λf). Amplitudo unavailable mempengaruhi kecepatan.'
+      tip:'Increase f → wave speed follows v = λf. Amplitude does not determine wave speed in this ideal model.'
     },
     experiment:{
       type:'sensor', sensor:'sound', field:'freq', measure:'mode',
@@ -2712,7 +2712,7 @@ learn: {
       {t:'h', text:'Lenses bend light to form images'},
       {t:'formula', tex:'1/f = 1/s + 1/s′', desc:'f = focal length, s = object distance, s′ = image distance.'},
       {t:'formula', tex:'M = −s′/s = h′/h', desc:'Magnification. A negative sign means the image is inverted.'},
-      {t:'kv', items:[['Kacamata minus','lensa cekung (f negatif)'],['Lup','lensa cembung, benda di dalam f'],['Kamera HP','lensa cembung, bayangan nyata di sensor']]}
+      {t:'kv', items:[['Kacamata minus','lensa cekung (f negatif)'],['Lup','lensa cembung, benda di dalam f'],['Camera HP','lensa cembung, bayangan nyata di sensor']]}
     ]},
     calculate:{
       inputs:[
@@ -3005,14 +3005,14 @@ const MODULES_DATA = window.MODULES_DATA || [];
 
 /* ═════════ §15 MODULE RUNTIME (normalisasi + registry) ═════════ */
 const MODE_META = {
-  learn:      { label:'Pahami',    icon:'fa-book-open' },
+  learn:      { label:'Learn',    icon:'fa-book-open' },
   calculate:  { label:'Calculate',    icon:'fa-calculator' },
-  explore:    { label:'Jelajahi',  icon:'fa-compass' },
-  simulate:   { label:'Simulasi',  icon:'fa-atom' },
+  explore:    { label:'Explore',  icon:'fa-compass' },
+  simulate:   { label:'Simulate',  icon:'fa-atom' },
   experiment: { label:'Experiment',icon:'fa-flask' },
   ar:         { label:'AR',        icon:'fa-cube' },
   everyday:   { label:'Everyday Science', icon:'fa-lightbulb' },
-  challenge:  { label:'Tantangan', icon:'fa-trophy' }
+  challenge:  { label:'Challenge', icon:'fa-trophy' }
 };
 const MODE_ORDER = ['learn','calculate','explore','simulate','experiment','ar','everyday','challenge'];
 
@@ -3143,10 +3143,10 @@ const MODE_RENDERERS = {
     // --- TAMBAHAN UNTUK EKSPERIMEN MANUAL / CRAFTING ---
     if(cfg.type==='manual') {
       return `<div class="card p-5 mb-3 fade-in">
-        <h3 class="font-extrabold text-slate-800 text-[15px] mb-3"><i class="fa-solid fa-hammer text-indigo-500 mr-1.5"></i>${cfg.title || 'Panduan Eksperimen'}</h3>
+        <h3 class="font-extrabold text-slate-800 text-[15px] mb-3"><i class="fa-solid fa-hammer text-indigo-500 mr-1.5"></i>${cfg.title || 'Panduan Experiment'}</h3>
         
         <!-- INI TAMBAHAN UNTUK MENAMPILKAN GAMBAR -->
-        ${cfg.image ? `<img src="${cfg.image}" class="w-full rounded-xl mb-4 border border-slate-200 shadow-sm" alt="Ilustrasi Eksperimen">` : ''}
+        ${cfg.image ? `<img src="${cfg.image}" class="w-full rounded-xl mb-4 border border-slate-200 shadow-sm" alt="Ilustrasi Experiment">` : ''}
         
         ${cfg.steps ? `<ol class="space-y-2 mb-3">${cfg.steps.map((s,i)=>`<li class="flex gap-2.5 text-[13px] text-slate-600"><span class="shrink-0 w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 text-[10px] font-black flex items-center justify-center">${i+1}</span><span>${s}</span></li>`).join('')}</ol>` : ''}
         ${cfg.note ? `<div class="bg-blue-50 border border-blue-200 rounded-xl p-3 mt-3 flex gap-2.5"><i class="fa-solid fa-circle-info text-blue-500 mt-0.5"></i><p class="text-[12px] text-blue-800">${cfg.note}</p></div>` : ''}
@@ -3154,7 +3154,7 @@ const MODE_RENDERERS = {
       </div>`;
     }
     
-    return `<div class="card p-5 text-sm text-slate-500">Eksperimen belum dikonfigurasi.</div>`;
+    return `<div class="card p-5 text-sm text-slate-500">Experiment belum dikonfigurasi.</div>`;
   },
 
   explore(mod, cfg){
@@ -3214,8 +3214,8 @@ const MODE_RENDERERS = {
     const lvl = Capabilities.level();
     const rows = [
       { n:1, name:'AR + Depth (WebXR / ARCore)', ok:Capabilities.has('ar'), desc:'Ukur langsung di ruang 3D dengan hit-test permukaan.' },
-      { n:2, name:'Kamera + Sensor Gerak', ok:Capabilities.has('camera')&&Capabilities.has('orientation'), desc:'Klinometer: sudut dari sensor + jarak → tinggi.' },
-      { n:3, name:'Kamera + Objek Acuan', ok:Capabilities.has('camera'), desc:'Kalibrasi skala piksel lalu ukur di bidang datar.' },
+      { n:2, name:'Camera + Sensor Gerak', ok:Capabilities.has('camera')&&Capabilities.has('orientation'), desc:'Klinometer: sudut dari sensor + jarak → tinggi.' },
+      { n:3, name:'Camera + Objek Acuan', ok:Capabilities.has('camera'), desc:'Kalibrasi skala piksel lalu ukur di bidang datar.' },
       { n:4, name:'Manual / Trigonometri', ok:true, desc:'Selalu available — kamu ukur, app menghitung.' }
     ];
     Runtime.after(()=>{ Clino.mount(); });
@@ -3234,12 +3234,12 @@ const MODE_RENDERERS = {
     <div class="card p-5 mb-3">
       <h3 class="font-bold text-slate-700 text-sm mb-3"><i class="fa-solid fa-cube text-fuchsia-500 mr-1.5"></i>Sesi AR (WebXR)</h3>
       <button onclick="ARLab.start()" ${Capabilities.has('ar')?'':'disabled'} class="w-full ${Capabilities.has('ar')?'bg-gradient-to-r from-fuchsia-500 to-violet-500':'bg-slate-200 text-slate-400'} text-white font-bold py-3 rounded-xl text-sm shadow">
-        <i class="fa-solid fa-vr-cardboard mr-1"></i>${Capabilities.has('ar')?'Mulai Ukur di AR':'AR unavailable available di perangkat ini'}</button>
+        <i class="fa-solid fa-vr-cardboard mr-1"></i>${Capabilities.has('ar')?'Mulai Ukur di AR':'AR not available on this device'}</button>
       <p class="text-[11px] text-slate-400 mt-2">Ketuk permukaan untuk titik 1 dan 2. Butuh Chrome Android + ARCore. Di APK, bisa diperkuat lewat native bridge (ARCore Depth).</p>
     </div>
 
     <div class="card p-5 mb-3">
-      <h3 class="font-bold text-slate-700 text-sm mb-2"><i class="fa-solid fa-camera text-fuchsia-500 mr-1.5"></i>Mode Kamera + Objek Acuan</h3>
+      <h3 class="font-bold text-slate-700 text-sm mb-2"><i class="fa-solid fa-camera text-fuchsia-500 mr-1.5"></i>Mode Camera + Objek Acuan</h3>
       <p class="text-[11px] text-slate-500 mb-3">Buka panel visual: kalibrasi dengan benda berukuran diketahui, lalu ukur jarak/sudut dengan mengetuk layar.</p>
       <button onclick="Experiments.camStart()" class="w-full bg-slate-800 text-white font-bold py-2.5 rounded-xl text-sm"><i class="fa-solid fa-video mr-1"></i>Turn on Camera</button>
     </div>
@@ -3309,7 +3309,7 @@ const Experiments = {
     const sim = APP.simulateSensors || (sensorKey && !Sensors.DRIVERS[sensorKey].supported());
     return `<div class="card p-5 mb-3">
       <div class="flex items-start justify-between gap-2 mb-2">
-        <h3 class="font-extrabold text-slate-800 text-[15px]">${cfg.title||'Eksperimen'}</h3>
+        <h3 class="font-extrabold text-slate-800 text-[15px]">${cfg.title||'Experiment'}</h3>
         ${sim?`<span class="text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full shrink-0">SIMULATION MODE</span>`
              :`<span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full shrink-0">SENSOR NYATA</span>`}
       </div>
@@ -3358,8 +3358,8 @@ const Experiments = {
         $('ex-n').textContent=st.n; $('ex-mean').textContent=Precision.format(st.mean,{decimals:3}); $('ex-sd').textContent=Precision.format(st.sdS,{decimals:3});
         if(performance.now()-this.chartT>100){ this.chartT=performance.now(); Viz.streamPush({[field]:v}); }
       });
-      UI.toast('Sensor aktif','emerald');
-    }catch(e){ UI.toast('Gagal: '+e.message,'rose'); }
+      UI.toast('Sensor active','emerald');
+    }catch(e){ UI.toast('Failed: '+e.message,'rose'); }
   },
   sensorStop(cfg){
     Sensors.stop(); Recorder.stop();
@@ -3430,7 +3430,7 @@ const Experiments = {
   async camStart(){
     Viz.state('camera'); UI.mobileView('visual');
     const ok = await CameraLab.start();
-    if(ok) UI.toast('Kamera aktif','emerald');
+    if(ok) UI.toast('Camera active','emerald');
   },
   camToolbar(cfg){
     const btn=(l,f,c='slate')=>`<button onclick="${f}" class="text-[11px] font-bold px-3 py-1.5 rounded-full bg-${c}-100 text-${c}-700 border border-${c}-200">${l}</button>`;
@@ -3472,7 +3472,7 @@ const Timer = {
     if($('tm-laps')) $('tm-laps').innerHTML='';
     if($('tm-derived')) $('tm-derived').innerHTML='';
     if($('tm-compare')) $('tm-compare').innerHTML='';
-    if($('tm-btn')) $('tm-btn').textContent='Mulai'; },
+    if($('tm-btn')) $('tm-btn').textContent='Start'; },
   toggle(){ this.running ? this.pause() : this.start(); },
   start(){ this.running=true; this.t0=performance.now()-(this.last*1000); $('tm-btn').textContent='Jeda';
     const loop=()=>{ if(!this.running) return; const t=(performance.now()-this.t0)/1000; this.last=t;
@@ -3545,7 +3545,7 @@ const Quiz = {
   },
   answerChoice(modId, i, chosen, correct, xp){
     const ok = chosen===correct;
-    $('qres-'+i).innerHTML = `<p class="text-[12px] font-bold ${ok?'text-emerald-600':'text-rose-600'}"><i class="fa-solid ${ok?'fa-circle-check':'fa-circle-xmark'} mr-1"></i>${ok?'Tepat!':'Belum tepat, coba lagi.'}</p>`;
+    $('qres-'+i).innerHTML = `<p class="text-[12px] font-bold ${ok?'text-emerald-600':'text-rose-600'}"><i class="fa-solid ${ok?'fa-circle-check':'fa-circle-xmark'} mr-1"></i>${ok?'Correct!':'Not quite—try again.'}</p>`;
     const w=$('qwhy-'+i); if(w) w.classList.remove('hidden');
     if(ok) Progress.add(xp, modId+':q'+i);
   },
@@ -3761,7 +3761,7 @@ const CUSTOM_VIEWS = {
         <button onclick="MapLab.locate()" class="flex-1 bg-emerald-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-location-crosshairs mr-1"></i>Lokasi saya</button>
       </div>
       <div class="mt-4 text-left bg-slate-50 border border-slate-200 rounded-xl p-3">
-        <p class="text-[11px] font-bold text-slate-500 uppercase mb-1">Tantangan cepat</p>
+        <p class="text-[11px] font-bold text-slate-500 uppercase mb-1">Challenge cepat</p>
         <p class="text-[12px] text-slate-600">Ukur Jakarta → Surabaya, lalu bandingkan dengan jarak jalan darat (±780 km). Why are they different?</p>
       </div>
     </div>`;
@@ -3969,7 +3969,7 @@ const VectorView = {
       ['â (satuan a)', `(${Vec.unit(a).map(v=>rnd(v,3)).join(', ')})`, ''],
       ['a + b', `(${Vec.add(a,b).map(v=>rnd(v,3)).join(', ')})`, ''],
       ['a − b', `(${Vec.sub(a,b).map(v=>rnd(v,3)).join(', ')})`, ''],
-      ['Proyeksi a pada b', Vec.dot(a,b)/(Vec.mag(b)||1), '']
+      ['Projection of a onto b', Vec.dot(a,b)/(Vec.mag(b)||1), '']
     ];
     $('v-out').innerHTML = `<div class="card p-5"><div class="space-y-1.5">${rows.map(([k,v,u])=>`
       <div class="flex justify-between items-center bg-fuchsia-50 border border-fuchsia-100 rounded-xl px-3 py-2">
@@ -3995,10 +3995,10 @@ const SensorLab = {
         if(performance.now()-this.t>100){ this.t=performance.now();
           const o={}; this.cfg.chartFields.forEach(k=>o[k]=s[k]); Viz.streamPush(o); }
       });
-      UI.toast('Sensor aktif'+(Sensors.isSimulated?' (simulasi)':''),'emerald');
-    }catch(e){ UI.toast('Gagal: '+e.message,'rose'); }
+      UI.toast('Sensor active'+(Sensors.isSimulated?' (simulasi)':''),'emerald');
+    }catch(e){ UI.toast('Failed: '+e.message,'rose'); }
   },
-  stop(){ Sensors.stop(); Recorder.stop(); UI.toast('Sensor berhenti','indigo'); },
+  stop(){ Sensors.stop(); Recorder.stop(); UI.toast('Sensor stopped','indigo'); },
   record(){
     if(Recorder.on){ Recorder.stop(); $('sl-recinfo').textContent=`Rekaman complete: ${Recorder.samples.length} sampel.`; $('sl-rec').innerHTML='<i class="fa-solid fa-circle mr-1"></i>Rekam'; }
     else { Recorder.start(APP.state.moduleId); $('sl-recinfo').textContent='● Merekam…'; $('sl-rec').innerHTML='<i class="fa-solid fa-stop mr-1"></i>Stop rekam'; }
@@ -4014,14 +4014,14 @@ const Viz = {
     const set=(k,icon,color,label)=>{ $('visual-'+k).classList.remove('hidden');
       t.innerHTML=`<i class="fa-solid ${icon} text-${color}-500 mr-1"></i> ${label}`;
       b.className=`text-[10px] bg-${color}-50 text-${color}-700 border border-${color}-200 px-2 py-0.5 rounded-full font-bold uppercase`; };
-    if(type==='map'){ set('map','fa-map','emerald','Peta Satelit'); b.textContent='GIS Interaktif'; setTimeout(()=>MapLab.map&&MapLab.map.invalidateSize(),250); }
-    else if(type==='chart'){ set('chart','fa-chart-line','indigo','Grafik'); b.textContent='Live'; }
-    else if(type==='sim'){ set('sim','fa-atom','emerald','Simulasi Fisika'); b.textContent='Engine'; setTimeout(()=>SimEngine.resize(),150); }
-    else if(type==='camera'){ set('camera','fa-camera','rose','Laboratorium Kamera'); b.textContent='Estimasi'; setTimeout(()=>CameraLab.fit(),200); }
+    if(type==='map'){ set('map','fa-map','emerald','Satellite Map'); b.textContent='Interactive GIS'; setTimeout(()=>MapLab.map&&MapLab.map.invalidateSize(),250); }
+    else if(type==='chart'){ set('chart','fa-chart-line','indigo','Chart'); b.textContent='Live'; }
+    else if(type==='sim'){ set('sim','fa-atom','emerald','Physics Simulation'); b.textContent='Engine'; setTimeout(()=>SimEngine.resize(),150); }
+    else if(type==='camera'){ set('camera','fa-camera','rose','Camera Lab'); b.textContent='Estimasi'; setTimeout(()=>CameraLab.fit(),200); }
     else { set('welcome','fa-eye','indigo','Visualization'); b.textContent='Standby'; }
   },
   chartRaw(cfg, title){
-    $('chart-title').textContent = title||'Grafik';
+    $('chart-title').textContent = title||'Chart';
     const ctx=$('chart-canvas').getContext('2d');
     if(this.chart) this.chart.destroy();
     this.chart = new Chart(ctx, cfg);
@@ -4049,7 +4049,7 @@ const Viz = {
   streamInit(fields){
     this.stream={ fields, labels:[], data:fields.map(()=>[]) };
     this.state('chart');
-    this.line({ title:'Data sensor (real-time)', labels:[], xLabel:'sampel', yLabel:'nilai',
+    this.line({ title:'Real-time sensor data', labels:[], xLabel:'samples', yLabel:'value',
       datasets: fields.map(f=>({ label:f.label, data:[], borderColor:f.color, backgroundColor:f.color+'18', borderWidth:2, tension:.25, pointRadius:0 })) });
   },
   streamPush(obj){
@@ -4094,10 +4094,10 @@ const MapLab = {
     if($('map-distance-result')) $('map-distance-result').textContent='0 km';
     if($('map-coords')) $('map-coords').textContent=''; },
   locate(){
-    if(!navigator.geolocation){ UI.toast('Geolocation unavailable available','amber'); return; }
+    if(!navigator.geolocation){ UI.toast('Geolocation unavailable','amber'); return; }
     navigator.geolocation.getCurrentPosition(p=>{
       this.map.setView([p.coords.latitude,p.coords.longitude],13);
-      L.circleMarker([p.coords.latitude,p.coords.longitude],{radius:8,color:'#4f46e5',fillOpacity:.7}).addTo(this.map).bindPopup('Posisimu').openPopup();
+      L.circleMarker([p.coords.latitude,p.coords.longitude],{radius:8,color:'#4f46e5',fillOpacity:.7}).addTo(this.map).bindPopup('Your position').openPopup();
       UI.toast('Location found','emerald');
     }, e=>UI.toast('Could not get location: '+e.message,'rose'));
   }
@@ -4105,13 +4105,13 @@ const MapLab = {
 
 /* ═════════ §19 UI + ROUTER ═════════ */
 const UI = {
-  activeCat:'Semua',
+  activeCat:'All',
   renderHome(){
     const q=($('search')?$('search').value:'').toLowerCase();
-    const cats=['Semua',...Registry.categories()];
+    const cats=['All',...Registry.categories()];
     $('cat-chips').innerHTML = cats.map(c=>`<button onclick="UI.activeCat='${c}';UI.renderHome()" class="chipbtn shrink-0 ${this.activeCat===c?'on':''}">${c}</button>`).join('');
     const list = Registry.all.filter(m=>
-      (this.activeCat==='Semua'||m.category===this.activeCat) &&
+      (this.activeCat==='All'||m.category===this.activeCat) &&
       (!q || (m.title+m.category+(m.tags||[]).join(' ')+(m.subtitle||'')).toLowerCase().includes(q)));
     $('module-grid').innerHTML = list.length ? list.map(m=>{
       const modes=Object.keys(m.modes);
@@ -4119,23 +4119,23 @@ const UI = {
         <div class="flex items-start justify-between">
           <div class="w-11 h-11 rounded-xl bg-${m.color}-50 border border-${m.color}-100 flex items-center justify-center group-hover:scale-105 transition-transform">
             <i class="fa-solid ${m.icon} text-xl text-${m.color}-600"></i></div>
-          ${m.safety?`<i class="fa-solid fa-triangle-exclamation text-amber-400 text-xs" title="Ada catatan keselamatan"></i>`:''}
+          ${m.safety?`<i class="fa-solid fa-triangle-exclamation text-amber-400 text-xs" title="Safety note available"></i>`:''}
         </div>
         <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-3">${m.category}</div>
         <h3 class="font-extrabold text-slate-800 text-[15px] leading-tight mt-0.5">${m.title}</h3>
         <p class="text-[11px] text-slate-500 mt-1 leading-snug">${m.subtitle||''}</p>
         <div class="flex flex-wrap gap-1 mt-3">${modes.slice(0,5).map(k=>`<span class="text-[9px] font-bold bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">${MODE_META[k]?MODE_META[k].label:k}</span>`).join('')}</div>
       </div>`;
-    }).join('') : `<p class="text-sm text-slate-400 col-span-3 text-center py-8">Tidak ada modul cocok. Coba kata kunci lain.</p>`;
+    }).join('') : `<p class="text-sm text-slate-400 col-span-3 text-center py-8">No matching modules. Try another keyword.</p>`;
   },
   homeCaps(){
     const keys=['camera','motion','orientation','magnetometer','microphone','ar','depth','nativeBridge'];
     $('home-caps').innerHTML = keys.map(k=>{
       const on=Capabilities.has(k);
       return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${on?'bg-white/25 text-white':'bg-white/10 text-white/50'} backdrop-blur">
-        <i class="fa-solid ${on?'fa-check':'fa-xmark'} mr-1"></i>${({camera:'Kamera',motion:'Accelerometer',orientation:'Gyroscope',magnetometer:'Magnetometer',microphone:'Microphone',ar:'AR',depth:'Depth',nativeBridge:'Native'})[k]}</span>`;
+        <i class="fa-solid ${on?'fa-check':'fa-xmark'} mr-1"></i>${({camera:'Camera',motion:'Accelerometer',orientation:'Gyroscope',magnetometer:'Magnetometer',microphone:'Microphone',ar:'AR',depth:'Depth',nativeBridge:'Native'})[k]}</span>`;
     }).join('') + `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white text-indigo-600">Level ${Capabilities.level()} · ${Capabilities.levelName()}</span>`;
-    $('cap-count').textContent = Object.values(Capabilities.state).filter(Boolean).length+' fitur';
+    $('cap-count').textContent = Object.values(Capabilities.state).filter(Boolean).length+' features';
   },
   mobileView(view){
     if(window.innerWidth>=768) return;
@@ -4167,8 +4167,8 @@ const UI = {
           <span class="font-bold text-slate-600">${k}</span>
           <span class="font-black ${s[k]?'text-emerald-600':'text-slate-400'}">${s[k]?'available':'unavailable'}</span></div>`).join('')}</div>
       <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-3 text-[12px] text-indigo-800">
-        <b>Level pengukuran aktif: ${Capabilities.level()} — ${Capabilities.levelName()}</b><br>
-        Modul otomatis memilih pengalaman terbaik yang bisa dijalankan perangkatmu. Kemampuan hardware menentukan kemampuan pengukuran — itu juga pelajaran sains.
+        <b>Active measurement level: ${Capabilities.level()} — ${Capabilities.levelName()}</b><br>
+        Modul otomatis memilih pengalaman terbaik yang bisa dijalankan perangkatmu. Hardware capability determines measurement capability — that is also a science lesson.
       </div>
       <button onclick="Capabilities.detect().then(()=>{UI.homeCaps();UI.capabilityModal();UI.toast('Redetect complete')})" class="w-full mt-3 bg-slate-800 text-white font-bold py-2.5 rounded-xl text-sm">Redetect</button>`);
   },
@@ -4191,7 +4191,7 @@ const UI = {
       <p class="text-[10px] text-slate-400 mt-3 text-center">Living Heritage in Education v0.2 · offline-first · engine modular</p>`);
   },
   constantsModal(){
-    this.modal('Konstanta Scientific', `<div class="space-y-1.5">${Object.keys(CONSTANTS).map(k=>`
+    this.modal('Scientific Constants', `<div class="space-y-1.5">${Object.keys(CONSTANTS).map(k=>`
       <button onclick="SciCalc.expr+='${k}';document.getElementById('sc-expr').value=SciCalc.expr;SciCalc.preview();UI.close()" class="w-full flex justify-between items-center bg-slate-50 hover:bg-indigo-50 border border-slate-200 rounded-xl px-3 py-2 text-left">
         <span><span class="font-black text-slate-700">${CONSTANTS[k].sym||k}</span> <span class="text-[11px] text-slate-400">${CONSTANTS[k].label||''}</span></span>
         <span class="text-[11px] font-bold text-indigo-600 num">${Precision.format(CONSTANTS[k].value,{mode:'auto',digits:6})} ${ulab(CONSTANTS[k].unit||'')}</span></button>`).join('')}</div>`);
@@ -4242,7 +4242,7 @@ const Router = {
   },
   tab(mode){
     const mod=Registry.get(APP.state.moduleId); if(!mod) return;
-    // stop resource dari tab sebelumnya
+    // stop resources from the previous tab
     Sensors.stop(); SimEngine.stop(); Recorder.stop();
     APP.state.mode=mode;
     document.querySelectorAll('.dtab').forEach(b=>{
@@ -4253,7 +4253,7 @@ const Router = {
     });
     const cfg=mod.modes[mode];
     const renderer = MODE_RENDERERS[mode];
-    const html = renderer ? renderer(mod, cfg) : `<div class="card p-5 text-slate-500 text-sm">Mode "${mode}" belum punya renderer.</div>`;
+    const html = renderer ? renderer(mod, cfg) : `<div class="card p-5 text-slate-500 text-sm">Mode "${mode}" has no renderer.</div>`;
     $('tab-content-container').innerHTML = `<div class="fade-in">${html}</div>`;
     // set panel visual sesuai kebutuhan
     const need = cfg.visual || ({ simulate:'sim', experiment: cfg.type==='camera'?'camera':(cfg.custom==='sensorLab'||cfg.type==='sensor'?'chart':mod.visual),
@@ -4294,10 +4294,10 @@ document.addEventListener('keydown', e=>{
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js')
         .then((registration) => {
-          console.log('PWA ServiceWorker berhasil didaftarkan dengan scope:', registration.scope);
+          console.log('PWA ServiceWorker registered with scope:', registration.scope);
         })
         .catch((error) => {
-          console.log('PWA ServiceWorker gagal didaftarkan:', error);
+          console.log('PWA ServiceWorker registration failed:', error);
         });
     });
   }

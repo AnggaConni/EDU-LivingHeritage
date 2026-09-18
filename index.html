@@ -423,7 +423,7 @@
                   font-bold uppercase tracking-[0.14em]
                   text-blue-100/80"
           >
-            Learning Loop
+            Phase 1 · Learning How to Live
           </p>
 
 
@@ -451,7 +451,7 @@
                   mt-2
                   max-w-lg"
           >
-            More than a calculator: an instrument for learning how to think through evidence.
+            Before we learn to operate tools, we learn to operate ourselves: pause, consider other people, adapt to constraints, and act with awareness.
           </p>
 
 
@@ -472,7 +472,7 @@
       </div>
       <div id="cat-chips" class="flex gap-1.5 overflow-x-auto pb-2 mb-3"></div>
       <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3" id="module-grid"></div>
-      <p class="text-[10px] text-slate-400 mt-6 text-center">All camera/sensor measurements are <b>educational estimates</b>, not laboratory-grade measurements.</p>
+      <div class="mt-6 card p-4 border-violet-100 bg-violet-50/60"><p class="text-[10px] font-black uppercase tracking-wider text-violet-600">Phase 1 · Living & Social Learning</p><p class="text-[12px] text-violet-900 mt-1 leading-relaxed">How should we live, respond, adapt, and work with others? Start with <b>Tepa Selira</b> and <b>Kōbō Fude o Erabazu</b>.</p></div><p class="text-[10px] text-slate-400 mt-4 text-center">All camera/sensor measurements are <b>educational estimates</b>, not laboratory-grade measurements.</p>
     </div>
 
     <!-- MODULE -->
@@ -3256,7 +3256,7 @@ const MODE_RENDERERS = {
     if(cfg.html) return `<div class="card p-5">${cfg.html}</div>`;
     return `<div class="card p-5">${renderBlocks(cfg.blocks||[])}</div>
       <div class="mt-3 rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-500 p-4 text-white">
-        <p class="text-[11px] font-bold uppercase tracking-widest opacity-80">Learning Loop</p>
+        <p class="text-[11px] font-bold uppercase tracking-widest opacity-80">Phase 1 · Learning How to Live</p>
         <p class="text-sm font-bold mt-0.5">Understand the theory? Now test it!</p>
         <div class="flex flex-wrap gap-1.5 mt-2">${
           Object.keys(mod.modes).filter(m=>m!=='learn').map(m=>`<button onclick="Router.tab('${m}')" class="bg-white/20 hover:bg-white/30 text-white text-[11px] font-bold px-3 py-1.5 rounded-full backdrop-blur"><i class="fa-solid ${MODE_META[m]?MODE_META[m].icon:'fa-star'} mr-1"></i>${MODE_META[m]?MODE_META[m].label:m}</button>`).join('')}

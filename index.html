@@ -1368,7 +1368,7 @@ const CameraLab = {
       $('cam-readout').innerHTML=`<b>Kalibrasi:</b> ${rnd(this.calib.px,1)} px = ${this.calib.cm} cm → <b>${rnd(this.calib.pxPerM/100,2)} px/cm</b>`;
       UI.toast('Calibration saved','emerald');
     } else if(this.mode==='measure'){
-      if(!this.calib.pxPerM){ UI.toast('Kalibrasi dulu ya','amber'); return; }
+      if(!this.calib.pxPerM){ UI.toast('Calibrate dulu ya','amber'); return; }
       const m = dist(p1,p2)/this.calib.pxPerM;
       $('cam-readout').innerHTML=`<b>Distance ≈ ${rnd(m,3)} m</b> (${rnd(m*100,1)} cm) · 2D estimate on the calibrated plane`;
     } else if(this.mode==='angle'){
@@ -1673,7 +1673,7 @@ const MODULES = [
       {t:'h', text:'Your Body Burns Calories Even While You Sleep'},
       {t:'p', text:'BMR (Basal Metabolic Rate) is the minimum energy your body needs to sustain basic functions such as breathing, circulation, brain activity, and temperature regulation at rest.'},
       {t:'formula', tex:'Pria: 10W + 6.25H - 5A + 5', desc:'W = berat (kg), H = tinggi (cm), A = umur (tahun)'},
-      {t:'formula', tex:'Wanita: 10W + 6.25H - 5A - 161', desc:'Persamaan metabolisme Mifflin-St Jeor.'},
+      {t:'formula', tex:'Female: 10W + 6.25H - 5A - 161', desc:'Mifflin-St Jeor metabolic equation.'},
       {t:'note', tone:'info', text:'Did you know? The human brain uses roughly 20% of daily energy while representing only about 2% of body mass!'}
     ]},
     calculate:{

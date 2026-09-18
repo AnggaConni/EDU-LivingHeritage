@@ -1027,6 +1027,86 @@ window.PSL = { onNative(msg){ document.dispatchEvent(new CustomEvent('psl-native
    ✚ ADD SIMULATION ENGINE HERE */
 const SIM_ENGINES = {
 
+  /* ---------- WAYANG KULIT (LIGHT PROJECTION) ---------- */
+  wayang:{
+    defaults:{ d_lamp: 10, d_wayang: 40, d_layar: 100, h_wayang: 15 },
+    init(p){ return { t:0 }; },
+    step(s,dt){ s.t+=dt; },
+    draw(c,W,H,s,p){
+      c.fillStyle='#0f172a'; c.fillRect(0,0,W,H); // Dark night background
+      
+      const cy = H/2 + 20; // Vertical center line
+      const sc = Math.min(W/120, 8); // Responsive scale
+      const X = x => 20 + x * sc; // X-axis transformation
+      
+      // Calculate magnification & shadow height
+      // M = Distance Light to Screen / Distance Light to Puppet
+      const distLampToWayang = p.d_wayang - p.d_lamp;
+      const distLampToLayar = p.d_layar - p.d_lamp;
+      const M = distLampToWayang > 0 ? distLampToLayar / distLampToWayang : 0;
+      const h_bayangan = M * p.h_wayang;
+
+      // 1. Draw Light Rays (Transparent yellow)
+      if (M > 0) {
+        c.fillStyle = 'rgba(251, 191, 36, 0.15)';
+        c.beginPath();
+        c.moveTo(X(p.d_lamp), cy); // Light point
+        c.lineTo(X(p.d_layar), cy - h_bayangan*sc); // Top of shadow
+        c.lineTo(X(p.d_layar), cy); // Center of screen
+        c.fill();
+        
+        // Ray borders
+        c.strokeStyle = 'rgba(251, 191, 36, 0.5)'; c.lineWidth = 1;
+        c.beginPath(); c.moveTo(X(p.d_lamp), cy); c.lineTo(X(p.d_layar), cy - h_bayangan*sc); c.stroke();
+      }
+
+      // 2. Draw Screen (Kelir)
+      c.strokeStyle = '#e2e8f0'; c.lineWidth = 3;
+      c.beginPath(); c.moveTo(X(p.d_layar), 20); c.lineTo(X(p.d_layar), H-20); c.stroke();
+      
+      // 3. Draw Shadow on Screen
+      if (M > 0 && h_bayangan < 150) {
+        c.strokeStyle = 'rgba(255,255,255,0.7)'; c.lineWidth = 4;
+        c.beginPath(); c.moveTo(X(p.d_layar), cy); c.lineTo(X(p.d_layar), cy - h_bayangan*sc); c.stroke();
+      }
+
+      // 4. Draw Actual Puppet
+      c.strokeStyle = '#000'; c.lineWidth = 6;
+      c.beginPath(); c.moveTo(X(p.d_wayang), cy); c.lineTo(X(p.d_wayang), cy - p.h_wayang*sc); c.stroke();
+      c.fillStyle = '#b45309'; // Skin/leather color
+      c.beginPath(); c.arc(X(p.d_wayang), cy - p.h_wayang*sc*0.7, p.h_wayang*sc*0.3, 0, Math.PI*2); c.fill();
+
+      // 5. Draw Light Source (Blencong) + Flicker effect
+      const kedip = Math.sin(s.t * 10) * 2;
+      c.fillStyle = '#f59e0b';
+      c.beginPath(); c.arc(X(p.d_lamp), cy, 6 + kedip, 0, Math.PI*2); c.fill();
+      c.fillStyle = '#fff'; c.beginPath(); c.arc(X(p.d_lamp), cy, 3, 0, Math.PI*2); c.fill();
+
+      // Text labels
+      c.fillStyle='#94a3b8'; c.font='10px sans-serif';
+      c.fillText('Light', X(p.d_lamp)-12, cy+15);
+      c.fillText('Puppet', X(p.d_wayang)-15, cy+15);
+      c.fillText('Screen', X(p.d_layar)-15, cy+15);
+      if(M > 0) {
+        c.fillStyle='#fde047'; c.font='bold 11px sans-serif';
+        c.fillText(`H = ${rnd(h_bayangan,1)} cm`, X(p.d_layar)-30, cy - h_bayangan*sc - 10);
+      }
+    },
+    readout(s,p){ 
+      const dp = p.d_wayang - p.d_lamp;
+      const ds = p.d_layar - p.d_lamp;
+      const M = dp > 0 ? ds / dp : 0;
+      return [
+        ['S (Light to Puppet)', dp, 'cm'],
+        ["S' (Light to Screen)", ds, 'cm'],
+        ['Magnification (M)', M, 'x'],
+        ['Puppet Height', p.h_wayang, 'cm'],
+        ['Shadow Height', M * p.h_wayang, 'cm'],
+        ['Image Type', dp>0?'Real':'—', '']
+      ]; 
+    }
+  },
+
   /* ---------- PROJECTILE ---------- */
   projectile:{
     defaults:{ v0:22, angle:45, g:9.80665, drag:0, h0:0, target:0 },
@@ -1169,6 +1249,292 @@ const SIM_ENGINES = {
     readout(s,p){ const w=p.v/p.r;
       return [['t',s.t,'s'],['ω',w,'rad/s'],['T',2*Math.PI/w,'s'],['f',w/(2*Math.PI),'Hz'],
               ['a꜀',p.v**2/p.r,'m/s²'],['F꜀',p.m*p.v**2/p.r,'N']]; }
+  },
+
+  /* ---------- TRADITIONAL HOUSE (EARTHQUAKE / STRUCTURAL DYNAMICS) ---------- */
+  earthquake:{
+    defaults: { magnitude: 0, freq: 5, flexibility: 80 },
+    init(p){ return { t:0, damageRigid:0, collapsed:false }; },
+    step(s,dt,p){
+      s.t += dt;
+      // Hitung gaya geser (Shear Stress) berdasarkan percepatan gempa (turunan kedua dari getaran)
+      const accel = p.magnitude * p.freq * p.freq; 
+      
+      // Rumah kaku (Rigid) menyerap semua stres. Jika melebihi batas, rusak.
+      if(accel > 150) s.damageRigid += (accel - 150) * dt * 0.1;
+      if(s.damageRigid > 100) { s.damageRigid = 100; s.collapsed = true; }
+
+      // Jika gempa berhenti, reset pelan-pelan (hanya untuk visual, kerusakan tetap)
+      if(p.magnitude === 0 && !s.collapsed) s.damageRigid = Math.max(0, s.damageRigid - 20*dt);
+    },
+    draw(c, W, H, s, p){
+      c.fillStyle='#e0f2fe'; c.fillRect(0,0,W,H); // Langit
+      
+      const groundY = H - 30;
+      // Gerakan tanah (gempa)
+      const groundX = p.magnitude > 0 ? Math.sin(s.t * p.freq) * (p.magnitude/2) : 0;
+      
+      // Gambar Tanah Bergetar
+      c.fillStyle='#64748b';
+      c.fillRect(0, groundY, W, 30);
+      
+      const cy = groundY;
+      const sc = Math.min(W/100, 3); // Skala
+
+      // ==========================================
+      // 1. RUMAH MODERN KAKU (RIGID CONCRETE) - KIRI
+      // ==========================================
+      c.save();
+      c.translate(W * 0.25 + groundX, cy); // Tanah bergerak, fondasi ikut bergerak keras
+      
+      if(s.collapsed) {
+        c.rotate(0.2); c.translate(0, 10); // Runtuh miring
+        c.fillStyle = '#ef4444'; c.font = 'bold 12px sans-serif'; c.fillText('COLLAPSED', -35, -50);
+      }
+      
+      // Bangunan Kaku
+      c.fillStyle = '#cbd5e1'; c.strokeStyle = '#475569'; c.lineWidth=2;
+      c.fillRect(-25*sc, -40*sc, 50*sc, 40*sc);
+      c.strokeRect(-25*sc, -40*sc, 50*sc, 40*sc);
+      
+      // Jendela
+      c.fillStyle = '#94a3b8';
+      c.fillRect(-15*sc, -30*sc, 10*sc, 10*sc);
+      c.fillRect(5*sc, -30*sc, 10*sc, 10*sc);
+
+      // Efek Retak (Damage)
+      if(s.damageRigid > 0) {
+        c.strokeStyle = '#dc2626'; c.lineWidth = 2 + (s.damageRigid/20);
+        c.beginPath(); c.moveTo(-10*sc, -40*sc); 
+        c.lineTo(0, -20*sc); c.lineTo(-5*sc, -10*sc); c.lineTo(15*sc, 0); c.stroke();
+      }
+      c.restore();
+
+      // ==========================================
+      // 2. RUMAH TRADISIONAL (FLEXIBLE / PASAK) - KANAN
+      // ==========================================
+      c.save();
+      // Base Isolation: Tanah bergerak, tapi pilar di atas batu rata bisa bergeser/slip (friction)
+      const baseIsolationSlip = p.magnitude > 0 ? Math.sin(s.t * p.freq + 0.5) * (p.magnitude/4) : 0;
+      const houseBaseX = W * 0.75 + groundX - baseIsolationSlip; 
+      
+      c.translate(houseBaseX, cy);
+
+      // Sway angle (Lentur/Goyangan) karena paku kayu (pasak) mengizinkan rotasi
+      const flex = p.flexibility / 100;
+      const swayAngle = p.magnitude > 0 ? Math.cos(s.t * p.freq) * (p.magnitude * 0.002 * flex) : 0;
+      
+      // Gambar Batu Fondasi (Umpak)
+      c.fillStyle = '#475569';
+      c.beginPath(); c.arc(-20*sc, 0, 4*sc, Math.PI, 0); c.fill();
+      c.beginPath(); c.arc(20*sc, 0, 4*sc, Math.PI, 0); c.fill();
+
+      // Rotasi dari dasar struktur
+      c.rotate(swayAngle);
+
+      // Pilar Kayu Fleksibel
+      c.strokeStyle = '#78350f'; c.lineWidth = 4;
+      c.beginPath(); c.moveTo(-20*sc, 0); c.lineTo(-20*sc, -25*sc); c.stroke();
+      c.beginPath(); c.moveTo(20*sc, 0); c.lineTo(20*sc, -25*sc); c.stroke();
+
+      // Lantai Panggung
+      c.fillStyle = '#b45309'; c.fillRect(-30*sc, -25*sc, 60*sc, 4*sc);
+      
+      // Dinding Kayu
+      c.fillStyle = '#d97706'; c.fillRect(-20*sc, -45*sc, 40*sc, 20*sc);
+
+      // Atap Gonjong (Khas Nusantara)
+      c.fillStyle = '#1c1917'; // Ijuk
+      c.beginPath();
+      c.moveTo(-35*sc, -45*sc); 
+      c.quadraticCurveTo(0, -35*sc, 35*sc, -45*sc); // Bawah atap melengkung
+      c.lineTo(25*sc, -70*sc);
+      c.quadraticCurveTo(0, -55*sc, -25*sc, -70*sc); // Atas atap melengkung
+      c.fill();
+      c.restore();
+
+      // Label Teks Bawah
+      c.fillStyle='#334155'; c.font='bold 11px sans-serif'; c.textAlign='center';
+      c.fillText('RIGID (Concrete)', W*0.25, groundY + 20);
+      c.fillText('FLEXIBLE (Wood/Pegs)', W*0.75, groundY + 20);
+    },
+    readout(s,p){
+      const accel = p.magnitude * p.freq * p.freq;
+      const gForce = accel / 100; // Skala artifisial untuk display
+      return [
+        ['Earthquake Mag', p.magnitude, ''],
+        ['Ground Accel', gForce, 'G'],
+        ['Rigid Stress', s.damageRigid, '%'],
+        ['Flexibility', p.flexibility, '%'],
+        ['Trad. Sway', Math.abs(accel * p.flexibility * 0.0001), 'rad'],
+        ['Rigid Status', s.collapsed ? 'COLLAPSED' : 'INTACT', '']
+      ];
+    }
+  },
+
+  /* ---------- SUBAK (ECOLOGY & WATER MANAGEMENT) ---------- */
+  subak:{
+    defaults: { inflow: 60, gate1: 50, gate2: 50 }, // gate = % air yang DITERUSKAN ke bawah
+    init(p){ return { t:0, levels:[20,20,20], health:[100,100,100] }; },
+    step(s,dt,p){
+      s.t += dt;
+      const evap = 12; // Base penguapan & penyerapan tanah
+      
+      // Debit masuk dari sungai/pegunungan
+      let w0 = p.inflow;
+      
+      // Sawah 1 (Hulu)
+      let keep1 = w0 * (1 - p.gate1/100);
+      let pass1 = w0 * (p.gate1/100);
+      
+      // Sawah 2 (Tengah)
+      let keep2 = pass1 * (1 - p.gate2/100);
+      let pass2 = pass1 * (p.gate2/100);
+      
+      // Sawah 3 (Hilir) - Mendapat semua sisa air
+      let keep3 = pass2;
+
+      const keeps = [keep1, keep2, keep3];
+
+      for(let i=0; i<3; i++) {
+        // Update level air
+        s.levels[i] += (keeps[i] - evap) * dt * 0.4;
+        s.levels[i] = Math.max(0, Math.min(100, s.levels[i])); // Clamp 0-100%
+
+        // Update kesehatan tanaman (Optimal level air: 30% - 70%)
+        if(s.levels[i] < 15) s.health[i] -= 15 * dt; // Mati kekeringan
+        else if(s.levels[i] > 85) s.health[i] -= 10 * dt; // Mati kebanjiran/busuk
+        else s.health[i] += 5 * dt; // Tumbuh sehat
+
+        s.health[i] = Math.max(0, Math.min(100, s.health[i]));
+      }
+    },
+    draw(c, W, H, s, p){
+      c.fillStyle='#f8fbff'; c.fillRect(0,0,W,H);
+      
+      const pad = 10;
+      const w = W - pad*2;
+      const tH = (H - pad*2) / 3; // Tinggi per teras
+      const names = ['Hulu (Upstream)', 'Tengah (Mid)', 'Hilir (Downstream)'];
+
+      for(let i=0; i<3; i++) {
+        const py = pad + i*tH;
+        const px = pad + i*20; // Efek terasering (berundak)
+        const tW = w - i*20;
+        
+        // Kotak Sawah (Tanah)
+        c.fillStyle = '#854d0e'; c.fillRect(px, py, tW, tH - 5);
+        
+        // Level Air (Biru)
+        const waterH = (s.levels[i]/100) * (tH - 5);
+        c.fillStyle = 'rgba(14, 165, 233, 0.7)'; 
+        c.fillRect(px, py + (tH - 5) - waterH, tW, waterH);
+        
+        // Padi / Tanaman (Warna berubah berdasarkan kesehatan)
+        const hlt = s.health[i];
+        let cropColor = '#22c55e'; // Hijau sehat
+        if(hlt < 50) cropColor = '#eab308'; // Kuning stres
+        if(hlt < 10) cropColor = '#9ca3af'; // Abu mati
+        
+        c.fillStyle = cropColor;
+        for(let j=0; j<8; j++) {
+          const cx = px + 20 + j*(tW/9);
+          // Gambar batang padi
+          c.beginPath(); c.moveTo(cx, py + tH - 5); c.lineTo(cx-5, py + tH - 25); c.lineTo(cx+5, py + tH - 25); c.fill();
+        }
+
+        // Teks Informasi
+        c.fillStyle = '#fff'; c.font = 'bold 10px sans-serif';
+        c.fillText(`${names[i]} - Air: ${Math.round(s.levels[i])}% | Crop: ${Math.round(hlt)}%`, px + 10, py + 15);
+      }
+
+      // Animasi aliran air
+      c.fillStyle = '#0ea5e9';
+      if(p.gate1 > 0) c.fillRect(pad + 10, pad + tH - 5, 8, (s.t*20)%tH);
+      if(p.gate2 > 0) c.fillRect(pad + 30, pad + tH*2 - 5, 8, (s.t*20)%tH);
+    },
+    readout(s,p){
+      const avgHealth = (s.health[0] + s.health[1] + s.health[2]) / 3;
+      return [
+        ['River Inflow', p.inflow, 'L/s'],
+        ['Gate 1 Passed', p.gate1, '%'],
+        ['Gate 2 Passed', p.gate2, '%'],
+        ['Crop Hulu', s.health[0], '%'],
+        ['Crop Hilir', s.health[2], '%'],
+        ['System Score', avgHealth, '%']
+      ];
+    }
+  },
+
+  /* ---------- WEAVING (ALGORITHMIC PATTERNS) ---------- */
+  weaving:{
+    defaults: { over: 2, under: 2, shift: 1, size: 20 },
+    init(p) { return { t: 0 }; },
+    step(s, dt) { s.t += dt; },
+    draw(c, W, H, s, p) {
+      c.fillStyle = '#f8fbff'; c.fillRect(0, 0, W, H);
+      
+      const cols = p.size;
+      const cell = W / cols;
+      const rows = Math.ceil(H / cell);
+      const pad = cell * 0.15; // Jarak antar benang
+      
+      const warpCol = '#3b82f6'; // Warna benang vertikal (Warp)
+      const weftCol = '#ef4444'; // Warna benang horizontal (Weft)
+      const warpShadow = '#1e3a8a';
+      const weftShadow = '#7f1d1d';
+      
+      const cycle = p.over + p.under;
+      if(cycle === 0) return;
+
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          // RUMUS ALGORITMA TENUN MATRIKS
+          const pos = (x + y * p.shift) % cycle;
+          const isWeftTop = pos < p.over;
+          
+          const px = x * cell;
+          const py = y * cell;
+          
+          if (isWeftTop) {
+            // Benang vertikal di bawah
+            c.fillStyle = warpShadow; c.fillRect(px + pad, py, cell - pad*2, cell);
+            // Benang horizontal di atas
+            c.fillStyle = weftCol; c.fillRect(px, py + pad, cell, cell - pad*2);
+            c.fillStyle = 'rgba(255,255,255,0.2)'; c.fillRect(px, py + pad, cell, cell*0.2); // Highlight
+          } else {
+            // Benang horizontal di bawah
+            c.fillStyle = weftShadow; c.fillRect(px, py + pad, cell, cell - pad*2);
+            // Benang vertikal di atas
+            c.fillStyle = warpCol; c.fillRect(px + pad, py, cell - pad*2, cell);
+            c.fillStyle = 'rgba(255,255,255,0.2)'; c.fillRect(px + pad, py, cell*0.2, cell); // Highlight
+          }
+        }
+      }
+      
+      // Animasi Alat Tenun (Shuttle meluncur)
+      const activeY = Math.floor((s.t * 6) % rows);
+      const shuttleX = (Math.sin(s.t * 8) + 1) / 2 * W;
+      c.fillStyle = '#f59e0b';
+      c.shadowColor = 'rgba(0,0,0,0.5)'; c.shadowBlur = 5;
+      c.fillRect(shuttleX - 15, activeY * cell + pad, 30, cell - pad*2);
+      c.shadowBlur = 0;
+    },
+    readout(s, p) {
+      const cycle = p.over + p.under;
+      let patternName = 'Custom Rule';
+      if(p.over===1 && p.under===1 && p.shift===1) patternName = 'Plain Weave';
+      if(p.over===2 && p.under===2 && p.shift===1) patternName = 'Twill (Jeans)';
+      if(cycle>=5 && p.shift>1) patternName = 'Satin';
+        
+      return [
+        ['Rule Over', p.over, 'threads'],
+        ['Rule Under', p.under, 'threads'],
+        ['Diagonal Shift', p.shift, 'offset'],
+        ['Math Matrix', `${cycle}×${cycle}`, 'grid'],
+        ['Pattern', patternName, '']
+      ];
+    }
   },
 
   /* ---------- WAVE ---------- */
@@ -3612,17 +3978,46 @@ learn: {
 },
 {
   id:'ich-subak', category:'Living Heritage Connections',
-  title:'Subak Bali — Water, Ecology, and Governance', subtitle:'Water management and common-pool resources',
-  icon:'fa-droplet', color:'emerald', tags:['Subak','Bali','water','ecology','governance'], capabilities:[], visual:'none',
+  title:'Subak Bali — Ecology & Game Theory', subtitle:'Common-pool resources and water flow simulation',
+  icon:'fa-droplet', color:'emerald', tags:['Subak','Bali','water','ecology','governance','systems'], 
+  capabilities:['simulation','calculator'], visual:'sim',
   modes:{
     learn:{blocks:[
-      {t:'h',text:'Water is both a physical resource and a social system.'},
-      {t:'p',text:'Subak can be used to explore irrigation, agricultural ecosystems, shared resources, cooperation, and local governance. The learning question is not only “how does water flow?” but also “how do people coordinate access to it?”'},
-      {t:'kv',items:[['Ecology','How water availability changes the agricultural system.'],['Physics','How flow, elevation, channels, and pressure affect movement.'],['Social science','How communities coordinate a shared resource.'],['Governance','How rules help people manage competing needs.']]},
-      {t:'note',tone:'tip',text:'A shared resource can fail physically or socially. Learners can investigate both at the same time.'}
+      {t:'h',text:'Water flows downhill, but human greed flows everywhere.'},
+      {t:'p',text:'The Subak system of Bali is a world-class example of managing a <b>Common-Pool Resource</b>. If the upstream farmers take all the water, downstream crops die. But if downstream farmers get angry, the whole social system collapses.'},
+      {t:'formula',tex:'Total Yield = F(Inflow, Coordination, Fairness)',desc:'A system succeeds only when water distribution rules are enforced collectively (Pekaseh).'},
+      {t:'list',items:[
+        '<b>Physics:</b> Gravity moves water through canals and weirs (tembuku).',
+        '<b>Ecology:</b> Too little water kills rice (drought); too much water drowns it and breeds pests (flood).',
+        '<b>Game Theory:</b> It takes coordination to ensure everyone maximizes output without destroying the resource.'
+      ]},
+      {t:'note',tone:'tip',text:'Go to the SIMULATE tab! See what happens if Farmer 1 (Hulu/Upstream) gets greedy and keeps 100% of the water.'}
     ]},
-    everyday:{items:[{q:'Two farms depend on the same limited water source. What is the useful learning question?',options:['Who can take the most water?','How can the community design a system that keeps the resource usable for everyone?','Why should each farm ignore the others?'],answer:1,explain:'The issue combines resource limits with cooperation and governance.',concepts:['common-pool resources','cooperation','water management'],tryIt:'Map one shared resource at school or in your neighborhood and identify who uses it and what rules keep it working.'}]},
-    challenge:{questions:[{q:'Why is Subak useful for interdisciplinary learning?',type:'choice',options:['It is only about farming','It connects physical water movement with ecology, agriculture, cooperation, and governance','It cannot be studied scientifically'],answer:1,xp:15,why:'The same living system can be investigated through several disciplines.'}]}
+    simulate:{
+      engine:'subak', 
+      params:{ inflow: 60, gate1: 50, gate2: 50 },
+      controls:[
+        { id:'inflow', label:'Mountain River Inflow (Rainfall)', min:10, max:120, step:5, unit:'L/s' },
+        { id:'gate1', label:'Gate 1 (Pass to Middle Farm)', min:0, max:100, step:5, unit:'%' },
+        { id:'gate2', label:'Gate 2 (Pass to Downstream)', min:0, max:100, step:5, unit:'%' }
+      ],
+      tip:'Set Gate 1 to 0%. The middle and downstream crops will immediately turn yellow and die from drought. Now try to find the perfect balance so all three farms stay green (100% crop health)!'
+    },
+    calculate:{
+      inputs:[
+        { id:'river_flow', label:'Total River Flow (L/s)', default:100, min:10, step:10 },
+        { id:'area1', label:'Upstream Area (Hectares)', default:2, min:1, step:0.5 },
+        { id:'area2', label:'Downstream Area (Hectares)', default:3, min:1, step:0.5 },
+        { id:'need_per_ha', label:'Water Need (L/s per Hectare)', default:15, min:5, step:1 }
+      ],
+      outputs:[
+        { id:'total_need', label:'Total Water Demand', formula:{expr:'(area1 + area2) * need_per_ha'}, unit:'L/s', decimals:1 },
+        { id:'balance', label:'Water Surplus / Deficit', formula:{expr:'river_flow - ((area1 + area2) * need_per_ha)'}, unit:'L/s', decimals:1 },
+        { id:'fair_gate', label:'Fair Gate Flow to Downstream (%)', formula:{expr:'(area2 / (area1 + area2)) * 100'}, unit:'%', decimals:1, hint:'In traditional Subak (tektek system), water is divided proportionally based on land area and responsibilities, not just who is upstream.' }
+      ]
+    },
+    everyday:{items:[{q:'In an apartment building, everyone uses the same water tank. In the morning, pressure drops to zero on the top floor because lower floors use it all. This is a classic example of:',options:['Evaporation physics','The Tragedy of the Commons (Common-Pool Resource dilemma)','Architectural error'],answer:1,explain:'Like river water in agriculture, shared resources get depleted by whoever accesses them first unless there is a social rule, coordination, or technology to manage fair distribution.',concepts:['common-pool resources','Elinor Ostrom','coordination'],tryIt:'Next time you share a pizza or a single internet router with 5 people, observe how "fairness" rules are naturally created.'}]},
+    challenge:{questions:[{q:'A river provides 120 L/s. Sawah A needs 40 L/s, Sawah B needs 80 L/s. To be perfectly fair based on need, what percentage of the water should Sawah A pass down to Sawah B?',type:'numeric',answer:66.6,tol:1,unit:'%',xp:20,hint:'Sawah B needs 80 out of the total 120. (80 / 120) * 100 = 66.6%.'}]}
   }
 },
 {
@@ -3658,18 +4053,45 @@ learn: {
 },
 {
   id:'ich-traditional-house', category:'Living Heritage Connections',
-  title:'Traditional Houses — Architecture as Physics', subtitle:'Structure, thermal comfort, passive cooling, and materials',
-  icon:'fa-house', color:'orange', tags:['traditional house','architecture','thermal comfort','passive cooling'], capabilities:[], visual:'none',
+  title:'Traditional Houses — Earthquake Physics', subtitle:'Base isolation, resonance, and material dynamics',
+  icon:'fa-house-crack', color:'orange', tags:['architecture','physics','earthquake','materials','dynamics'], 
+  capabilities:['simulation','calculator'], visual:'sim',
   modes:{
     learn:{blocks:[
-      {t:'h',text:'A house is a system for handling forces, heat, light, and air.'},
-      {t:'p',text:'Traditional houses can be investigated as physical systems: how loads are carried, how materials behave, how roof geometry changes airflow, how openings affect heat, and how shaded surfaces influence thermal comfort.'},
-      {t:'formula',tex:'Q̇ = k · A · (ΔT / d)',desc:'A simplified conduction relationship: conductivity, area, temperature difference, and layer thickness affect heat transfer.'},
-      {t:'list',items:['Structure → forces and load paths','Materials → conductivity, strength, and mass','Openings → ventilation and airflow','Roof and shade → solar heat and thermal comfort']},
-      {t:'note',tone:'tip',text:'Compare two buildings under similar conditions and identify which design choices change the indoor environment.'}
+      {t:'h',text:'Why do ancient wooden houses survive massive earthquakes?'},
+      {t:'p',text:'Nusantara (the Indonesian archipelago) sits on the Ring of Fire. Centuries before modern civil engineering, local builders developed advanced seismic-resistant architecture (like Rumah Gadang, Omo Hada, or Joglo) using principles of physics that modern engineers call <b>Base Isolation</b> and <b>Structural Damping</b>.'},
+      {t:'formula',tex:'F = m · a',desc:'Earthquake force equals the mass of the building multiplied by the ground acceleration.'},
+      {t:'list',items:[
+        '<b>Umpak (Base Isolation):</b> Pillars do not go deep into the ground. They rest on flat stones. When the ground shakes violently, the stones slide, preventing the full force from transferring to the house structure.',
+        '<b>Pasak (Wooden Pegs):</b> Instead of rigid iron nails (which snap under shear stress), they use wooden pegs. These joints flex, sway, and absorb energy (friction damping) without breaking.',
+        '<b>Material:</b> Wood is elastic. It bends under dynamic loads and returns to its shape, unlike basic unreinforced concrete which is brittle and cracks.'
+      ]},
+      {t:'note',tone:'tip',text:'Go to the SIMULATE tab! Trigger an earthquake and watch how the rigid concrete box cracks, while the traditional roof sways and survives.'}
     ]},
-    everyday:{items:[{q:'Why might a building with high ceilings and well-placed openings feel cooler?',options:['Because high ceilings create electricity','Because geometry and openings can influence air movement and heat distribution','Because the walls stop all heat'],answer:1,explain:'Building geometry and ventilation pathways can affect airflow and heat accumulation.',concepts:['convection','ventilation','thermal comfort'],tryIt:'Observe how opening or closing windows changes airflow in a safe indoor demonstration.'}]},
-    challenge:{questions:[{q:'What makes traditional architecture useful for physics learning?',type:'choice',options:['It is only decorative','Its real structure and environmental responses can be observed and analyzed with physics','It should never be measured'],answer:1,xp:15,why:'The building is a real physical system that can generate measurable questions.'}]}
+    simulate:{
+      engine:'earthquake', 
+      params:{ magnitude: 0, freq: 5, flexibility: 80 },
+      controls:[
+        { id:'magnitude', label:'Earthquake Magnitude (Ground Movement)', min:0, max:15, step:1, unit:' power' },
+        { id:'freq', label:'Seismic Wave Frequency', min:1, max:10, step:1, unit:' Hz' },
+        { id:'flexibility', label:'Joint Flexibility (Wooden Pegs vs Iron Nails)', min:10, max:100, step:5, unit:'%' }
+      ],
+      tip:'Set Magnitude to 12. The modern unreinforced rigid house will accumulate stress and eventually collapse. The traditional house relies on flexibility and base sliding to dissipate energy!'
+    },
+    calculate:{
+      inputs:[
+        { id:'mass', label:'Building Mass (kg)', default:15000, min:1000, step:1000 },
+        { id:'accel', label:'Ground Acceleration (m/s²)', default:4.5, min:0.1, step:0.1 },
+        { id:'damping', label:'Energy Absorbed by Flexible Joints (%)', default:60, type:'range', min:0, max:95, step:5 }
+      ],
+      outputs:[
+        { id:'force', label:'Total Seismic Force Generated', formula:{expr:'mass * accel'}, unit:'Newtons', format:'sci' },
+        { id:'absorbed', label:'Force Dissipated as Heat/Friction', formula:{expr:'(mass * accel) * (damping/100)'}, unit:'Newtons', format:'sci' },
+        { id:'damage_force', label:'Destructive Force on Structure', formula:{expr:'(mass * accel) * (1 - damping/100)'}, unit:'Newtons', format:'sci', hint:'A rigid building (0% damping) absorbs the full destructive force, causing the material to fracture.' }
+      ]
+    },
+    everyday:{items:[{q:'Why didn\'t traditional builders use iron nails, even though iron is "stronger" than wood?',options:['They didn\'t know how to melt iron','Iron rusts in tropical weather, and more importantly, iron is rigid and snaps under the violent shear forces of an earthquake. Wood swells, locks together, and flexes.','Iron was too heavy to carry'],answer:1,explain:'Strength is not just about hardness; it is about elasticity and toughness. Wooden pegs (pasak) and interlocking joints allow the building to sway. Friction between the wooden parts acts like a shock absorber, converting seismic kinetic energy into microscopic heat.',concepts:['shear stress','damping','material science'],tryIt:'Take a dry spaghetti stick (rigid) and a rubber band (flexible). Bend both. Which one snaps first?'}]},
+    challenge:{questions:[{q:'If a house has a mass of 20,000 kg and the earthquake ground acceleration is 5 m/s², what is the total lateral force hitting the house before any damping is applied?',type:'numeric',answer:100000,tol:100,unit:'N',xp:20,hint:'Use Newton\'s Second Law: Force = mass × acceleration.'}]}
   }
 },
 {
@@ -3689,18 +4111,48 @@ learn: {
 },
 {
   id:'ich-weaving-math', category:'Living Heritage Connections',
-  title:'Weaving — Patterns as Mathematics', subtitle:'Symmetry, geometry, repetition, and algorithms',
-  icon:'fa-border-all', color:'indigo', tags:['weaving','patterns','symmetry','geometry','algorithms'], capabilities:[], visual:'none',
+  title:'Weaving — Patterns as Algorithms', subtitle:'Symmetry, geometry, matrix, and binary logic',
+  icon:'fa-border-all', color:'indigo', tags:['weaving','patterns','symmetry','geometry','algorithms'], 
+  capabilities:['simulation','calculator'], visual:'sim',
   modes:{
     learn:{blocks:[
-      {t:'h',text:'A woven pattern can be read like an algorithm.'},
-      {t:'p',text:'Weaving can open questions about repetition, symmetry, tessellation, sequences, counting, transformations, ratios, and rules. Learners can reverse-engineer a visible pattern into a sequence of operations.'},
-      {t:'formula',tex:'Pattern rule → repetition → transformation → visible structure',desc:'A conceptual model for turning a craft pattern into a mathematical investigation.'},
-      {t:'list',items:['Find the repeating unit.','Count the sequence.','Identify reflection, rotation, translation, or scaling.','Ask whether a computer could reproduce the rule.']},
-      {t:'note',tone:'tip',text:'The mathematical object is already present in the craft. The learner learns to see and formalize it.'}
+      {t:'h',text:'A woven pattern is an early form of computer code.'},
+      {t:'p',text:'Long before digital computers, weavers used binary logic (thread up or thread down, 1 or 0) to program complex patterns into textiles. A traditional loom is essentially a mechanical matrix calculator.'},
+      {t:'formula',tex:'P(x,y) = (x + y · shift) \\bmod (over + under)',desc:'A basic mathematical algorithm for generating standard weave structures.'},
+      {t:'list',items:[
+        '<b>Plain Weave (1/1):</b> Over 1, under 1. Strong, simple, like a checkerboard.',
+        '<b>Twill Weave (2/2):</b> Over 2, under 2, shifted by 1. Creates diagonal lines (used in denim jeans).',
+        '<b>Satin Weave:</b> Long "floats" (e.g., over 4, under 1) with staggered shifts. Creates a smooth, shiny surface.'
+      ]},
+      {t:'note',tone:'tip',text:'Go to the SIMULATE tab! Change the "Over", "Under", and "Shift" parameters to mathematically program your own textile.'}
     ]},
-    everyday:{items:[{q:'A textile pattern repeats every 8 units. What can students do with that observation?',options:['Only memorize the number 8','Build a sequence, model the repetition, and test how the pattern changes when the rule changes','Ignore the repetition'],answer:1,explain:'A repeating unit can become the seed of a mathematical or computational model.',concepts:['sequence','periodicity','algorithm','symmetry'],tryIt:'Draw a simple repeating motif and write a rule that a classmate could use to reproduce it.'}]},
-    challenge:{questions:[{q:'Why is weaving useful for mathematics?',type:'choice',options:['Because mathematics and crafts are unrelated','Because visible patterns can be analyzed using counting, geometry, symmetry, and algorithms','Because patterns cannot be formalized'],answer:1,xp:15,why:'Formal mathematical descriptions can grow directly from a practiced visual pattern.'}]}
+    simulate:{
+      engine:'weaving', 
+      params:{ over: 2, under: 2, shift: 1, size: 20 },
+      controls:[
+        { id:'over', label:'Weft Over (Horizontal on top)', min:1, max:6, step:1, unit:'' },
+        { id:'under', label:'Weft Under (Vertical on top)', min:1, max:6, step:1, unit:'' },
+        { id:'shift', label:'Row Shift (Diagonal Angle)', min:0, max:5, step:1, unit:'' },
+        { id:'size', label:'Zoom (Grid Size)', min:10, max:50, step:2, unit:'cols' }
+      ],
+      tip:'Try setting Over=1, Under=1, Shift=1 for a Plain Weave. Then try Over=2, Under=2, Shift=1 to see the diagonal Denim Twill.'
+    },
+    calculate:{
+      inputs:[
+        { id:'length', label:'Fabric Length (m)', default:5, min:0.1, step:0.5 },
+        { id:'width', label:'Fabric Width (m)', default:1.2, min:0.1, step:0.1 },
+        { id:'epi', label:'Warp Density (Vertical Threads per cm)', default:20, min:5, step:1 },
+        { id:'ppi', label:'Weft Density (Horizontal Threads per cm)', default:20, min:5, step:1 },
+        { id:'takeup', label:'Crimp / Take-up (%)', default:10, type:'range', min:0, max:30, step:1 }
+      ],
+      outputs:[
+        { id:'total_warp', label:'Total Vertical Threads (Ends)', formula:{expr:'width * 100 * epi'}, format:'int' },
+        { id:'warp_yarn', label:'Warp Yarn Length Required', formula:{expr:'(width * 100 * epi) * length * (1 + takeup/100)'}, unit:'m', format:'int' },
+        { id:'weft_yarn', label:'Weft Yarn Length Required', formula:{expr:'(length * 100 * ppi) * width * (1 + takeup/100)'}, unit:'m', format:'int', hint:'Yarn requirement must include extra length because threads bend over and under each other (crimp).' }
+      ]
+    },
+    everyday:{items:[{q:'Why do denim jeans have distinct diagonal lines, unlike a standard t-shirt or bedsheet?',options:['Because they are printed with diagonal ink','Because they use a "Twill" weaving algorithm (e.g., over 2, under 1, shift 1)','Because they are stretched diagonally during manufacturing'],answer:1,explain:'The twill pattern shifts the intersection point by one thread on every row. Mathematically, this creates a staggered step pattern that our eyes perceive as continuous diagonal lines.',concepts:['algorithm','twill weave','matrix'],tryIt:'Look closely at your jeans. You will see the diagonal staircase pattern of the threads!'}]},
+    challenge:{questions:[{q:'In a pattern defined by the algorithm "Over 3, Under 1", what is the mathematical cycle length (how many threads before the pattern sequence repeats on a single row)?',type:'numeric',answer:4,tol:0,unit:'threads',xp:15,hint:'Cycle length is simply the sum of Over + Under.'}]}
   }
 },
 {
@@ -3717,6 +4169,52 @@ learn: {
     ]},
     everyday:{items:[{q:'A community notices that a fishing area needs time to recover. What can students investigate?',options:['Only the number of fish caught yesterday','Population trends, habitat condition, seasonal patterns, and whether rules change resource pressure','Nothing because ecology is too complex'],answer:1,explain:'Ecological stewardship can be examined through data, observation, and the rules people use to manage pressure.',concepts:['carrying capacity','conservation','population dynamics'],tryIt:'Create a simple observation log for one local species, habitat, or shoreline condition.'}]},
     challenge:{questions:[{q:'What makes stewardship a strong ecology learning context?',type:'choice',options:['It removes the need for measurement','It connects resource use, ecological limits, community rules, and monitoring','It proves every traditional practice is scientifically optimal'],answer:1,xp:15,why:'Students can study ecological mechanisms and social management without making unsupported claims about effectiveness.'}]}
+  }
+},
+
+{
+  id:'ich-wayang-optics', category:'Living Heritage Connections',
+  title:'Wayang Kulit — Geometry of Shadows', subtitle:'Point-light projection, magnification, and penumbra',
+  icon:'fa-masks-theater', color:'amber', tags:['wayang','optics','light','geometry','shadows'], 
+  capabilities:['simulation','calculator'], visual:'sim',
+  modes:{
+    learn:{blocks:[
+      {t:'h',text:'Not just a shadow, it is geometric control.'},
+      {t:'p',text:'The Dalang (puppeteer) manipulates the size of the character on the screen (kelir) using pure optics and geometry. By moving the puppet closer to the light source (blencong), the shadow becomes gigantic, but the edges blur (penumbra).'},
+      {t:'formula',tex:'M = Screen Distance / Puppet Distance',desc:'Magnification. Distance is measured from the point light source.'},
+      {t:'list',items:[
+        'Moving closer to the light → Shadow grows larger, edges blur (because the flame is not a mathematically perfect point).',
+        'Moving closer to the screen → Shadow shrinks (approaching its actual size), edges become sharp.',
+        'Tilting angle → Creates proportion distortion for dramatic effect.'
+      ]},
+      {t:'note',tone:'tip',text:'Go to the SIMULATE tab. Adjust the puppet\'s position to see how a Dalang makes a character look intimidating.'}
+    ]},
+    simulate:{
+      engine:'wayang', 
+      params:{ d_lamp: 10, d_wayang: 30, d_layar: 90, h_wayang: 15 },
+      controls:[
+        { id:'d_wayang', label:'Puppet Position (S)', min:12, max:88, step:1, unit:'cm' },
+        { id:'d_lamp', label:'Light Position (Blencong)', min:0, max:25, step:1, unit:'cm' },
+        { id:'h_wayang', label:'Actual Puppet Height', min:5, max:30, step:1, unit:'cm' }
+      ],
+      tip:'Slide the puppet position closer to the light (S). Notice how the magnification (M) skyrockets!'
+    },
+    calculate:{
+      inputs:[
+        { id:'s', label:'Distance Light to Puppet (s)', default:20, min:1, step:1 },
+        { id:'s_aksen', label:'Distance Light to Screen (s\')', default:100, min:10, step:1 },
+        { id:'h', label:'Actual Puppet Height (h)', default:15, step:1 }
+      ],
+      outputs:[
+        { id:'M', label:'Magnification (M)', formula:{expr:'s_aksen / s'}, decimals:2 },
+        { id:'h_aksen', label:'Giant Shadow Height', formula:{expr:'(s_aksen / s) * h'}, unit:'cm', decimals:1 }
+      ],
+      chart:{ title:'Shadow Height vs Puppet Distance', xLabel:'Distance Light to Puppet (cm)', yLabel:'Shadow Height (cm)',
+        x:{ id:'s', from:5, to:80, steps:30 },
+        series:[{ label:'Shadow Height', expr:'(s_aksen / s) * h', color:'#f59e0b' }] }
+    },
+    everyday:{items:[{q:'When a battle scene peaks, the Dalang often moves the puppet closer to the Blencong (light). In optical physics, what happens on the screen?',options:['The shadow becomes very small and dark','The shadow drastically grows (gigantic) but the edges blur slightly','The shadow size does not change, only the color changes'],answer:1,explain:'The closer an object is to a point light source, the larger its angular projection on the screen. The blurring effect (penumbra) occurs because the flame has actual dimensions, not just a perfect mathematical point.',concepts:['magnification','penumbra','light projection'],tryIt:'Turn on your phone flashlight in a dark room. Move your palm closer to the light, then closer to the wall. Observe the change!'}]},
+    challenge:{questions:[{q:'If the kelir (screen) is 100 cm from the light, and the puppet height is 20 cm. At what distance must the puppet be placed from the light so its shadow height becomes 80 cm?',type:'numeric',answer:25,tol:1,unit:'cm',xp:20,hint:'Magnification (M) = 80 / 20 = 4x. Since M = s\' / s, then 4 = 100 / s. Calculate s!'}]}
   }
 },
 
@@ -3741,6 +4239,11 @@ const MODE_ORDER = ['learn','calculate','explore','simulate','experiment','ar','
 
 
 const ICH_CONNECTIONS = {
+  'ich-wayang-optics': {
+    title:'Wayang Kulit → Optical Physics', icon:'fa-masks-theater', color:'amber',
+    text:'The Dalang (puppeteer) adjusts the distance between the blencong (light source) and the wayang (puppet) to control the size and sharpness of the shadow on the kelir (screen). This is applied optical geometry.',
+    bridge:'Performing Arts → Light Projection & Geometry → Optical Simulation'
+  },
   'phys-wave': {
     title:'Gong / Gamelan → Physics', icon:'fa-music', color:'cyan',
     text:'Start with a living gong or gamelan practice, then investigate frequency, amplitude, resonance, damping, timbre, and acoustics.',
@@ -3939,7 +4442,7 @@ const MODE_RENDERERS = {
   everyday(mod, cfg){
     return (cfg.items||[]).map((it,i)=>`
       <div class="card p-5 mb-3">
-        <span class="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full uppercase">Sains harian</span>
+        <span class="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full uppercase">Daily Science</span>
         <h3 class="font-extrabold text-slate-800 text-[15px] mt-2 mb-3">${it.q}</h3>
         <p class="text-[11px] font-bold text-slate-400 uppercase mb-2">Predict first before revealing the answer 👇</p>
         <div class="space-y-2" id="ev-${i}">
@@ -3947,7 +4450,7 @@ const MODE_RENDERERS = {
         </div>
         <div id="evres-${i}" class="hidden mt-3">
           <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
-            <p class="text-[12px] text-slate-700 leading-relaxed"><b>Penjelasan:</b> ${it.explain}</p>
+            <p class="text-[12px] text-slate-700 leading-relaxed"><b>Explanation:</b> ${it.explain}</p>
             ${it.concepts?`<div class="flex flex-wrap gap-1 mt-2.5">${it.concepts.map(c=>`<span class="text-[10px] font-bold bg-white border border-slate-200 text-slate-500 px-2 py-0.5 rounded-full">#${c}</span>`).join('')}</div>`:''}
             ${it.tryIt?`<p class="text-[12px] text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg p-2.5 mt-2.5"><i class="fa-solid fa-flask mr-1"></i><b>Try it yourself:</b> ${it.tryIt}</p>`:''}
           </div>
@@ -3960,7 +4463,7 @@ const MODE_RENDERERS = {
     if(cfg.game==='projectile-target') return Games.projectileTarget(mod, cfg);
     return `<div class="card p-4 mb-3 flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center"><i class="fa-solid fa-trophy"></i></div>
-        <div><p class="text-[11px] font-bold text-slate-400 uppercase">Kumpulkan XP</p>
+        <div><p class="text-[11px] font-bold text-slate-400 uppercase">Collect XP</p>
         <p class="text-sm font-bold text-slate-700">Level ${Progress.level()} · ${Progress.data.xp} XP</p></div>
       </div>` + (cfg.questions||[]).map((q,i)=>`
       <div class="card p-5 mb-3">
@@ -3972,11 +4475,11 @@ const MODE_RENDERERS = {
         ${q.type==='choice'
           ? `<div class="space-y-2">${q.options.map((o,j)=>`<button onclick="Quiz.answerChoice('${mod.id}',${i},${j},${q.answer},${q.xp||10})" class="w-full text-left text-[13px] px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 font-semibold text-slate-700">${String.fromCharCode(65+j)}. ${o}</button>`).join('')}</div>`
           : `<div class="flex gap-2">
-              <input type="number" id="q-${i}" placeholder="jawabanmu" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold num outline-none focus:border-indigo-400">
+              <input type="number" id="q-${i}" placeholder="Your answer" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold num outline-none focus:border-indigo-400">
               ${q.unit?`<span class="px-3 py-2.5 bg-slate-100 rounded-xl text-xs font-bold text-slate-500 self-center">${ulab(q.unit)}</span>`:''}
               <button onclick="Quiz.answerNumeric('${mod.id}',${i},${q.answer},${q.tol||0.01},${q.xp||10})" class="bg-indigo-600 text-white font-bold px-4 rounded-xl text-sm">Check</button>
             </div>`}
-        ${q.hint?`<button onclick="this.nextElementSibling.classList.toggle('hidden')" class="text-[11px] font-bold text-slate-400 mt-2"><i class="fa-solid fa-lightbulb mr-1"></i>Petunjuk</button><p class="hidden text-[12px] text-slate-500 bg-slate-50 border border-slate-200 rounded-lg p-2.5 mt-1.5">${q.hint}</p>`:''}
+        ${q.hint?`<button onclick="this.nextElementSibling.classList.toggle('hidden')" class="text-[11px] font-bold text-slate-400 mt-2"><i class="fa-solid fa-lightbulb mr-1"></i>Clue</button><p class="hidden text-[12px] text-slate-500 bg-slate-50 border border-slate-200 rounded-lg p-2.5 mt-1.5">${q.hint}</p>`:''}
         <div id="qres-${i}" class="mt-2.5"></div>
         ${q.why?`<div id="qwhy-${i}" class="hidden text-[12px] text-slate-600 bg-slate-50 border border-slate-200 rounded-lg p-2.5 mt-2">${q.why}</div>`:''}
       </div>`).join('');

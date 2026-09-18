@@ -96,7 +96,7 @@
 
   <meta
     name="twitter:title"
-    content="Living Heritage in Education · Living Heritage & Education"
+    content="Living Heritage LAB · Pocket Learning in Living Heritage"
   >
 
   <meta
@@ -349,7 +349,7 @@
         <h3 class="font-extrabold text-slate-700">Your Phone = a Learning Lab</h3>
         <p class="text-xs text-slate-500 mt-2 max-w-xs">Choose a module from the panel. This area can become a map, chart, simulation, camera, or sensor depending on the activity.</p>
         <div class="grid grid-cols-4 gap-2 mt-5 text-[10px] text-slate-500 font-semibold">
-          <div class="card p-2"><i class="fa-solid fa-chart-line text-indigo-500 block mb-1"></i>Grafik</div>
+          <div class="card p-2"><i class="fa-solid fa-chart-line text-indigo-500 block mb-1"></i>Chart</div>
           <div class="card p-2"><i class="fa-solid fa-atom text-emerald-500 block mb-1"></i>Simulate</div>
           <div class="card p-2"><i class="fa-solid fa-camera text-rose-500 block mb-1"></i>Camera</div>
           <div class="card p-2"><i class="fa-solid fa-wave-square text-amber-500 block mb-1"></i>Sensor</div>
@@ -364,7 +364,7 @@
       </div>
       <!-- chart -->
       <div id="visual-chart" class="hidden w-full h-full flex flex-col fade-in card p-3">
-        <h4 id="chart-title" class="text-[11px] font-bold text-slate-500 text-center mb-1 uppercase tracking-wide">Grafik</h4>
+        <h4 id="chart-title" class="text-[11px] font-bold text-slate-500 text-center mb-1 uppercase tracking-wide">Chart</h4>
         <div class="flex-1 min-h-[220px]"><canvas id="chart-canvas"></canvas></div>
       </div>
       <!-- simulation -->
@@ -444,7 +444,7 @@
           <p
             class="text-[11px] sm:text-xs
                   leading-relaxed
-                  text-teal-50/85
+                  text-blue-50/85
                   mt-2
                   max-w-lg"
           >
@@ -469,7 +469,6 @@
       </div>
       <div id="cat-chips" class="flex gap-1.5 overflow-x-auto pb-2 mb-3"></div>
       <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3" id="module-grid"></div>
-      
       <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div class="card p-4 border-violet-100 bg-violet-50/60">
           <p class="text-[10px] font-black uppercase tracking-wider text-violet-600">Phase 1 · Learning How to Live</p>
@@ -479,13 +478,14 @@
           <p class="text-[10px] font-black uppercase tracking-wider text-teal-600">Phase 2 · Maintaining Harmony</p>
           <p class="text-[12px] text-teal-900 mt-1 leading-relaxed">How do we preserve the relationship? Explore <b>Wa</b>, <b>He</b>, <b>Jeong</b>, and <b>Shazai</b>.</p>
         </div>
-      </div><p class="text-[10px] text-slate-400 mt-4 text-center">All camera/sensor measurements are <b>educational estimates</b>, not laboratory-grade measurements.</p>
+      </div>
+      <p class="text-[10px] text-slate-400 mt-4 text-center">All camera/sensor measurements are <b>educational estimates</b>, not laboratory-grade measurements.</p>
     </div>
 
     <!-- MODULE -->
     <div id="view-module" class="hidden fade-in">
       <div class="bg-white border-b border-slate-200 px-4 md:px-6 pt-4 pb-0 sticky top-0 z-20">
-        <button onclick="Router.home()" class="text-[11px] text-slate-400 hover:text-indigo-600 font-semibold mb-1"><i class="fa-solid fa-chevron-left mr-1"></i>Katalog</button>
+        <button onclick="Router.home()" class="text-[11px] text-slate-400 hover:text-indigo-600 font-semibold mb-1"><i class="fa-solid fa-chevron-left mr-1"></i>Catalog</button>
         <div class="flex justify-between items-start">
           <div>
             <span id="m-category" class="px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded text-[10px] font-bold uppercase tracking-wider border border-indigo-100"></span>
@@ -518,8 +518,8 @@
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   LIVING HERITAGE LAB · v0.3
-   ARCHITECTURE: MODULE = "WHAT" | ENGINE = "HOW"
+   LIVING HERITAGE LAB · v0.2
+   ARSITEKTUR:  MODUL = "APA"   |   ENGINE = "BAGAIMANA"
    ───────────────────────────────────────────────────────────────
    §0  util            §9  sensor manager     §17 custom views
    §1  app config      §10 native bridge      §18 visual pane
@@ -590,10 +590,10 @@ const UNITS = {
   length:      { base:'m',   label:'Length',      units:{ m:1, cm:.01, mm:.001, km:1000, inch:.0254, ft:.3048, yd:.9144, mile:1609.344, nmi:1852 } },
   mass:        { base:'kg',  label:'Mass',        units:{ kg:1, g:.001, mg:1e-6, ton:1000, lb:.45359237, oz:.0283495 } },
   time:        { base:'s',   label:'Time',        units:{ s:1, ms:.001, menit:60, jam:3600, hari:86400 } },
-  area:        { base:'m2',  label:'Luas',         units:{ m2:1, cm2:1e-4, km2:1e6, hektar:1e4, ft2:.092903 } },
+  area:        { base:'m2',  label:'Area',         units:{ m2:1, cm2:1e-4, km2:1e6, hektar:1e4, ft2:.092903 } },
   volume:      { base:'m3',  label:'Volume',       units:{ m3:1, L:.001, mL:1e-6, cm3:1e-6, galon:.0037854 } },
   speed:       { base:'ms',  label:'Speed',    units:{ ms:1, kmh:1/3.6, mph:.44704, knot:.514444 } },
-  accel:       { base:'ms2', label:'Percepatan',   units:{ ms2:1, g_unit:9.80665 } },
+  accel:       { base:'ms2', label:'Acceleration',   units:{ ms2:1, g_unit:9.80665 } },
   force:       { base:'N',   label:'Force',         units:{ N:1, kN:1000, dyne:1e-5, kgf:9.80665 } },
   energy:      { base:'J',   label:'Energy',       units:{ J:1, kJ:1000, cal:4.184, kcal:4184, Wh:3600, kWh:3.6e6, eV:1.602176634e-19 } },
   power:       { base:'W',   label:'Power',         units:{ W:1, kW:1000, MW:1e6, hp:745.7 } },
@@ -602,10 +602,10 @@ const UNITS = {
                    K:{toBase:v=>v, fromBase:v=>v},
                    C:{toBase:v=>v+273.15, fromBase:v=>v-273.15},
                    F:{toBase:v=>(v-32)*5/9+273.15, fromBase:v=>(v-273.15)*9/5+32} } },
-  frequency:   { base:'Hz',  label:'Frekuensi',    units:{ Hz:1, kHz:1000, MHz:1e6, rpm:1/60 } },
+  frequency:   { base:'Hz',  label:'Frequency',    units:{ Hz:1, kHz:1000, MHz:1e6, rpm:1/60 } },
   angle:       { base:'rad', label:'Angle',        units:{ rad:1, deg:Math.PI/180, grad:Math.PI/200, putaran:2*Math.PI } },
   voltage:     { base:'V',   label:'Voltage',     units:{ V:1, mV:.001, kV:1000 } },
-  current:     { base:'A',   label:'Arus',         units:{ A:1, mA:.001, uA:1e-6 } },
+  current:     { base:'A',   label:'Current',         units:{ A:1, mA:.001, uA:1e-6 } },
   resistance:  { base:'ohm', label:'Resistance',     units:{ ohm:1, kohm:1000, Mohm:1e6 } },
   data:        { base:'B',   label:'Data',         units:{ B:1, KB:1024, MB:1048576, GB:1073741824 } }
 };
@@ -851,7 +851,7 @@ const Comparison = {
     return `<div class="card p-4 mt-3">
       <div class="flex items-center justify-between mb-3">
         <h4 class="font-bold text-sm text-slate-700"><i class="fa-solid fa-scale-balanced text-indigo-500 mr-1.5"></i>${esc(label)}</h4>
-        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-${tone}-50 text-${tone}-700 border border-${tone}-200">${good?'Sangat dekat':ok?'Cukup dekat':'Selisih besar'}</span>
+        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-${tone}-50 text-${tone}-700 border border-${tone}-200">${good?'Very close':ok?'Fairly close':'Large difference'}</span>
       </div>
       <div class="grid grid-cols-3 gap-2 text-center">
         <div class="bg-slate-50 rounded-xl p-2.5 border border-slate-200"><p class="text-[10px] font-bold text-slate-400 uppercase">Theory</p><p class="text-lg font-black text-slate-700 num">${Precision.format(theory)}</p><p class="text-[10px] text-slate-400">${ulab(unit)}</p></div>
@@ -1071,7 +1071,7 @@ const SIM_ENGINES = {
         c.strokeStyle='#ef4444'; c.beginPath(); c.moveTo(X(s.x),Y(s.y)); c.lineTo(X(s.x),Y(s.y)+p.g*sc*k*0.6); c.stroke(); }
     },
     readout(s,p){ return [['t',s.t,'s'],['x',s.x,'m'],['y',s.y,'m'],
-      ['|v|',Math.hypot(s.vx,s.vy),'m/s'],['Distance',s.landed?s.range:s.x,'m'],['Puncak',s.maxH,'m']]; }
+      ['|v|',Math.hypot(s.vx,s.vy),'m/s'],['Distance',s.landed?s.range:s.x,'m'],['Peak',s.maxH,'m']]; }
   },
 
   /* ---------- FREE FALL (dua objek: bola vs bulu) ---------- */
@@ -1615,7 +1615,7 @@ const MODULES = [
         { id:'ppn', label:'PPN', formula:{op:'percentOf', args:['setelah','pajak']}, format:'currency' },
         { id:'bayar', label:'Total payment', formula:{expr:'setelah + ppn'}, format:'currency', hint:'The discount is applied first, then tax is calculated on the discounted price.' }
       ],
-      chart:{ title:'Total bayar vs besarnya diskon', xLabel:'Diskon (%)', yLabel:'Rupiah',
+      chart:{ title:'Total bayar vs besarnya diskon', xLabel:'Diskon (%)', yLabel:'IDR',
         x:{ id:'diskon', from:0, to:90, steps:18 },
         series:[{ label:'Total payment', expr:'(harga - harga*diskon/100) * (1 + pajak/100)', color:'#e11d48' }] }
     },
@@ -2438,7 +2438,7 @@ learn: {
         { id:'vx', label:'Horizontal speed', formula:{expr:'v0*cos(angle)'}, unit:'ms' },
         { id:'vy', label:'Initial vertical speed', formula:{expr:'v0*sin(angle)'}, unit:'ms' },
         { id:'tTop', label:'Time to peak', formula:{expr:'vy/g'}, unit:'s' },
-        { id:'hMax', label:'Tinggi maksimum', formula:{expr:'h0 + vy^2/(2*g)'}, unit:'m' },
+        { id:'hMax', label:'Maximum height', formula:{expr:'h0 + vy^2/(2*g)'}, unit:'m' },
         { id:'tTot', label:'Flight time', formula:{expr:'(vy + sqrt(vy^2 + 2*g*h0))/g'}, unit:'s' },
         { id:'range', label:'Range', formula:{expr:'vx*tTot'}, unit:'m', hint:'Model ideal: tanpa hambatan udara, tanpa angin.' }
       ],
@@ -2523,7 +2523,7 @@ learn: {
       title:'Ukur g memakai akselerometer',
       unit:'ms2', label:'|a| (besar percepatan)',
       steps:['Letakkan HP <b>diam</b> di meja datar.','Tap Start and wait about 5 seconds for the data to stabilize.','Tap Stop and inspect the average |a| — this estimates g at your location.'],
-      compare:{ theory:{constant:'g'}, unit:'ms2', label:'Percepatan gravitasi' },
+      compare:{ theory:{constant:'g'}, unit:'ms2', label:'Acceleration gravitasi' },
       note:'Low-cost sensors can deviate by about 0.1–0.5 m/s². Tilt the phone and observe X/Y/Z components changing while |a| stays similar.'
     }
   }
@@ -2546,7 +2546,7 @@ learn: {
       ],
       outputs:[
         { id:'T', label:'Periode', formula:{expr:'2*pi*sqrt(L/g)'}, unit:'s' },
-        { id:'f', label:'Frekuensi', formula:{expr:'1/T'}, unit:'Hz' },
+        { id:'f', label:'Frequency', formula:{expr:'1/T'}, unit:'Hz' },
         { id:'n60', label:'Oscillations in 60 s', formula:{expr:'60/T'}, decimals:1 }
       ],
       chart:{ title:'Periode vs panjang tali', xLabel:'L (m)', yLabel:'T (s)',
@@ -2573,7 +2573,7 @@ learn: {
         { id:'T', label:'Periode rata-rata', expr:'lapMean', unit:'s' },
         { id:'gMeas', label:'Measured g', expr:'4*pi^2*L/T^2', unit:'ms2' }
       ],
-      compare:{ measuredKey:'gMeas', theory:{constant:'g'}, unit:'ms2', label:'Percepatan gravitasi' }
+      compare:{ measuredKey:'gMeas', theory:{constant:'g'}, unit:'ms2', label:'Acceleration gravitasi' }
     }
   }
 },
@@ -2602,7 +2602,7 @@ learn: {
         { id:'energi', label:'Energy per day', formula:{expr:'power*jam/1000'}, unit:'kWh', decimals:3 },
         { id:'biaya', label:'Monthly cost', formula:{expr:'energi*30*tarif'}, format:'currency', hint:'Estimated for 30 days of use.' }
       ],
-      chart:{ title:'Arus vs hambatan (V tetap)', xLabel:'R (Ω)', yLabel:'I (A)',
+      chart:{ title:'Current vs hambatan (V tetap)', xLabel:'R (Ω)', yLabel:'I (A)',
         x:{ id:'resistance', from:1, to:20, steps:20 },
         series:[{ label:'I = V/R', expr:'voltage/resistance', color:'#f59e0b' },
                 { label:'P = V²/R (W)', expr:'voltage^2/resistance', color:'#ef4444' }] }
@@ -2680,7 +2680,7 @@ learn: {
     ]},
     calculate:{
       inputs:[
-        { id:'f', label:'Frekuensi', default:440, unit:{family:'frequency', base:'Hz', options:['Hz','kHz','MHz']}, min:0.001 },
+        { id:'f', label:'Frequency', default:440, unit:{family:'frequency', base:'Hz', options:['Hz','kHz','MHz']}, min:0.001 },
         { id:'v', label:'Wave speed', default:343, unit:{family:'speed', base:'ms', options:['ms','kmh']} }
       ],
       outputs:[
@@ -2698,13 +2698,13 @@ learn: {
       controls:[
         { id:'A', label:'Amplitudo', min:0.2, max:3, step:0.1, unit:'m' },
         { id:'lambda', label:'Length gelombang λ', min:0.5, max:6, step:0.1, unit:'m' },
-        { id:'f', label:'Frekuensi', min:0.1, max:4, step:0.1, unit:'Hz' }
+        { id:'f', label:'Frequency', min:0.1, max:4, step:0.1, unit:'Hz' }
       ],
       tip:'Increase f → wave speed follows v = λf. Amplitude does not determine wave speed in this ideal model.'
     },
     experiment:{
       type:'sensor', sensor:'sound', field:'freq', measure:'mode',
-      title:'Sound Frequency Detection', unit:'Hz', label:'Frekuensi dominan',
+      title:'Sound Frequency Detection', unit:'Hz', label:'Frequency dominan',
       steps:['Allow microphone access.','Play a tone from a musical instrument or tuner app.','Observe the dominant frequency and noise level (dB).','Calculate λ = 343/f for that tone.'],
       note:'The dB value here is relative and not microphone-calibrated. Use it for comparison, not as an official measurement.'
     }
@@ -2728,9 +2728,9 @@ learn: {
         { id:'h', label:'Object height (cm)', default:3, step:0.1 }
       ],
       outputs:[
-        { id:'si', label:"Shadow image distance s′", formula:{expr:'1/(1/f - 1/s)'}, unit:'cm' },
+        { id:'si', label:"Jarak bayangan s′", formula:{expr:'1/(1/f - 1/s)'}, unit:'cm' },
         { id:'M', label:'Magnification M', formula:{expr:'-si/s'}, decimals:3 },
-        { id:'hi', label:"Image height h′", formula:{expr:'M*h'}, unit:'cm' },
+        { id:'hi', label:"Tinggi bayangan h′", formula:{expr:'M*h'}, unit:'cm' },
         { id:'kuat', label:'Lens power (diopters)', formula:{expr:'100/f'}, decimals:2, hint:'Positive s′ = real image; negative = virtual image.' }
       ]
     },
@@ -2766,7 +2766,7 @@ learn: {
       {t:'h', text:'Why can a metal car provide some protection during lightning?'},
       {t:'p', text:'A metal car body is a conductor. In a strong external electric field, charges redistribute on the metal so the field inside the passenger compartment is greatly reduced. Current can travel along the exterior rather than through the occupants.'},
       {t:'formula', tex:'E_dalam ≈ 0', desc:'For a closed conductor in electrostatic equilibrium.'},
-      {t:'list', items:['The protective element is the <b>conductive enclosure</b>, not the rubber tires','Large openings reduce shielding effectiveness','Fabric/plastic (a tent) provides little shielding','Microwaves and USB cables also involve related electromagnetic principles']},
+      {t:'list', items:['Yang melindungi adalah <b>logam yang menutupi</b>, bukan ban karet','Large openings reduce shielding effectiveness','Fabric/plastic (a tent) provides little shielding','Microwaves and USB cables also involve related electromagnetic principles']},
       {t:'note', tone:'warn', text:'A motorcycle does not enclose the rider in a conductive metal cabin, so it does not provide the same type of protection as a car.'}
     ]},
     simulate:{
@@ -2966,7 +2966,7 @@ learn: {
       {t:'note', tone:'warn', text:'The dB value in this app is not calibrated. Use it for comparison, not as an official measurement.'}
     ]},
     experiment:{ custom:'sensorLab', sensor:'sound',
-      fields:[{k:'db',label:'Level (dB rel.)',color:'#f59e0b',range:120},{k:'freq',label:'Frekuensi dominan',color:'#0ea5e9',range:2000}],
+      fields:[{k:'db',label:'Level (dB rel.)',color:'#f59e0b',range:120},{k:'freq',label:'Frequency dominan',color:'#0ea5e9',range:2000}],
       chartFields:['db'],
       ideas:['Compare noise in an empty classroom with recess','Clap → observe the spike and decay (room reverberation)','Whistle up and down → watch the frequency move','Measure a guitar-string frequency and compare it with a note table'] }
   }
@@ -3002,10 +3002,11 @@ learn: {
       ]
     }
   }
-},
+}
 
-{
-  id:'life-tepa-selira', category:'Living & Social Learning',
+,
+
+id:'life-tepa-selira', category:'Living & Social Learning',
   title:'Tepa Selira — Think Before You Speak', subtitle:'Perspective-taking in everyday life',
   icon:'fa-people-arrows', color:'violet',
   tags:['tepa selira','empathy','social ethics','perspective taking'],
@@ -3614,7 +3615,7 @@ const MODE_RENDERERS = {
     if(cfg.html) return `<div class="card p-5">${cfg.html}</div>`;
     return `<div class="card p-5">${renderBlocks(cfg.blocks||[])}</div>
       <div class="mt-3 rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-500 p-4 text-white">
-        <p class="text-[11px] font-bold uppercase tracking-widest opacity-80">Phase 1 · Learning How to Live</p>
+        <p class="text-[11px] font-bold uppercase tracking-widest opacity-80">Phase 2 · Maintaining Harmony</p>
         <p class="text-sm font-bold mt-0.5">Understand the theory? Now test it!</p>
         <div class="flex flex-wrap gap-1.5 mt-2">${
           Object.keys(mod.modes).filter(m=>m!=='learn').map(m=>`<button onclick="Router.tab('${m}')" class="bg-white/20 hover:bg-white/30 text-white text-[11px] font-bold px-3 py-1.5 rounded-full backdrop-blur"><i class="fa-solid ${MODE_META[m]?MODE_META[m].icon:'fa-star'} mr-1"></i>${MODE_META[m]?MODE_META[m].label:m}</button>`).join('')}
@@ -3625,7 +3626,7 @@ const MODE_RENDERERS = {
   calculate(mod, cfg){
     if(cfg.custom) return CUSTOM_VIEWS[cfg.custom](mod, cfg);
     const inputs = cfg.inputs||[];
-    let html = `<div class="card p-5"><h3 class="font-bold text-slate-700 text-sm mb-4"><i class="fa-solid fa-sliders text-indigo-500 mr-1.5"></i>Masukan</h3><div class="space-y-3.5">`;
+    let html = `<div class="card p-5"><h3 class="font-bold text-slate-700 text-sm mb-4"><i class="fa-solid fa-sliders text-indigo-500 mr-1.5"></i>Inputs</h3><div class="space-y-3.5">`;
     inputs.forEach(inp=>{
       const unitSel = inp.unit ? `<select id="u-${inp.id}" onchange="Calc.run()" class="text-[11px] font-bold bg-slate-100 border border-slate-200 rounded-lg px-2 py-1 outline-none">
           ${inp.unit.options.map(u=>`<option value="${u}" ${u===(inp.unit.default||inp.unit.options[0])?'selected':''}>${ulab(u)}</option>`).join('')}</select>` : '';
@@ -3657,7 +3658,7 @@ const MODE_RENDERERS = {
   simulate(mod, cfg){
     let html = `<div class="card p-5">
       <div class="flex gap-2 mb-4">
-        <button onclick="SimEngine.start()" class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold py-2.5 rounded-xl text-sm shadow"><i class="fa-solid fa-play mr-1"></i>Jalankan</button>
+        <button onclick="SimEngine.start()" class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold py-2.5 rounded-xl text-sm shadow"><i class="fa-solid fa-play mr-1"></i>Run</button>
         <button onclick="SimEngine.pause()" class="px-4 bg-slate-100 rounded-xl font-bold text-slate-600 text-sm"><i class="fa-solid fa-pause"></i></button>
         <button onclick="SimEngine.reset()" class="px-4 bg-slate-100 rounded-xl font-bold text-slate-600 text-sm"><i class="fa-solid fa-rotate-left"></i></button>
       </div>
@@ -3718,7 +3719,7 @@ const MODE_RENDERERS = {
   everyday(mod, cfg){
     return (cfg.items||[]).map((it,i)=>`
       <div class="card p-5 mb-3">
-        <span class="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full uppercase">Everyday learning</span>
+        <span class="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full uppercase">Sains harian</span>
         <h3 class="font-extrabold text-slate-800 text-[15px] mt-2 mb-3">${it.q}</h3>
         <p class="text-[11px] font-bold text-slate-400 uppercase mb-2">Predict first before revealing the answer 👇</p>
         <div class="space-y-2" id="ev-${i}">
@@ -3726,7 +3727,7 @@ const MODE_RENDERERS = {
         </div>
         <div id="evres-${i}" class="hidden mt-3">
           <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
-            <p class="text-[12px] text-slate-700 leading-relaxed"><b>Explanation:</b> ${it.explain}</p>
+            <p class="text-[12px] text-slate-700 leading-relaxed"><b>Penjelasan:</b> ${it.explain}</p>
             ${it.concepts?`<div class="flex flex-wrap gap-1 mt-2.5">${it.concepts.map(c=>`<span class="text-[10px] font-bold bg-white border border-slate-200 text-slate-500 px-2 py-0.5 rounded-full">#${c}</span>`).join('')}</div>`:''}
             ${it.tryIt?`<p class="text-[12px] text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg p-2.5 mt-2.5"><i class="fa-solid fa-flask mr-1"></i><b>Try it yourself:</b> ${it.tryIt}</p>`:''}
           </div>
@@ -3739,23 +3740,23 @@ const MODE_RENDERERS = {
     if(cfg.game==='projectile-target') return Games.projectileTarget(mod, cfg);
     return `<div class="card p-4 mb-3 flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center"><i class="fa-solid fa-trophy"></i></div>
-        <div><p class="text-[11px] font-bold text-slate-400 uppercase">Earn XP</p>
+        <div><p class="text-[11px] font-bold text-slate-400 uppercase">Kumpulkan XP</p>
         <p class="text-sm font-bold text-slate-700">Level ${Progress.level()} · ${Progress.data.xp} XP</p></div>
       </div>` + (cfg.questions||[]).map((q,i)=>`
       <div class="card p-5 mb-3">
         <div class="flex justify-between items-start mb-2">
-          <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full">QUESTION ${i+1}</span>
+          <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full">SOAL ${i+1}</span>
           <span class="text-[10px] font-bold text-amber-600">+${q.xp||10} XP</span>
         </div>
         <p class="text-[14px] font-bold text-slate-800 mb-3">${q.q}</p>
         ${q.type==='choice'
           ? `<div class="space-y-2">${q.options.map((o,j)=>`<button onclick="Quiz.answerChoice('${mod.id}',${i},${j},${q.answer},${q.xp||10})" class="w-full text-left text-[13px] px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 font-semibold text-slate-700">${String.fromCharCode(65+j)}. ${o}</button>`).join('')}</div>`
           : `<div class="flex gap-2">
-              <input type="number" id="q-${i}" placeholder="your answer" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold num outline-none focus:border-indigo-400">
+              <input type="number" id="q-${i}" placeholder="jawabanmu" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold num outline-none focus:border-indigo-400">
               ${q.unit?`<span class="px-3 py-2.5 bg-slate-100 rounded-xl text-xs font-bold text-slate-500 self-center">${ulab(q.unit)}</span>`:''}
-              <button onclick="Quiz.answerNumeric('${mod.id}',${i},${q.answer},${q.tol||0.01},${q.xp||10})" class="bg-indigo-600 text-white font-bold px-4 rounded-xl text-sm">Cek</button>
+              <button onclick="Quiz.answerNumeric('${mod.id}',${i},${q.answer},${q.tol||0.01},${q.xp||10})" class="bg-indigo-600 text-white font-bold px-4 rounded-xl text-sm">Check</button>
             </div>`}
-        ${q.hint?`<button onclick="this.nextElementSibling.classList.toggle('hidden')" class="text-[11px] font-bold text-slate-400 mt-2"><i class="fa-solid fa-lightbulb mr-1"></i>Hint</button><p class="hidden text-[12px] text-slate-500 bg-slate-50 border border-slate-200 rounded-lg p-2.5 mt-1.5">${q.hint}</p>`:''}
+        ${q.hint?`<button onclick="this.nextElementSibling.classList.toggle('hidden')" class="text-[11px] font-bold text-slate-400 mt-2"><i class="fa-solid fa-lightbulb mr-1"></i>Petunjuk</button><p class="hidden text-[12px] text-slate-500 bg-slate-50 border border-slate-200 rounded-lg p-2.5 mt-1.5">${q.hint}</p>`:''}
         <div id="qres-${i}" class="mt-2.5"></div>
         ${q.why?`<div id="qwhy-${i}" class="hidden text-[12px] text-slate-600 bg-slate-50 border border-slate-200 rounded-lg p-2.5 mt-2">${q.why}</div>`:''}
       </div>`).join('');
@@ -3786,7 +3787,7 @@ const MODE_RENDERERS = {
     <div class="card p-5 mb-3">
       <h3 class="font-bold text-slate-700 text-sm mb-3"><i class="fa-solid fa-cube text-fuchsia-500 mr-1.5"></i>Sesi AR (WebXR)</h3>
       <button onclick="ARLab.start()" ${Capabilities.has('ar')?'':'disabled'} class="w-full ${Capabilities.has('ar')?'bg-gradient-to-r from-fuchsia-500 to-violet-500':'bg-slate-200 text-slate-400'} text-white font-bold py-3 rounded-xl text-sm shadow">
-        <i class="fa-solid fa-vr-cardboard mr-1"></i>${Capabilities.has('ar')?'Measure with AR':'AR is not available on this device'}</button>
+        <i class="fa-solid fa-vr-cardboard mr-1"></i>${Capabilities.has('ar')?'Mulai Ukur di AR':'AR is not available on this device'}</button>
       <p class="text-[11px] text-slate-400 mt-2">Tap the surface for points 1 and 2. Requires Chrome on Android + ARCore. In an APK, this can be enhanced through the native bridge (ARCore Depth).</p>
     </div>
 
@@ -3806,14 +3807,14 @@ const MODE_RENDERERS = {
           <input type="number" id="clino-eye" value="1.5" step="0.05" oninput="Clino.calc()" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 font-bold num"></div>
       </div>
       <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center mb-3">
-        <p class="text-[10px] font-bold text-slate-400 uppercase">Elevation angle</p>
+        <p class="text-[10px] font-bold text-slate-400 uppercase">Angle elevasi</p>
         <p id="clino-angle" class="text-3xl font-black text-fuchsia-600 num">—</p>
-        <p class="text-[10px] font-bold text-slate-400 uppercase mt-2">Estimated object height</p>
+        <p class="text-[10px] font-bold text-slate-400 uppercase mt-2">Estimasi tinggi objek</p>
         <p id="clino-h" class="text-xl font-black text-slate-700 num">—</p>
       </div>
       <div class="flex gap-2">
         <button onclick="Clino.start()" class="flex-1 bg-fuchsia-600 text-white font-bold py-2.5 rounded-xl text-sm">Start sensor</button>
-        <button onclick="Clino.hold()" class="flex-1 bg-slate-100 text-slate-700 font-bold py-2.5 rounded-xl text-sm">Hold / Release</button>
+        <button onclick="Clino.hold()" class="flex-1 bg-slate-100 text-slate-700 font-bold py-2.5 rounded-xl text-sm">Tahan / Lepas</button>
       </div>
       <p class="text-[10px] text-slate-400 mt-2">Educational estimate — accuracy depends on sensor calibration and hand stability.</p>
     </div>`;
@@ -3863,7 +3864,7 @@ const Experiments = {
       <div class="flex items-start justify-between gap-2 mb-2">
         <h3 class="font-extrabold text-slate-800 text-[15px]">${cfg.title||'Experiment'}</h3>
         ${sim?`<span class="text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full shrink-0">SIMULATION MODE</span>`
-             :`<span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full shrink-0">SENSOR NYATA</span>`}
+             :`<span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full shrink-0">REAL SENSOR</span>`}
       </div>
       ${cfg.steps?`<ol class="space-y-2 mt-3">${cfg.steps.map((s,i)=>`<li class="flex gap-2.5 text-[12.5px] text-slate-600"><span class="shrink-0 w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 text-[10px] font-black flex items-center justify-center">${i+1}</span><span>${s}</span></li>`).join('')}</ol>`:''}
       ${sim?`<p class="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-2.5 mt-3">Sensors unavailable / simulation mode active. The data shown is synthetic so you can still practice the workflow (fallback Level 4).</p>`:''}
@@ -3882,7 +3883,7 @@ const Experiments = {
         </div>
         <div class="grid grid-cols-3 gap-2 text-center mb-4">
           ${['n','mean','sd'].map(k=>`<div class="bg-slate-50 border border-slate-200 rounded-xl p-2">
-            <p class="text-[9px] font-bold text-slate-400 uppercase">${({n:'Sampel',mean:'Rata-rata',sd:'Std dev'})[k]}</p>
+            <p class="text-[9px] font-bold text-slate-400 uppercase">${({n:'Samples',mean:'Mean',sd:'Std dev'})[k]}</p>
             <p id="ex-${k}" class="text-sm font-black text-slate-700 num">—</p></div>`).join('')}
         </div>
         <div class="flex gap-2">
@@ -3924,13 +3925,13 @@ const Experiments = {
     this.measured=measured;
     if(cfg.compare){
       const theory = FormulaEngine.evaluate(cfg.compare.theory, {});
-      $('ex-compare').innerHTML = Comparison.card(theory, measured, cfg.compare.unit||cfg.unit, cfg.compare.label||'Theory vs Observation')
-        + `<div class="card p-4 mt-3"><p class="text-[11px] font-bold text-slate-400 uppercase mb-1">Experiment metadata</p>
+      $('ex-compare').innerHTML = Comparison.card(theory, measured, cfg.compare.unit||cfg.unit, cfg.compare.label||'Theory vs Kenyataan')
+        + `<div class="card p-4 mt-3"><p class="text-[11px] font-bold text-slate-400 uppercase mb-1">Metadata eksperimen</p>
            <pre class="text-[10px] text-slate-500 overflow-x-auto">${esc(JSON.stringify(Recorder.meta(),null,1))}</pre></div>`;
       Progress.add(20, APP.state.moduleId+':experiment');
     } else {
       $('ex-compare').innerHTML = `<div class="card p-4"><p class="text-[11px] font-bold text-slate-400 uppercase mb-2">Measurement summary</p>
-        <div class="grid grid-cols-2 gap-2 text-[12px]">${[['Rata-rata',st.mean],['Median',st.median],['Min',st.min],['Maks',st.max],['Std dev',st.sdS],['Sampel',st.n]]
+        <div class="grid grid-cols-2 gap-2 text-[12px]">${[['Mean',st.mean],['Median',st.median],['Min',st.min],['Maks',st.max],['Std dev',st.sdS],['Samples',st.n]]
         .map(([k,v])=>`<div class="flex justify-between bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5"><span class="text-slate-500 font-bold">${k}</span><span class="font-black text-slate-700 num">${Precision.format(v,{decimals:3})}</span></div>`).join('')}</div></div>`;
       Progress.add(15, APP.state.moduleId+':experiment');
     }
@@ -4105,7 +4106,7 @@ const Quiz = {
     const v = parseFloat($('q-'+i).value);
     if(Number.isNaN(v)){ UI.toast('Isi jawabannya dulu','amber'); return; }
     const ok = Math.abs(v-ans)<=tol;
-    $('qres-'+i).innerHTML = `<p class="text-[12px] font-bold ${ok?'text-emerald-600':'text-rose-600'}"><i class="fa-solid ${ok?'fa-circle-check':'fa-circle-xmark'} mr-1"></i>${ok?'Benar!':'Belum tepat — selisih '+Precision.format(Math.abs(v-ans))}</p>`;
+    $('qres-'+i).innerHTML = `<p class="text-[12px] font-bold ${ok?'text-emerald-600':'text-rose-600'}"><i class="fa-solid ${ok?'fa-circle-check':'fa-circle-xmark'} mr-1"></i>${ok?'Correct!':'Not quite — selisih '+Precision.format(Math.abs(v-ans))}</p>`;
     if(ok) Progress.add(xp, modId+':q'+i);
   }
 };
@@ -4118,7 +4119,7 @@ const Games = {
     return `<div class="card p-5 mb-3">
         <div class="flex justify-between items-center mb-3">
           <h3 class="font-extrabold text-slate-800 text-[15px]"><i class="fa-solid fa-bullseye text-rose-500 mr-1.5"></i>Target Practice</h3>
-          <span id="g-score" class="text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded-full">Skor 0</span>
+          <span id="g-score" class="text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded-full">Score 0</span>
         </div>
         <div class="grid grid-cols-2 gap-2 mb-4">
           <div class="bg-rose-50 border border-rose-200 rounded-xl p-3 text-center"><p class="text-[10px] font-bold text-rose-500 uppercase">Target</p><p id="g-target" class="text-xl font-black text-rose-700 num">—</p><p class="text-[10px] text-rose-400">meter</p></div>
@@ -4152,7 +4153,7 @@ const Games = {
         s._scored=true;
         const err=Math.abs(s.range-this.target), pct=err/this.target*100;
         const pts = pct<1?100:pct<3?60:pct<8?30:pct<15?10:0;
-        this.score+=pts; $('g-score').textContent='Skor '+this.score;
+        this.score+=pts; $('g-score').textContent='Score '+this.score;
         const tone = pts>=60?'emerald':pts>=10?'amber':'rose';
         $('g-result').innerHTML=`<div class="bg-${tone}-50 border border-${tone}-200 rounded-xl p-3.5">
           <p class="text-sm font-black text-${tone}-800">${pts>=60?'🎯 KENA!':pts>=10?'Hampir!':'Meleset'} +${pts} poin</p>
@@ -4203,7 +4204,7 @@ const CUSTOM_VIEWS = {
     <div class="card p-4">
       <div class="flex justify-between items-center mb-2">
         <h3 class="font-bold text-slate-700 text-sm"><i class="fa-solid fa-clock-rotate-left text-indigo-500 mr-1.5"></i>Riwayat</h3>
-        <button onclick="SciCalc.hist=[];SciCalc.paint()" class="text-[11px] font-bold text-slate-400">Bersihkan</button>
+        <button onclick="SciCalc.hist=[];SciCalc.paint()" class="text-[11px] font-bold text-slate-400">Clear</button>
       </div>
       <div id="sc-hist" class="space-y-1.5 text-[12px]"></div>
     </div>`;
@@ -4343,7 +4344,7 @@ const CUSTOM_VIEWS = {
         <button onclick="Recorder.exportCSV()" class="flex-1 bg-white border border-slate-200 text-slate-600 font-bold py-2 rounded-xl text-[11px]"><i class="fa-solid fa-file-csv mr-1"></i>CSV</button>
         <button onclick="Recorder.exportJSON()" class="flex-1 bg-white border border-slate-200 text-slate-600 font-bold py-2 rounded-xl text-[11px]"><i class="fa-solid fa-file-code mr-1"></i>JSON</button>
       </div>
-      <p id="sl-recinfo" class="text-[11px] text-slate-400 mt-2">Belum merekam.</p>
+      <p id="sl-recinfo" class="text-[11px] text-slate-400 mt-2">Not recording yet.</p>
     </div>
     <div class="card p-5">
       <h3 class="font-bold text-slate-700 text-sm mb-2"><i class="fa-solid fa-flask-vial text-emerald-500 mr-1.5"></i>Ide eksperimen</h3>
@@ -4410,7 +4411,7 @@ const Grapher = {
       datasets.push({ label:'y'+(ix+1)+' = '+src, data, borderColor:col, backgroundColor:col+'22', borderWidth:2.5, tension:.2, pointRadius:0, spanGaps:false });
     });
     Viz.state('chart');
-    Viz.line({ title:'Grafik fungsi', labels, datasets, xLabel:'x', yLabel:'y' });
+    Viz.line({ title:'Chart fungsi', labels, datasets, xLabel:'x', yLabel:'y' });
     this.evalAt();
   },
   evalAt(){
@@ -4470,7 +4471,7 @@ const StatsView = {
     out.innerHTML = `<div class="card p-5">
       <h3 class="font-bold text-slate-700 text-sm mb-3"><i class="fa-solid fa-calculator text-cyan-500 mr-1.5"></i>Summary (n = ${s.n})</h3>
       <div class="grid grid-cols-2 gap-2">
-        ${[['Rata-rata',s.mean],['Median',s.median],['Modus',s.mode.length?s.mode.join(', '):'—'],['Jangkauan',s.range],
+        ${[['Mean',s.mean],['Median',s.median],['Modus',s.mode.length?s.mode.join(', '):'—'],['Jangkauan',s.range],
            ['Minimum',s.min],['Maksimum',s.max],['Variansi (s²)',s.varS],['Std dev (s)',s.sdS],
            ['Q1',s.q1],['Q3',s.q3],['IQR',s.q3-s.q1],['Jumlah',s.sum]].map(([k,v])=>`
           <div class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2"><p class="text-[10px] font-bold text-slate-400 uppercase">${k}</p>
@@ -4484,7 +4485,7 @@ const StatsView = {
     for(let i=0;i<bins;i++) labels.push(`${rnd(s.min+i*w,1)}–${rnd(s.min+(i+1)*w,1)}`);
     d.vals.forEach(v=>{ counts[clamp(Math.floor((v-s.min)/w),0,bins-1)]++; });
     Viz.state('chart');
-    Viz.chartRaw({ type:'bar', data:{ labels, datasets:[{ label:'Frekuensi', data:counts, backgroundColor:'#06b6d4aa', borderColor:'#0891b2', borderWidth:1.5 }]},
+    Viz.chartRaw({ type:'bar', data:{ labels, datasets:[{ label:'Frequency', data:counts, backgroundColor:'#06b6d4aa', borderColor:'#0891b2', borderWidth:1.5 }]},
       options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{beginAtZero:true, title:{display:true,text:'frekuensi'}} } } }, 'Histogram');
   }
 };
@@ -4740,7 +4741,7 @@ const UI = {
         <input type="checkbox" ${APP.simulateSensors?'checked':''} onchange="APP.simulateSensors=this.checked;UI.toast('Sensor simulation '+(this.checked?'ON':'OFF'))" class="w-5 h-5 accent-indigo-600">
       </label>
       <button onclick="if(confirm('Reset XP & progress?')){localStorage.removeItem('psl.progress');location.reload()}" class="w-full bg-rose-50 border border-rose-200 text-rose-700 font-bold py-2.5 rounded-xl text-sm">Reset progress</button>
-      <p class="text-[10px] text-slate-400 mt-3 text-center">Living Heritage in Education v0.2 · offline-first · modular learning engine</p>`);
+      <p class="text-[10px] text-slate-400 mt-3 text-center">Living Heritage in Education v0.2 · offline-first · engine modular</p>`);
   },
   constantsModal(){
     this.modal('Scientific Constants', `<div class="space-y-1.5">${Object.keys(CONSTANTS).map(k=>`
@@ -4832,7 +4833,7 @@ document.addEventListener('keydown', e=>{
   UI.homeCaps();
   UI.renderHome();
   Router.home();
-  console.log('%cLiving Heritage in Education v0.2','background:#4f46e5;color:#fff;padding:2px 8px;border-radius:4px',
+  console.log('%cLiving Heritage LAB v0.3','background:#4f46e5;color:#fff;padding:2px 8px;border-radius:4px',
     '\nModul:',Registry.all.length,'· Engine simulasi:',Object.keys(SIM_ENGINES).length,
     '\nTambah modul di §14 MODULE REGISTRY.');
 })();

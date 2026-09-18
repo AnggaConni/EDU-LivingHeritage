@@ -4218,14 +4218,29 @@ learn: {
   modes:{
     learn:{blocks:[
       {t:'h',text:'Gotong Royong is not just muscle; it is coordination.'},
-      {t:'p',text:'When many people work together (Gotong Royong), moving the object is the easy part. The hard part is <b>Communication</b>. If the leader says "Move left!" but the message is passed indirectly from person to person, the last person might hear "Move right!" causing the team to fail or get hurt.'},
-      {t:'formula',tex:'Final Clarity = 100 \\times (1 - distortion)^{n}',desc:'In Information Theory, every time a message is passed to a new person (n), a small percentage of information is lost or distorted.'},
+      {t:'p',text:'When a community works together (Gotong Royong) to lift a traditional house or build a bridge, moving the object is actually the easy part. The hardest part is <b>Communication</b>. If 50 people lift a heavy log, they must lift at the exact same millisecond. If the leader says "Move left!" but the message is passed indirectly, the last person might hear "Move right!" causing the team to fail or get hurt.'},
+      
+      {t:'h',text:'Why do messages change even when no one is lying?'},
+      {t:'p',text:'You might wonder: "If A tells B, and B tells C, why does C hear something completely different? Nobody is lying!" In Information Theory and Psychology, this is called <b>Distortion</b> or <b>Noise</b>. It happens naturally due to several reasons:'},
+      
       {t:'list',items:[
-        '<b>The Telephone Game (Bisik-Bisik):</b> Even if everyone is honest, human memory and listening skills are not 100% perfect. A 10% distortion over 10 people means the final message is completely ruined.',
-        '<b>Indirect Communication (Chain):</b> "Tell B to tell C to tell D." Slow, and highly prone to fatal errors and misunderstandings.',
-        '<b>Direct Communication (Broadcast):</b> The leader or coordinator speaks directly to everyone at once. Distortion happens only once, saving the teamwork.'
+        '<b>The Photocopy Effect:</b> Imagine photocopying a drawing. Then you photocopy the copy. Then you copy it again. By the 10th time, the picture is blurry. Human memory works the same way. We rarely remember exact words; we remember <i>impressions</i>.',
+        '<b>The Translation Filter:</b> When B hears A, B translates the words into their own understanding. When B tells C, B uses their own vocabulary. "Push the heavy beam carefully" might turn into "Move the wood," losing important safety details.',
+        '<b>Loss of Context (Tone & Urgency):</b> A says urgently and loudly, "Stop, it is falling!" B tells C calmly, "A said we should wait a minute." The words survived, but the urgency completely vanished.',
+        '<b>The "Filling the Blanks" Trap:</b> If B forgets a small detail, the human brain automatically guesses and fills in the blank to make the story make sense. B passes this "guess" to C as a proven fact without realizing it.'
       ]},
-      {t:'note',tone:'warn',text:'A damaged message causes misunderstandings, resentment, and destroys the social trust needed for Gotong Royong. Speak directly to the source!'}
+
+      {t:'formula',tex:'Final Clarity = 100 \\times (1 - distortion)^{n}',desc:'In Information Theory, every time a message is passed to a new person (n), a percentage of the original meaning is mathematically lost.'},
+      
+      {t:'h',text:'Network Topologies in Real Life'},
+      {t:'kv',items:[
+        ['Indirect (Chain)','A tells B, B tells C, C tells D. This is the "Telephone Game" (Bisik-Bisik). It is slow, and if everyone makes just a 15% mental error, after 10 people, the message clarity drops to 23%.'],
+        ['Direct (Broadcast)','The leader stands in the middle and speaks loudly to everyone at once. Distortion happens only once (Leader to Everyone), keeping the team perfectly synchronized.']
+      ]},
+
+      {t:'p',text:'This is why in traditional Gotong Royong, there is always a coordinator who shouts instructions, blows a whistle, or sings a rhythmic chant (like "Hoo-ha!" or "Satu, dua, TIGA!"). It ensures everyone receives the exact same uncorrupted signal simultaneously.'},
+      
+      {t:'note',tone:'warn',text:'Never rely on "He said, she said" (Katanya si A...) for important teamwork. A damaged message causes misunderstandings, resentment, and destroys the social trust needed for collaboration. Speak directly to the source!'}
     ]},
     simulate:{
       engine:'gotongroyong', 

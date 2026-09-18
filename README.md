@@ -34,13 +34,13 @@ One recurring scenario is invitation and spending: having enough money yourself 
 
 ### 2. Kōbō Fude o Erabazu — Learn to Use the Tool
 
-The Japanese proverb **「弘法筆を選ばず」 (Kōbō fude o erabazu)** is commonly explained as the idea that a skilled person can work well without blaming the quality of the tool. citeturn321746search0turn321746search3
+The Japanese proverb **「弘法筆を選ばず」 (Kōbō fude o erabazu)** is commonly explained as the idea that a skilled person can work well without blaming the quality of the tool. See the Japanese dictionary reference at https://kotobank.jp/word/%E5%BC%98%E6%B3%95%E7%AD%86%E3%82%92%E9%81%B8%E3%81%B0%E3%81%9A-2236155 and the Kumano Fude Business Cooperative explanation at https://www.kumanofude.or.jp/quiz/quiz08-explanation/.
 
 The module uses that proverb to teach adaptive agency:
 
 **Observe constraints → learn the controls → change technique → continue.**
 
-The lesson is deliberately not “tools never matter.” Historical commentary notes that Kūkai himself discussed choosing brushes carefully, so the educational interpretation is about adaptability rather than pretending all tools are equal. citeturn321746search0
+The lesson is deliberately not “tools never matter.” Historical commentary notes that Kūkai himself discussed choosing brushes carefully, so the educational interpretation is about adaptability rather than pretending all tools are equal. See Kotobank’s historical note on the expression: https://kotobank.jp/word/%E5%BC%98%E6%B3%95%E7%AD%86%E3%82%92%E9%81%B8%E3%81%B0%E3%81%9A-2236155.
 
 This principle is applied beyond physical tools: motorcycles, kitchens, cameras, maps, spreadsheets, databases, code, AI systems, projects, teams, institutions, and unfamiliar problems.
 

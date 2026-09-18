@@ -2721,9 +2721,9 @@ learn: {
         { id:'h', label:'Object height (cm)', default:3, step:0.1 }
       ],
       outputs:[
-        { id:'si', label:"Jarak bayangan s′", formula:{expr:'1/(1/f - 1/s)'}, unit:'cm' },
+        { id:'si', label:"Shadow image distance s′", formula:{expr:'1/(1/f - 1/s)'}, unit:'cm' },
         { id:'M', label:'Magnification M', formula:{expr:'-si/s'}, decimals:3 },
-        { id:'hi', label:"Tinggi bayangan h′", formula:{expr:'M*h'}, unit:'cm' },
+        { id:'hi', label:"Image height h′", formula:{expr:'M*h'}, unit:'cm' },
         { id:'kuat', label:'Lens power (diopters)', formula:{expr:'100/f'}, decimals:2, hint:'Positive s′ = real image; negative = virtual image.' }
       ]
     },
@@ -2759,7 +2759,7 @@ learn: {
       {t:'h', text:'Why can a metal car provide some protection during lightning?'},
       {t:'p', text:'A metal car body is a conductor. In a strong external electric field, charges redistribute on the metal so the field inside the passenger compartment is greatly reduced. Current can travel along the exterior rather than through the occupants.'},
       {t:'formula', tex:'E_dalam ≈ 0', desc:'For a closed conductor in electrostatic equilibrium.'},
-      {t:'list', items:['Yang melindungi adalah <b>logam yang menutupi</b>, bukan ban karet','Large openings reduce shielding effectiveness','Fabric/plastic (a tent) provides little shielding','Microwaves and USB cables also involve related electromagnetic principles']},
+      {t:'list', items:['The protective element is the <b>conductive enclosure</b>, not the rubber tires','Large openings reduce shielding effectiveness','Fabric/plastic (a tent) provides little shielding','Microwaves and USB cables also involve related electromagnetic principles']},
       {t:'note', tone:'warn', text:'A motorcycle does not enclose the rider in a conductive metal cabin, so it does not provide the same type of protection as a car.'}
     ]},
     simulate:{
@@ -3234,7 +3234,7 @@ const MODE_RENDERERS = {
     <div class="card p-5 mb-3">
       <h3 class="font-bold text-slate-700 text-sm mb-3"><i class="fa-solid fa-cube text-fuchsia-500 mr-1.5"></i>Sesi AR (WebXR)</h3>
       <button onclick="ARLab.start()" ${Capabilities.has('ar')?'':'disabled'} class="w-full ${Capabilities.has('ar')?'bg-gradient-to-r from-fuchsia-500 to-violet-500':'bg-slate-200 text-slate-400'} text-white font-bold py-3 rounded-xl text-sm shadow">
-        <i class="fa-solid fa-vr-cardboard mr-1"></i>${Capabilities.has('ar')?'Mulai Ukur di AR':'AR is not available on this device'}</button>
+        <i class="fa-solid fa-vr-cardboard mr-1"></i>${Capabilities.has('ar')?'Measure with AR':'AR is not available on this device'}</button>
       <p class="text-[11px] text-slate-400 mt-2">Tap the surface for points 1 and 2. Requires Chrome on Android + ARCore. In an APK, this can be enhanced through the native bridge (ARCore Depth).</p>
     </div>
 
@@ -4188,7 +4188,7 @@ const UI = {
         <input type="checkbox" ${APP.simulateSensors?'checked':''} onchange="APP.simulateSensors=this.checked;UI.toast('Sensor simulation '+(this.checked?'ON':'OFF'))" class="w-5 h-5 accent-indigo-600">
       </label>
       <button onclick="if(confirm('Reset XP & progress?')){localStorage.removeItem('psl.progress');location.reload()}" class="w-full bg-rose-50 border border-rose-200 text-rose-700 font-bold py-2.5 rounded-xl text-sm">Reset progress</button>
-      <p class="text-[10px] text-slate-400 mt-3 text-center">Living Heritage in Education v0.2 · offline-first · engine modular</p>`);
+      <p class="text-[10px] text-slate-400 mt-3 text-center">Living Heritage in Education v0.2 · offline-first · modular learning engine</p>`);
   },
   constantsModal(){
     this.modal('Scientific Constants', `<div class="space-y-1.5">${Object.keys(CONSTANTS).map(k=>`

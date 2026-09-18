@@ -597,9 +597,9 @@ const UNITS = {
                    F:{toBase:v=>(v-32)*5/9+273.15, fromBase:v=>(v-273.15)*9/5+32} } },
   frequency:   { base:'Hz',  label:'Frekuensi',    units:{ Hz:1, kHz:1000, MHz:1e6, rpm:1/60 } },
   angle:       { base:'rad', label:'Angle',        units:{ rad:1, deg:Math.PI/180, grad:Math.PI/200, putaran:2*Math.PI } },
-  voltage:     { base:'V',   label:'Tegangan',     units:{ V:1, mV:.001, kV:1000 } },
+  voltage:     { base:'V',   label:'Voltage',     units:{ V:1, mV:.001, kV:1000 } },
   current:     { base:'A',   label:'Arus',         units:{ A:1, mA:.001, uA:1e-6 } },
-  resistance:  { base:'ohm', label:'Hambatan',     units:{ ohm:1, kohm:1000, Mohm:1e6 } },
+  resistance:  { base:'ohm', label:'Resistance',     units:{ ohm:1, kohm:1000, Mohm:1e6 } },
   data:        { base:'B',   label:'Data',         units:{ B:1, KB:1024, MB:1048576, GB:1073741824 } }
 };
 const UNIT_LABEL = { ms:'m/s', kmh:'km/h', ms2:'m/s²', m2:'m²', cm2:'cm²', km2:'km²', ft2:'ft²', m3:'m³', cm3:'cm³',
@@ -2402,51 +2402,51 @@ learn: {
 
 /* ───────── FISIKA ───────── */
 {
-  id:'phys-projectile', category:'Physics', title:'Gerak Parabola', subtitle:'Calculate → simulasi → ukur pakai kamera',
+  id:'phys-projectile', category:'Physics', title:'Projectile Motion', subtitle:'Calculate → simulate → measure with the camera',
   icon:'fa-baseball', color:'orange', tags:['parabola','proyektil','kinematika','kamera'],
   capabilities:['calculator','simulation','camera','game'], visual:'sim',
   safety:{ level:'medium', warnings:[
-    {severity:'warning', text:'Lempar bola di ruang terbuka. Jauhkan dari kaca, orang lain, dan lalu lintas.'},
-    {severity:'info', text:'Letakkan HP di tempat stabil (tripod/tumpukan buku), jangan dipegang saat merekam.'}]},
+    {severity:'warning', text:'Throw the ball only in an open area. Keep away from glass, other people, and traffic.'},
+    {severity:'info', text:'Place the phone on a stable surface (tripod or stacked books); do not hold it while recording.'}]},
   modes:{
     learn:{ blocks:[
       {t:'h', text:'Two motions at the same time'},
-      {t:'p', text:'Gerak parabola = gerak <b>lurus beraturan</b> arah horizontal + gerak <b>dipercepat</b> arah vertikal. Keduanya berjalan mandiri, hanya berbagi waktu yang sama.'},
+      {t:'p', text:'Projectile motion combines <b>uniform horizontal motion</b> with <b>accelerated vertical motion</b>. The two components evolve independently while sharing the same time.'},
       {t:'formula', tex:'x(t) = v₀·cosθ·t', desc:'Horizontal: tanpa percepatan (jika hambatan udara diabaikan).'},
       {t:'formula', tex:'y(t) = v₀·sinθ·t − ½g·t²', desc:'Vertikal: ditarik gravitasi terus-menerus.'},
-      {t:'formula', tex:'R = v₀²·sin(2θ) / g', desc:'Jarak terjauh. Maksimum saat θ = 45° (di tanah datar, tanpa udara).'},
-      {t:'note', tone:'tip', text:'Angle 30° dan 60° memberi jarak yang sama — tapi lintasan dan waktu udaranya beda!'},
+      {t:'formula', tex:'R = v₀²·sin(2θ) / g', desc:'Maximum range. It occurs at θ = 45° for level ground with no air resistance.'},
+      {t:'note', tone:'tip', text:'Angles of 30° and 60° can give the same range under ideal conditions, but their trajectories and flight times differ.'},
       {t:'steps', items:['Tebak dulu: sudut berapa paling jauh?','Uji di tab Simulate','Aktifkan hambatan udara, lihat sudut optimum turun','Lempar bola sungguhan di tab Experiment']}
     ]},
     calculate:{
       inputs:[
-        { id:'v0', label:'Speed awal', default:20, unit:{family:'speed', base:'ms', options:['ms','kmh']}, min:0 },
-        { id:'angle', label:'Angle lemparan (°)', default:45, type:'range', min:1, max:89, step:1 },
-        { id:'h0', label:'Tinggi awal (m)', default:0, min:0, step:0.1 },
-        { id:'g', label:'Gravitasi', default:9.80665, type:'select', options:[
+        { id:'v0', label:'Initial speed', default:20, unit:{family:'speed', base:'ms', options:['ms','kmh']}, min:0 },
+        { id:'angle', label:'Launch angle (°)', default:45, type:'range', min:1, max:89, step:1 },
+        { id:'h0', label:'Initial height (m)', default:0, min:0, step:0.1 },
+        { id:'g', label:'Gravity', default:9.80665, type:'select', options:[
             {label:'Bumi (9.81)', value:9.80665},{label:'Bulan (1.62)', value:1.62},
             {label:'Mars (3.72)', value:3.72},{label:'Jupiter (24.79)', value:24.79}] }
       ],
       outputs:[
-        { id:'vx', label:'Speed horizontal', formula:{expr:'v0*cos(angle)'}, unit:'ms' },
-        { id:'vy', label:'Speed vertikal awal', formula:{expr:'v0*sin(angle)'}, unit:'ms' },
-        { id:'tTop', label:'Time sampai puncak', formula:{expr:'vy/g'}, unit:'s' },
+        { id:'vx', label:'Horizontal speed', formula:{expr:'v0*cos(angle)'}, unit:'ms' },
+        { id:'vy', label:'Initial vertical speed', formula:{expr:'v0*sin(angle)'}, unit:'ms' },
+        { id:'tTop', label:'Time to peak', formula:{expr:'vy/g'}, unit:'s' },
         { id:'hMax', label:'Tinggi maksimum', formula:{expr:'h0 + vy^2/(2*g)'}, unit:'m' },
-        { id:'tTot', label:'Time di udara', formula:{expr:'(vy + sqrt(vy^2 + 2*g*h0))/g'}, unit:'s' },
-        { id:'range', label:'Jarak tempuh', formula:{expr:'vx*tTot'}, unit:'m', hint:'Model ideal: tanpa hambatan udara, tanpa angin.' }
+        { id:'tTot', label:'Flight time', formula:{expr:'(vy + sqrt(vy^2 + 2*g*h0))/g'}, unit:'s' },
+        { id:'range', label:'Range', formula:{expr:'vx*tTot'}, unit:'m', hint:'Model ideal: tanpa hambatan udara, tanpa angin.' }
       ],
       notes:'Angle dihitung dalam derajat pada modul ini (mode sudut kalkulator unavailable mempengaruhi).',
       chart:{ title:'Jarak tempuh vs sudut lemparan', xLabel:'Angle (°)', yLabel:'Jarak (m)',
         x:{ id:'angle', from:1, to:89, steps:44 },
-        series:[{ label:'Jarak (m)', expr:'v0*cos(angle)*(v0*sin(angle)+sqrt((v0*sin(angle))^2+2*g*h0))/g', color:'#ea580c' }] }
+        series:[{ label:'Range (m)', expr:'v0*cos(angle)*(v0*sin(angle)+sqrt((v0*sin(angle))^2+2*g*h0))/g', color:'#ea580c' }] }
     },
     simulate:{
       engine:'projectile',
       params:{ v0:22, angle:45, g:9.80665, drag:0 },
       controls:[
-        { id:'v0', label:'Speed awal', min:5, max:60, step:1, unit:'m/s' },
+        { id:'v0', label:'Initial speed', min:5, max:60, step:1, unit:'m/s' },
         { id:'angle', label:'Angle', min:5, max:85, step:1, unit:'°' },
-        { id:'g', label:'Gravitasi', min:1.6, max:25, step:0.01, unit:'m/s²',
+        { id:'g', label:'Gravity', min:1.6, max:25, step:0.01, unit:'m/s²',
           presets:[['Bumi',9.80665],['Bulan',1.62],['Mars',3.72],['Jupiter',24.79]] },
         { id:'drag', label:'Hambatan udara (k)', min:0, max:0.25, step:0.005 },
         { id:'h0', label:'Tinggi awal', min:0, max:20, step:0.5, unit:'m' }
@@ -2466,37 +2466,37 @@ learn: {
     },
     challenge:{ game:'projectile-target' },
     everyday:{ items:[
-      { q:'Kenapa penembak jitu dan pemain basket unavailable selalu memakai sudut 45°?',
+      { q:'Why do snipers and basketball players not always use a 45° angle?',
         options:['Karena 45° hanya optimum untuk ketinggian awal & akhir sama tanpa hambatan udara','Karena 45° salah rumus','Karena gravitasi berubah-ubah'],
-        answer:0, concepts:['sudut optimum','ketinggian awal','hambatan udara'],
+        answer:0, concepts:['optimal angle','initial height','air resistance'],
         explain:'Rumus R = v₀²sin2θ/g berlaku untuk tanah datar tanpa udara. Jika titik lepas lebih tinggi dari target atau ada hambatan udara, sudut optimum menjadi lebih kecil dari 45°.',
         tryIt:'Di tab Simulate, set h₀ = 10 m lalu cari sudut yang menghasilkan jarak terbesar.' }
     ]}
   }
 },
 {
-  id:'phys-freefall', category:'Physics', title:'Jatuh Bebas & Gravitasi', subtitle:'Ukur g dengan sensor HP',
+  id:'phys-freefall', category:'Physics', title:'Free Fall & Gravity', subtitle:'Measure g with the phone sensor',
   icon:'fa-arrow-down-long', color:'blue', tags:['gravitasi','jatuh bebas','akselerometer'],
   capabilities:['calculator','simulation','motion'], visual:'sim',
-  safety:{ level:'medium', warnings:[{severity:'critical', text:'JANGAN menjatuhkan atau melempar HP. Eksperimen ini cukup dengan HP diam di meja.'}]},
+  safety:{ level:'medium', warnings:[{severity:'critical', text:'DO NOT drop or throw the phone. This experiment only requires the phone to remain still on a table.'}]},
   modes:{
     learn:{ blocks:[
-      {t:'h', text:'Semua benda jatuh sama cepat — kalau unavailable ada udara'},
-      {t:'p', text:'Bulu dan batu jatuh bersamaan di ruang vakum (dibuktikan astronaut Apollo 15 di Bulan). Yang membuat bulu lambat adalah hambatan udara, bukan massanya.'},
-      {t:'formula', tex:'v = g·t', desc:'Speed bertambah 9.81 m/s setiap detik.'},
-      {t:'formula', tex:'h = ½g·t²', desc:'Jarak jatuh sebanding kuadrat waktu.'},
-      {t:'note', tone:'info', text:'Accelerometer HP saat diam justru membaca ≈ 9.8 m/s² — karena ia mengukur gaya normal meja, bukan "percepatan gerak". Justru itulah cara mengukur g.'}
+      {t:'h', text:'All objects fall at the same rate — when there is no air resistance'},
+      {t:'p', text:'A feather and a stone fall together in a vacuum. In Earth’s atmosphere, air resistance—not mass alone—makes the feather fall more slowly.'},
+      {t:'formula', tex:'v = g·t', desc:'Speed increases by 9.81 m/s every second.'},
+      {t:'formula', tex:'h = ½g·t²', desc:'Fall distance is proportional to time squared.'},
+      {t:'note', tone:'info', text:'A phone accelerometer can read about 9.8 m/s² while the phone is at rest because it senses the support force from the table. That is useful for estimating g.'}
     ]},
     calculate:{
       inputs:[
-        { id:'h', label:'Ketinggian', default:20, unit:{family:'length', base:'m', options:['m','cm','km','ft']}, min:0 },
+        { id:'h', label:'Height', default:20, unit:{family:'length', base:'m', options:['m','cm','km','ft']}, min:0 },
         { id:'g', label:'Gravitasi (m/s²)', default:9.80665, min:0.1, step:0.01 }
       ],
       outputs:[
-        { id:'t', label:'Time jatuh', formula:{expr:'sqrt(2*h/g)'}, unit:'s' },
-        { id:'v', label:'Speed saat menyentuh tanah', formula:{expr:'g*t'}, unit:'ms' },
-        { id:'vkmh', label:'…dalam km/jam', formula:{expr:'g*t*3.6'}, unit:'kmh' },
-        { id:'ek', label:'Energy kinetik per kg', formula:{expr:'0.5*v^2'}, unit:'J', hint:'Untuk massa m, kalikan dengan m.' }
+        { id:'t', label:'Fall time', formula:{expr:'sqrt(2*h/g)'}, unit:'s' },
+        { id:'v', label:'Impact speed', formula:{expr:'g*t'}, unit:'ms' },
+        { id:'vkmh', label:'…in km/h', formula:{expr:'g*t*3.6'}, unit:'kmh' },
+        { id:'ek', label:'Kinetic energy per kg', formula:{expr:'0.5*v^2'}, unit:'J', hint:'Untuk massa m, kalikan dengan m.' }
       ],
       chart:{ title:'Speed vs waktu jatuh', xLabel:'waktu (s)', yLabel:'v (m/s)',
         x:{ id:'t', from:0, to:6, steps:24 },
@@ -2505,8 +2505,8 @@ learn: {
     simulate:{
       engine:'freefall', params:{ h:20, g:9.80665, drag:0.9 },
       controls:[
-        { id:'h', label:'Ketinggian', min:2, max:60, step:1, unit:'m' },
-        { id:'g', label:'Gravitasi', min:1.6, max:25, step:0.01, unit:'m/s²', presets:[['Bumi',9.80665],['Bulan',1.62],['Mars',3.72]] },
+        { id:'h', label:'Height', min:2, max:60, step:1, unit:'m' },
+        { id:'g', label:'Gravity', min:1.6, max:25, step:0.01, unit:'m/s²', presets:[['Bumi',9.80665],['Bulan',1.62],['Mars',3.72]] },
         { id:'drag', label:'Hambatan udara "bulu"', min:0, max:3, step:0.05 }
       ],
       tip:'Set hambatan udara ke 0 → keduanya jatuh identik. Itulah kondisi Bulan.'
@@ -2522,25 +2522,25 @@ learn: {
   }
 },
 {
-  id:'phys-pendulum', category:'Physics', title:'Ayunan Sederhana', subtitle:'Ukur periode → hitung g',
+  id:'phys-pendulum', category:'Physics', title:'Simple Pendulum', subtitle:'Measure the period → calculate g',
   icon:'fa-stopwatch', color:'emerald', tags:['pendulum','periode','osilasi'],
   capabilities:['calculator','simulation'], visual:'sim',
   modes:{
     learn:{ blocks:[
-      {t:'h', text:'Periode unavailable bergantung massa'},
-      {t:'formula', tex:'T = 2π √(L/g)', desc:'Hanya panjang tali dan gravitasi yang menentukan periode (untuk sudut kecil).'},
-      {t:'p', text:'Ini alasan jam bandul bisa akurat: ayunannya stabil selama panjang talinya tetap. Bahkan Galileo memakai denyut jantungnya untuk menemukan sifat ini.'},
-      {t:'note', tone:'warn', text:'Rumus ini <i>pendekatan sudut kecil</i> (&lt; ~15°). Di tab Simulate, naikkan θ₀ ke 80° dan lihat T terukur mulai melebihi T teori.'}
+      {t:'h', text:'The period does not depend on mass'},
+      {t:'formula', tex:'T = 2π √(L/g)', desc:'For small angles, only string length and gravity determine the period.'},
+      {t:'p', text:'This is why a pendulum clock can be accurate: its oscillation remains stable when the string length stays constant. Galileo even used his pulse to explore this property.'},
+      {t:'note', tone:'warn', text:'This formula is a <i>small-angle approximation</i> (&lt; ~15°). In Simulate, raise θ₀ to 80° and see the measured period begin to exceed the theoretical value.'}
     ]},
     calculate:{
       inputs:[
-        { id:'L', label:'Length tali', default:1, unit:{family:'length', base:'m', options:['m','cm']}, min:0.01 },
+        { id:'L', label:'String length', default:1, unit:{family:'length', base:'m', options:['m','cm']}, min:0.01 },
         { id:'g', label:'Gravitasi (m/s²)', default:9.80665, step:0.01 }
       ],
       outputs:[
         { id:'T', label:'Periode', formula:{expr:'2*pi*sqrt(L/g)'}, unit:'s' },
         { id:'f', label:'Frekuensi', formula:{expr:'1/T'}, unit:'Hz' },
-        { id:'n60', label:'Jumlah ayunan dalam 60 s', formula:{expr:'60/T'}, decimals:1 }
+        { id:'n60', label:'Oscillations in 60 s', formula:{expr:'60/T'}, decimals:1 }
       ],
       chart:{ title:'Periode vs panjang tali', xLabel:'L (m)', yLabel:'T (s)',
         x:{ id:'L', from:0.05, to:3, steps:30 },
@@ -2549,51 +2549,51 @@ learn: {
     simulate:{
       engine:'pendulum', params:{ L:1, theta0:25, g:9.80665, damping:0.02 },
       controls:[
-        { id:'L', label:'Length tali', min:0.1, max:3, step:0.05, unit:'m' },
-        { id:'theta0', label:'Angle awal', min:5, max:85, step:1, unit:'°' },
-        { id:'g', label:'Gravitasi', min:1.6, max:25, step:0.01, unit:'m/s²', presets:[['Bumi',9.80665],['Bulan',1.62]] },
+        { id:'L', label:'String length', min:0.1, max:3, step:0.05, unit:'m' },
+        { id:'theta0', label:'Initial angle', min:5, max:85, step:1, unit:'°' },
+        { id:'g', label:'Gravity', min:1.6, max:25, step:0.01, unit:'m/s²', presets:[['Bumi',9.80665],['Bulan',1.62]] },
         { id:'damping', label:'Redaman', min:0, max:0.5, step:0.01 }
       ],
       tip:'Bandingkan "T teori" dan "T terukur" pada HUD saat sudut awal besar.'
     },
     experiment:{
       type:'timer', title:'Ukur g dari ayunan nyata', cyclesPerLap:1,
-      steps:['Buat ayunan: benang + kunci/mur. Ukur panjang L dari titik gantung ke pusat beban.',
+      steps:['Build a pendulum with a string and a small weight. Measure L from the pivot to the center of mass.',
              'Simpangkan ±10°, lepaskan.','Tekan <b>Lap</b> setiap kali beban kembali ke titik yang sama arah yang sama.',
              'Ambil minimal 10 lap agar rata-rata stabil, lalu Stop.'],
       inputs:[{ id:'L', label:'Length tali (m)', default:0.5, step:0.01 }],
       derive:[
         { id:'T', label:'Periode rata-rata', expr:'lapMean', unit:'s' },
-        { id:'gMeas', label:'g hasil pengukuran', expr:'4*pi^2*L/T^2', unit:'ms2' }
+        { id:'gMeas', label:'Measured g', expr:'4*pi^2*L/T^2', unit:'ms2' }
       ],
       compare:{ measuredKey:'gMeas', theory:{constant:'g'}, unit:'ms2', label:'Percepatan gravitasi' }
     }
   }
 },
 {
-  id:'phys-ohm', category:'Physics', title:'Hukum Ohm & Power', subtitle:'V, I, R, dan biaya listrik',
+  id:'phys-ohm', category:'Physics', title:'Ohm’s Law & Power', subtitle:'V, I, R, dan biaya listrik',
   icon:'fa-bolt', color:'amber', tags:['listrik','ohm','daya','rangkaian'],
   capabilities:['calculator'], visual:'chart',
   modes:{
     learn:{ blocks:[
-      {t:'h', text:'Analogi air'},
+      {t:'h', text:'Water analogy'},
       {t:'kv', items:[['Tegangan (V)','tekanan air / dorongan listrik'],['Arus (I)','debit air yang mengalir'],['Hambatan (R)','pipa yang menyempit']]},
-      {t:'formula', tex:'V = I × R', desc:'Naikkan tekanan → aliran naik. Sempitkan pipa → aliran turun.'},
-      {t:'formula', tex:'P = V × I = I²R', desc:'Power = laju energi berubah jadi cahaya/panas/gerak.'},
-      {t:'note', tone:'warn', text:'Jangan bereksperimen dengan listrik PLN 220 V. Cukup baterai 1.5–9 V untuk belajar.'}
+      {t:'formula', tex:'V = I × R', desc:'Increase pressure → flow increases. Narrow the pipe → flow decreases.'},
+      {t:'formula', tex:'P = V × I = I²R', desc:'Power = the rate at which energy is converted into light, heat, or motion.'},
+      {t:'note', tone:'warn', text:'Do not experiment with 220 V mains electricity. Use a 1.5–9 V battery for learning.'}
     ]},
     calculate:{
       inputs:[
-        { id:'voltage', label:'Tegangan', default:12, unit:{family:'voltage', base:'V', options:['V','mV','kV']} },
-        { id:'resistance', label:'Hambatan', default:4, unit:{family:'resistance', base:'ohm', options:['ohm','kohm','Mohm']}, min:0.0001 },
-        { id:'jam', label:'Pemakaian per hari (jam)', default:5, type:'range', min:0, max:24, step:0.5 },
-        { id:'tarif', label:'Tarif listrik (Rp/kWh)', default:1445, step:5 }
+        { id:'voltage', label:'Voltage', default:12, unit:{family:'voltage', base:'V', options:['V','mV','kV']} },
+        { id:'resistance', label:'Resistance', default:4, unit:{family:'resistance', base:'ohm', options:['ohm','kohm','Mohm']}, min:0.0001 },
+        { id:'jam', label:'Daily usage (hours)', default:5, type:'range', min:0, max:24, step:0.5 },
+        { id:'tarif', label:'Electricity tariff (IDR/kWh)', default:1445, step:5 }
       ],
       outputs:[
-        { id:'current', label:'Arus listrik', formula:{op:'divide', args:['voltage','resistance']}, unit:'A' },
+        { id:'current', label:'Current', formula:{op:'divide', args:['voltage','resistance']}, unit:'A' },
         { id:'power', label:'Power', formula:{expr:'voltage*current'}, unit:'W' },
-        { id:'energi', label:'Energy per hari', formula:{expr:'power*jam/1000'}, unit:'kWh', decimals:3 },
-        { id:'biaya', label:'Biaya per bulan', formula:{expr:'energi*30*tarif'}, format:'currency', hint:'Perkiraan 30 hari pemakaian.' }
+        { id:'energi', label:'Energy per day', formula:{expr:'power*jam/1000'}, unit:'kWh', decimals:3 },
+        { id:'biaya', label:'Monthly cost', formula:{expr:'energi*30*tarif'}, format:'currency', hint:'Estimated for 30 days of use.' }
       ],
       chart:{ title:'Arus vs hambatan (V tetap)', xLabel:'R (Ω)', yLabel:'I (A)',
         x:{ id:'resistance', from:1, to:20, steps:20 },
@@ -2601,16 +2601,16 @@ learn: {
                 { label:'P = V²/R (W)', expr:'voltage^2/resistance', color:'#ef4444' }] }
     },
     everyday:{ items:[
-      { q:'Kenapa kabel charger terasa hangat saat mengisi baterai?',
+      { q:'Why can a charging cable feel warm while charging a battery?',
         options:['Karena kabel bocor listrik','Karena sebagian energi listrik berubah jadi panas akibat hambatan kabel','Karena baterai memanaskan kabel'],
-        answer:1, concepts:['P = I²R','efisiensi','disipasi'],
-        explain:'Kabel punya hambatan kecil R. Power yang hilang jadi panas = I²R. Arus besar (fast charging) → panas naik kuadratik. Kabel tipis (R besar) makin panas.',
-        tryIt:'Di Calculate, set R kecil (0.2 Ω) dan lihat bagaimana daya melonjak saat tegangan naik.' }
+        answer:1, concepts:['P = I²R','efficiency','dissipation'],
+        explain:'A cable has a small resistance R. Power dissipated as heat is I²R. Higher current increases heating quadratically, and a thinner, higher-resistance cable can get hotter.',
+        tryIt:'In Calculate, set R to 0.2 Ω and observe how power changes as voltage increases.' }
     ]},
     challenge:{ questions:[
-      { q:'Lampu 6 V dilalui arus 0.5 A. Berapa hambatannya (Ω)?', type:'numeric', answer:12, tol:0.1, unit:'Ω', xp:10, hint:'R = V / I' },
-      { q:'Dua hambatan 6 Ω dipasang paralel. Hambatan totalnya?', type:'numeric', answer:3, tol:0.05, unit:'Ω', xp:15, hint:'1/Rt = 1/R1 + 1/R2' },
-      { q:'Jika tegangan digandakan pada hambatan tetap, daya menjadi…', type:'choice', options:['2× lebih besar','4× lebih besar','tetap'], answer:1, xp:15, why:'P = V²/R, jadi V dua kali → P empat kali.' }
+      { q:'A 6 V lamp carries 0.5 A. What is its resistance (Ω)?', type:'numeric', answer:12, tol:0.1, unit:'Ω', xp:10, hint:'R = V / I' },
+      { q:'Two 6 Ω resistors are connected in parallel. What is the total resistance?', type:'numeric', answer:3, tol:0.05, unit:'Ω', xp:15, hint:'1/Rt = 1/R1 + 1/R2' },
+      { q:'If voltage is doubled across a fixed resistance, power becomes…', type:'choice', options:['2× larger','4× larger','unchanged'], answer:1, xp:15, why:'P = V²/R, so doubling V makes P four times larger.' }
     ]}
   }
 },

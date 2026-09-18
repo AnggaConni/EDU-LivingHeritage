@@ -8,18 +8,18 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   >
-  <meta name="theme-color" content="#4f46e5">
+  <meta name="theme-color" content="#0f766e">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Living Heritage">
 
   <!-- SEO -->
-  <title>Living Heritage in Education · Learning through Living Heritage</title>
+  <title>Living Heritage LAB · Pocket Learning in Living Heritage</title>
 
-  <meta name="description" content="Living Heritage in Education is a learning platform connecting living heritage with science, social learning, observation, experimentation, and reflection.">
+  <meta name="description" content="Living Heritage LAB is a modular learning platform connecting living heritage with science, social learning, observation, experimentation, and reflection.">
 
-  <meta name="keywords" content="living heritage, heritage education, intangible cultural heritage, ICH, UNESCO, education, STEM, science, social science, cultural heritage, inquiry-based learning">
+  <meta name="keywords" content="living heritage, living heritage lab, heritage education, intangible cultural heritage, ICH, UNESCO, education, science, social learning, relationships, inquiry-based learning">
 
   <meta name="author" content="AnggaConni">
   <meta name="robots" content="index, follow">
@@ -59,12 +59,12 @@
 
   <meta
     property="og:title"
-    content="Living Heritage in Education · Living Heritage & Education"
+    content="Living Heritage LAB · Pocket Learning in Living Heritage"
   >
 
   <meta
     property="og:description"
-    content="Transform your smartphone into an interactive science lab. Learn, calculate, experiment, measure, and visualize."
+    content="Learn science, living heritage, social skills, observation, experimentation, and reflection through a pocket learning lab."
   >
 
   <meta
@@ -78,7 +78,7 @@
 
   <meta
     property="og:site_name"
-    content="Living Heritage in Education"
+    content="Living Heritage LAB"
   >
 
   <meta
@@ -101,7 +101,7 @@
 
   <meta
     name="twitter:description"
-    content="A modular science learning platform that turns smartphones into interactive scientific instruments."
+    content="A modular learning platform connecting living heritage, science, relationships, observation, experimentation, and reflection."
   >
 
   <meta
@@ -143,12 +143,12 @@
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "Living Heritage in Education",
+    "name": "Living Heritage LAB",
     "alternateName": "Living Heritage in Education",
     "url": "https://anggaconni.github.io/EDU-LivingHeritage/",
     "applicationCategory": "EducationalApplication",
     "operatingSystem": "Web Browser",
-    "description": "A learning platform connecting living heritage with science, observation, experimentation, and reflection",
+    "description": "A pocket learning lab connecting living heritage with science, social learning, observation, experimentation, and reflection",
     "author": {
       "@type": "Person",
       "name": "AnggaConni"
@@ -171,7 +171,7 @@
   </script>
 
 <style>
-  :root{ --brand:#4f46e5; }
+  :root{ --brand:#0f766e; }
   body{ font-family:'Plus Jakarta Sans',sans-serif; background:#f6f8fc; }
   html,body{ height:100vh; height:100dvh; overflow:hidden; }
   ::-webkit-scrollbar{ width:6px;height:6px }
@@ -180,8 +180,8 @@
   @keyframes fade{ from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
   .pop{ animation:pop .25s ease }
   @keyframes pop{ 0%{transform:scale(.92)} 100%{transform:scale(1)} }
-  .tab-active{ color:#4f46e5; border-color:#4f46e5; background:#eef2ff }
-  .mtab-active{ color:#4f46e5; background:#eef2ff }
+  .tab-active{ color:#0f766e; border-color:#0f766e; background:#f0fdfa }
+  .mtab-active{ color:#0f766e; background:#f0fdfa }
   .card{ background:#fff;border:1px solid #e6ebf3;border-radius:1rem;box-shadow:0 1px 2px rgba(15,23,42,.04) }
   #map-wrapper{ display:flex;flex-direction:column;flex:1 1 auto;height:100%;min-height:45vh }
   #map{ flex:1 1 auto;height:100%!important;width:100%;border-radius:.75rem;z-index:10 }
@@ -233,9 +233,9 @@
   >
     <!-- Logo -->
     <div class="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl
-                bg-gradient-to-br from-indigo-500 via-blue-500 to-cyan-400
+                bg-gradient-to-br from-teal-500 via-cyan-500 to-emerald-400
                 flex items-center justify-center
-                shadow-md shadow-indigo-200">
+                shadow-md shadow-teal-200">
       <i class="fa-solid fa-flask-vial text-white text-sm sm:text-base"></i>
     </div>
 
@@ -244,13 +244,13 @@
       <h1 class="font-extrabold text-[12px] sm:text-[13px]
                  tracking-tight leading-none text-slate-800
                  truncate">
-        POCKET SCIENCE LAB
+        LIVING HERITAGE LAB
       </h1>
 
       <p class="text-[9px] sm:text-[10px]
                 text-slate-400 mt-1 leading-none
                 truncate">
-        Living Heritage learning platform · v0.2
+        Pocket learning in living heritage · v0.3
       </p>
     </div>
   </div>
@@ -395,10 +395,10 @@
       <!-- ===== HOME INFORMATION ===== -->
       <div
         class="relative overflow-hidden rounded-2xl
-              bg-gradient-to-br from-indigo-700 via-blue-700 to-cyan-600
+              bg-gradient-to-br from-teal-700 via-cyan-700 to-emerald-600
               p-4 sm:p-5
               text-white
-              shadow-lg shadow-blue-200/60
+              shadow-lg shadow-teal-200/60
               mb-5"
       >
 
@@ -421,9 +421,9 @@
           <p
             class="text-[10px] sm:text-[11px]
                   font-bold uppercase tracking-[0.14em]
-                  text-blue-100/80"
+                  text-teal-100/80"
           >
-            Phase 1 · Learning How to Live
+            Phase 2 · Maintaining Harmony
           </p>
 
 
@@ -436,10 +436,7 @@
                   tracking-tight
                   max-w-xl"
           >
-            Ask → Predict → Calculate
-            <span class="hidden sm:inline">→</span>
-            <br class="sm:hidden">
-            Simulate → Measure → Compare
+            How do we preserve the relationship?
           </h2>
 
 
@@ -447,11 +444,11 @@
           <p
             class="text-[11px] sm:text-xs
                   leading-relaxed
-                  text-blue-50/85
+                  text-teal-50/85
                   mt-2
                   max-w-lg"
           >
-            Before we learn to operate tools, we learn to operate ourselves: pause, consider other people, adapt to constraints, and act with awareness.
+            Learn how to maintain relationships: prevent unnecessary escalation, live with differences, use goodwill wisely, and repair harm when harmony breaks.
           </p>
 
 
@@ -472,7 +469,17 @@
       </div>
       <div id="cat-chips" class="flex gap-1.5 overflow-x-auto pb-2 mb-3"></div>
       <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3" id="module-grid"></div>
-      <div class="mt-6 card p-4 border-violet-100 bg-violet-50/60"><p class="text-[10px] font-black uppercase tracking-wider text-violet-600">Phase 1 · Living & Social Learning</p><p class="text-[12px] text-violet-900 mt-1 leading-relaxed">How should we live, respond, adapt, and work with others? Start with <b>Tepa Selira</b> and <b>Kōbō Fude o Erabazu</b>.</p></div><p class="text-[10px] text-slate-400 mt-4 text-center">All camera/sensor measurements are <b>educational estimates</b>, not laboratory-grade measurements.</p>
+      
+      <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="card p-4 border-violet-100 bg-violet-50/60">
+          <p class="text-[10px] font-black uppercase tracking-wider text-violet-600">Phase 1 · Learning How to Live</p>
+          <p class="text-[12px] text-violet-900 mt-1 leading-relaxed">How should we live, respond, adapt, and act with awareness? Start with <b>Tepa Selira</b> and <b>Kōbō Fude o Erabazu</b>.</p>
+        </div>
+        <div class="card p-4 border-teal-100 bg-teal-50/60">
+          <p class="text-[10px] font-black uppercase tracking-wider text-teal-600">Phase 2 · Maintaining Harmony</p>
+          <p class="text-[12px] text-teal-900 mt-1 leading-relaxed">How do we preserve the relationship? Explore <b>Wa</b>, <b>He</b>, <b>Jeong</b>, and <b>Shazai</b>.</p>
+        </div>
+      </div><p class="text-[10px] text-slate-400 mt-4 text-center">All camera/sensor measurements are <b>educational estimates</b>, not laboratory-grade measurements.</p>
     </div>
 
     <!-- MODULE -->
@@ -511,8 +518,8 @@
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   POCKET SCIENCE LAB · v0.2
-   ARSITEKTUR:  MODUL = "APA"   |   ENGINE = "BAGAIMANA"
+   LIVING HERITAGE LAB · v0.3
+   ARCHITECTURE: MODULE = "WHAT" | ENGINE = "HOW"
    ───────────────────────────────────────────────────────────────
    §0  util            §9  sensor manager     §17 custom views
    §1  app config      §10 native bridge      §18 visual pane
@@ -3191,6 +3198,357 @@ learn: {
   }
 }
 
+
+/* ───────── PHASE 2 · MAINTAINING HARMONY ───────── */
+{
+  id:'life-wa', category:'Living & Social Learning',
+  title:'Wa (和) — Harmony Before Winning',
+  subtitle:'Protect the relationship when disagreement appears',
+  icon:'fa-people-group', color:'teal',
+  tags:['wa','和','harmony','relationships','conflict prevention'],
+  capabilities:['calculator'], visual:'none',
+  modes:{
+    learn:{ blocks:[
+      {t:'h', text:'Sometimes the goal is not to win the argument. It is to keep the relationship workable.'},
+      {t:'p', text:'<b>Wa (和)</b> is presented here as a Japanese idea of valuing harmony and avoiding unnecessary quarrels. The educational question is simple: when a disagreement appears, what can we do so that the relationship can still function afterward?'},
+      {t:'p', text:'Harmony does not mean “never disagree.” It means choosing timing, language, and process carefully so a solvable problem does not become a permanent relationship problem.'},
+      {t:'kv', items:[
+        ['Problem','What actually needs to be solved?'],
+        ['Relationship','What should still be possible after this conversation?'],
+        ['Timing','Would saying this publicly make the situation harder?'],
+        ['Process','Can we talk privately, clarify intent, and find a workable next step?']
+      ]},
+      {t:'note', tone:'tip', text:'A disagreement can stay a disagreement. The learning goal is to prevent the disagreement from becoming humiliation, retaliation, or permanent withdrawal.'},
+      {t:'note', tone:'info', text:'Historical context: the Seventeen-Article Constitution associated with Prince Shōtoku is commonly translated as emphasizing harmony and avoidance of quarrels. Source: Britannica.'}
+    ]},
+    everyday:{ items:[
+      {
+        q:'During a group presentation, a student makes a joke about a teammate’s slide and the class laughs. The teammate goes quiet. What response best protects the relationship?',
+        options:[
+          'Make another joke so everyone stays relaxed',
+          'Talk privately with the student who made the joke and give the situation a chance to be repaired',
+          'Tell the embarrassed student to ignore it'
+        ],
+        answer:1,
+        explain:'Public confrontation can add another layer of embarrassment. A private conversation can create room for clarification, apology, and repair.',
+        concepts:['timing','conflict prevention','relationship repair'],
+        tryIt:'Think of a recent disagreement. What would change if the first repair conversation happened privately instead of in front of an audience?'
+      },
+      {
+        q:'Two friends disagree about how to divide work in a group project. What is more consistent with Wa?',
+        options:[
+          'Keep arguing until one person gives up',
+          'Focus on a workable arrangement that lets both people continue cooperating',
+          'Avoid discussing the disagreement at all'
+        ],
+        answer:1,
+        explain:'Wa is not silence. It is an approach that gives the relationship a chance to remain functional while the practical problem is solved.',
+        concepts:['cooperation','negotiation','harmony'],
+        tryIt:'Rewrite “I need to prove I am right” as a question about what arrangement would let the group move forward.'
+      }
+    ]},
+    challenge:{ questions:[
+      {
+        q:'A friend is upset after being corrected in front of everyone. What is the most useful next step?',
+        type:'choice',
+        options:[
+          'Explain again why you were right, in front of everyone',
+          'Create a private space to clarify what happened and repair the interaction',
+          'Tell the friend that being embarrassed is their problem'
+        ],
+        answer:1, xp:15,
+        why:'Wa focuses attention on what happens to the relationship after the disagreement, not only on who had the better argument.'
+      },
+      {
+        q:'Does harmony require everyone to agree?',
+        type:'choice',
+        options:['Yes, otherwise there is no harmony','No, people can disagree and still maintain the relationship','Only the older person needs to agree'],
+        answer:1, xp:15,
+        why:'Harmony can be a way of managing disagreement without turning difference into hostility.'
+      }
+    ]},
+    explore:{
+      html:\`<div class="space-y-3">
+        <div class="card p-4">
+          <h3 class="font-bold text-slate-700 text-sm">The Relationship-After Test</h3>
+          <p class="text-[12px] text-slate-600 mt-2 leading-relaxed">Before escalating a disagreement, ask:</p>
+          <ol class="text-[12px] text-slate-600 mt-2 space-y-1 list-decimal ml-5">
+            <li>What problem must actually be solved?</li>
+            <li>What relationship do I want to still have tomorrow?</li>
+            <li>What is the least damaging process that still addresses the issue?</li>
+          </ol>
+        </div>
+        <div class="card p-4 bg-teal-50 border-teal-200">
+          <p class="text-[12px] text-teal-900"><b>Practice:</b> Take “I must win this argument” and turn it into “I need the problem solved without making the relationship harder to repair.”</p>
+        </div>
+      </div>\`
+    }
+  }
+},
+{
+  id:'life-he', category:'Living & Social Learning',
+  title:'He (和) — Harmony Without Sameness',
+  subtitle:'Learn to live with differences',
+  icon:'fa-arrows-left-right-to-line', color:'amber',
+  tags:['he','和','Confucius','difference','coexistence'],
+  capabilities:['calculator'], visual:'none',
+  modes:{
+    learn:{ blocks:[
+      {t:'h', text:'You can disagree and still belong to the same group.'},
+      {t:'p', text:'In the <i>Analects</i> 13.23, Confucius is associated with <b>和而不同 (he er bu tong)</b>: harmony without sameness. The useful lesson for children is that cooperation does not require everyone to think, speak, or choose identically.'},
+      {t:'p', text:'A relationship becomes fragile when “harmony” quietly means “you must agree with me.” A healthier model allows difference while protecting respect and cooperation.'},
+      {t:'kv', items:[
+        ['Sameness','“You must think the way I think.”'],
+        ['Harmony','“We can think differently and still work together.”'],
+        ['Boundary','Difference is allowed; humiliation and hostility are not.'],
+        ['Action','Find the part we can agree on and coordinate from there.']
+      ]},
+      {t:'note', tone:'tip', text:'Harmony is not forced agreement. It is the ability to remain connected while difference is visible.'},
+      {t:'note', tone:'info', text:'Source context for the phrase 和而不同: Analects 13.23. The module uses the phrase as an educational framework for coexistence with difference.'}
+    ]},
+    everyday:{ items:[
+      {
+        q:'Your group is choosing a design for a school project. One student wants a bright poster; another wants a minimalist poster. What response fits He?',
+        options:[
+          'Force everyone to use one style',
+          'Allow the difference, then find a design rule the group can agree on',
+          'Let the loudest student decide'
+        ],
+        answer:1,
+        explain:'The group does not need identical preferences. It needs a workable way to combine differences into one shared activity.',
+        concepts:['difference','cooperation','consensus'],
+        tryIt:'Pick two opinions you disagree about. Write one thing that can remain different and one thing you can still coordinate.'
+      },
+      {
+        q:'A classmate explains an issue from a different perspective. What is the first useful response?',
+        options:[
+          'Assume they are wrong because they think differently',
+          'Ask what information or experience led them to that view',
+          'Stop the conversation immediately'
+        ],
+        answer:1,
+        explain:'Understanding difference does not require changing your own view. It creates space for coexistence without demanding sameness.',
+        concepts:['perspective','dialogue','coexistence'],
+        tryIt:'Use the sentence “I see it differently, but help me understand how you got there.”'
+      }
+    ]},
+    challenge:{ questions:[
+      {
+        q:'What is closer to he er bu tong?',
+        type:'choice',
+        options:[
+          'Everyone must agree before the group can continue',
+          'People may disagree while maintaining cooperation and respect',
+          'Differences should be hidden so the group looks united'
+        ],
+        answer:1, xp:15,
+        why:'The phrase is commonly explained as harmony without sameness: difference can remain visible without becoming hostility.'
+      },
+      {
+        q:'A teammate has a different idea from yours. Which response protects both difference and the relationship?',
+        type:'choice',
+        options:[
+          '“Your idea is wrong. Use mine.”',
+          '“Let’s compare the reasons for both ideas and decide what works for the group.”',
+          '“We should avoid discussing it.”'
+        ],
+        answer:1, xp:15,
+        why:'The group can keep disagreement visible while still cooperating toward a shared task.'
+      }
+    ]},
+    explore:{
+      html:\`<div class="space-y-3">
+        <div class="card p-4">
+          <h3 class="font-bold text-slate-700 text-sm">The Difference Test</h3>
+          <p class="text-[12px] text-slate-600 mt-2 leading-relaxed">Classify the situation:</p>
+          <div class="space-y-1.5 mt-3 text-[12px] text-slate-600">
+            <div><b>Healthy difference</b> → We can disagree and still cooperate.</div>
+            <div><b>Negotiable difference</b> → We can combine preferences or choose a shared rule.</div>
+            <div><b>Relationship threat</b> → The disagreement has become ridicule, exclusion, or hostility.</div>
+          </div>
+        </div>
+        <div class="card p-4 bg-amber-50 border-amber-200">
+          <p class="text-[12px] text-amber-900"><b>Practice:</b> Replace “Which one of us is right?” with “What can remain different, and what do we need to coordinate?”</p>
+        </div>
+      </div>\`
+    }
+  }
+},
+{
+  id:'life-jeong', category:'Living & Social Learning',
+  title:'Jeong (정) — The Bond That Softens Judgment',
+  subtitle:'Let shared history create room for understanding',
+  icon:'fa-heart', color:'rose',
+  tags:['jeong','정','relationships','goodwill','understanding'],
+  capabilities:['calculator'], visual:'none',
+  modes:{
+    learn:{ blocks:[
+      {t:'h', text:'The same mistake can feel different inside different relationships.'},
+      {t:'p', text:'<b>Jeong (정)</b> is described in the source as an emotional bond that accumulates through shared time and experience. It is not simply friendship or family; it helps explain why people may give someone the benefit of the doubt when there is a history of mutual care.'},
+      {t:'p', text:'This does not mean relationships excuse harmful behavior. It means context changes how a mistake is interpreted and whether the first response is curiosity or condemnation.'},
+      {t:'kv', items:[
+        ['History','What have these people experienced together?'],
+        ['Goodwill','Is there evidence of mutual care and cooperation?'],
+        ['Interpretation','Does one mistake fit the whole person, or is it an exception?'],
+        ['Boundary','Can understanding coexist with a need to repair the harm?']
+      ]},
+      {t:'note', tone:'tip', text:'Goodwill buys room for a conversation. It does not create permission to repeat harmful behavior.'}
+    ]},
+    everyday:{ items:[
+      {
+        q:'Two classmates accidentally miss a deadline. One has worked reliably with the group for a year; the other barely participates. Why might the group react differently?',
+        options:[
+          'Because rules should always depend on popularity',
+          'Because shared history can influence how people interpret an isolated mistake',
+          'Because reliable people can never make mistakes'
+        ],
+        answer:1,
+        explain:'Jeong helps describe how accumulated shared experience can create trust and a greater willingness to interpret one mistake as circumstance rather than character.',
+        concepts:['trust','context','goodwill'],
+        tryIt:'When someone disappoints you, ask whether you are reacting to one event or to a pattern.'
+      },
+      {
+        q:'A friend says something clumsy that hurts you. What reflects both goodwill and healthy boundaries?',
+        options:[
+          'Pretend nothing happened forever',
+          'Explain the impact, leave room for their intent to have been different, and see whether they repair it',
+          'End the relationship immediately without conversation'
+        ],
+        answer:1,
+        explain:'Goodwill can soften the first interpretation without requiring you to erase the impact or skip repair.',
+        concepts:['benefit of doubt','boundaries','repair'],
+        tryIt:'Practice: “I know you may not have meant it that way. Here is how it landed for me.”'
+      }
+    ]},
+    challenge:{ questions:[
+      {
+        q:'What does jeong help explain?',
+        type:'choice',
+        options:[
+          'Why every mistake should be forgiven',
+          'Why shared history and accumulated goodwill can change how a mistake is interpreted',
+          'Why only family members deserve understanding'
+        ],
+        answer:1, xp:15,
+        why:'The concept describes an emotional bond built through shared experience that can soften judgment.'
+      },
+      {
+        q:'Which statement is healthiest?',
+        type:'choice',
+        options:[
+          '“We have history, so nothing they do matters.”',
+          '“We have history, so I can start with understanding while still addressing harm.”',
+          '“History means I should never set a boundary.”'
+        ],
+        answer:1, xp:15,
+        why:'The module separates goodwill from unlimited permission.'
+      }
+    ]},
+    explore:{
+      html:\`<div class="space-y-3">
+        <div class="card p-4">
+          <h3 class="font-bold text-slate-700 text-sm">The Pattern Test</h3>
+          <p class="text-[12px] text-slate-600 mt-2 leading-relaxed">Before deciding what a mistake “means,” ask:</p>
+          <ol class="text-[12px] text-slate-600 mt-2 space-y-1 list-decimal ml-5">
+            <li>Is this an isolated event or a repeated pattern?</li>
+            <li>What history exists between us?</li>
+            <li>Can I address the impact without reducing the person to the mistake?</li>
+          </ol>
+        </div>
+        <div class="card p-4 bg-rose-50 border-rose-200">
+          <p class="text-[12px] text-rose-900"><b>Practice:</b> Replace “They are a bad person” with “Something went wrong. What pattern and context should I understand before I decide what it means?”</p>
+        </div>
+      </div>\`
+    }
+  }
+},
+{
+  id:'life-shazai', category:'Living & Social Learning',
+  title:'Shazai (謝罪) — When Harmony Needs a Safety Valve',
+  subtitle:'Repair harm without hiding behind “keeping the peace”',
+  icon:'fa-handshake-angle', color:'slate',
+  tags:['shazai','謝罪','apology','accountability','toxic harmony'],
+  capabilities:['calculator'], visual:'none',
+  modes:{
+    learn:{ blocks:[
+      {t:'h', text:'Harmony is not the same as pretending nothing happened.'},
+      {t:'p', text:'The source describes <b>shazai (謝罪)</b> as the formal apology and uses it as the “other half” of harmony: when harm occurs, a relationship may need an explicit repair mechanism rather than silence.'},
+      {t:'p', text:'There is a dangerous version of harmony: “Let’s keep the peace, so nobody should talk about what happened.” That can protect the appearance of calm while leaving the harmed person without recognition or repair.'},
+      {t:'kv', items:[
+        ['Recognize','What happened, without inventing excuses?'],
+        ['Acknowledge','Who was affected and how?'],
+        ['Repair','What action can reduce the harm or rebuild trust?'],
+        ['Change','What should be different next time?']
+      ]},
+      {t:'note', tone:'warn', text:'A fake apology, a staged “coincidence,” or pressure to forget the incident may preserve appearances while leaving the underlying problem intact.'},
+      {t:'note', tone:'tip', text:'The goal is not punishment. The goal is accountable repair: the relationship gets a chance to become safe and workable again.'},
+      {t:'note', tone:'info', text:'This module is based on the source’s discussion of Japanese apology (shazai) and the limits of harmony when silence starts protecting the wrong outcome.'}
+    ]},
+    everyday:{ items:[
+      {
+        q:'A student hurts a classmate with a public joke, then says, “Come on, let’s just forget it so the class stays peaceful.” What is missing?',
+        options:[
+          'Nothing. Forgetting is always the best way to keep harmony',
+          'A chance to acknowledge the harm and repair the relationship',
+          'A bigger punishment in front of the class'
+        ],
+        answer:1,
+        explain:'Harmony that skips recognition can leave the harmed person carrying the cost. Repair requires some form of acknowledgment and a changed next step.',
+        concepts:['repair','accountability','healthy harmony'],
+        tryIt:'Write an apology that names the action, acknowledges the impact, and states one concrete change for next time.'
+      },
+      {
+        q:'Someone apologizes only by saying, “Sorry you felt that way,” and changes nothing. What question matters next?',
+        options:[
+          'Did the apology sound formal enough?',
+          'What will actually change because of the apology?',
+          'Can everyone pretend the issue never happened?'
+        ],
+        answer:1,
+        explain:'An apology becomes more useful when it leads to recognition, repair, and changed behavior rather than only restoring appearances.',
+        concepts:['apology','behavior change','trust repair'],
+        tryIt:'Turn “I’m sorry” into “I’m sorry for ____. I can see it affected ____. Next time I will ____.”'
+      }
+    ]},
+    challenge:{ questions:[
+      {
+        q:'Which response best balances harmony and accountability after harm?',
+        type:'choice',
+        options:[
+          'Silence, so nobody feels uncomfortable',
+          'Acknowledge the harm, repair what can be repaired, and change the behavior',
+          'Public humiliation of the person who caused the harm'
+        ],
+        answer:1, xp:15,
+        why:'Healthy harmony needs a safety valve. Silence can protect the appearance of peace; humiliation destroys the relationship. Repair sits between those extremes.'
+      },
+      {
+        q:'Does a sincere apology mean the harmed person must immediately forgive?',
+        type:'choice',
+        options:['Yes','No, apology and forgiveness are different processes','Only if the person apologizes in public'],
+        answer:1, xp:15,
+        why:'An apology can be offered and acted upon without forcing another person to erase their feelings or trust immediately.'
+      }
+    ]},
+    explore:{
+      html:\`<div class="space-y-3">
+        <div class="card p-4">
+          <h3 class="font-bold text-slate-700 text-sm">The Safety-Valve Test</h3>
+          <p class="text-[12px] text-slate-600 mt-2 leading-relaxed">When someone says “let’s keep the peace,” ask:</p>
+          <ol class="text-[12px] text-slate-600 mt-2 space-y-1 list-decimal ml-5">
+            <li>Are we preventing unnecessary conflict?</li>
+            <li>Or are we preventing the harmed person from speaking?</li>
+            <li>What small repair could make the relationship safer?</li>
+          </ol>
+        </div>
+        <div class="card p-4 bg-slate-50 border-slate-300">
+          <p class="text-[12px] text-slate-700"><b>Repair formula:</b> Recognize → Acknowledge → Repair → Change.</p>
+        </div>
+      </div>\`
+    }
+  }
+},
+
 /* ✚ ADD NEW MODULE HERE (copas blok di atas, ganti id & isinya) */
 ];
 
@@ -3360,7 +3718,7 @@ const MODE_RENDERERS = {
   everyday(mod, cfg){
     return (cfg.items||[]).map((it,i)=>`
       <div class="card p-5 mb-3">
-        <span class="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full uppercase">Sains harian</span>
+        <span class="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full uppercase">Everyday learning</span>
         <h3 class="font-extrabold text-slate-800 text-[15px] mt-2 mb-3">${it.q}</h3>
         <p class="text-[11px] font-bold text-slate-400 uppercase mb-2">Predict first before revealing the answer 👇</p>
         <div class="space-y-2" id="ev-${i}">
@@ -3368,7 +3726,7 @@ const MODE_RENDERERS = {
         </div>
         <div id="evres-${i}" class="hidden mt-3">
           <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
-            <p class="text-[12px] text-slate-700 leading-relaxed"><b>Penjelasan:</b> ${it.explain}</p>
+            <p class="text-[12px] text-slate-700 leading-relaxed"><b>Explanation:</b> ${it.explain}</p>
             ${it.concepts?`<div class="flex flex-wrap gap-1 mt-2.5">${it.concepts.map(c=>`<span class="text-[10px] font-bold bg-white border border-slate-200 text-slate-500 px-2 py-0.5 rounded-full">#${c}</span>`).join('')}</div>`:''}
             ${it.tryIt?`<p class="text-[12px] text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg p-2.5 mt-2.5"><i class="fa-solid fa-flask mr-1"></i><b>Try it yourself:</b> ${it.tryIt}</p>`:''}
           </div>
@@ -3381,23 +3739,23 @@ const MODE_RENDERERS = {
     if(cfg.game==='projectile-target') return Games.projectileTarget(mod, cfg);
     return `<div class="card p-4 mb-3 flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center"><i class="fa-solid fa-trophy"></i></div>
-        <div><p class="text-[11px] font-bold text-slate-400 uppercase">Kumpulkan XP</p>
+        <div><p class="text-[11px] font-bold text-slate-400 uppercase">Earn XP</p>
         <p class="text-sm font-bold text-slate-700">Level ${Progress.level()} · ${Progress.data.xp} XP</p></div>
       </div>` + (cfg.questions||[]).map((q,i)=>`
       <div class="card p-5 mb-3">
         <div class="flex justify-between items-start mb-2">
-          <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full">SOAL ${i+1}</span>
+          <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full">QUESTION ${i+1}</span>
           <span class="text-[10px] font-bold text-amber-600">+${q.xp||10} XP</span>
         </div>
         <p class="text-[14px] font-bold text-slate-800 mb-3">${q.q}</p>
         ${q.type==='choice'
           ? `<div class="space-y-2">${q.options.map((o,j)=>`<button onclick="Quiz.answerChoice('${mod.id}',${i},${j},${q.answer},${q.xp||10})" class="w-full text-left text-[13px] px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 font-semibold text-slate-700">${String.fromCharCode(65+j)}. ${o}</button>`).join('')}</div>`
           : `<div class="flex gap-2">
-              <input type="number" id="q-${i}" placeholder="jawabanmu" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold num outline-none focus:border-indigo-400">
+              <input type="number" id="q-${i}" placeholder="your answer" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold num outline-none focus:border-indigo-400">
               ${q.unit?`<span class="px-3 py-2.5 bg-slate-100 rounded-xl text-xs font-bold text-slate-500 self-center">${ulab(q.unit)}</span>`:''}
               <button onclick="Quiz.answerNumeric('${mod.id}',${i},${q.answer},${q.tol||0.01},${q.xp||10})" class="bg-indigo-600 text-white font-bold px-4 rounded-xl text-sm">Cek</button>
             </div>`}
-        ${q.hint?`<button onclick="this.nextElementSibling.classList.toggle('hidden')" class="text-[11px] font-bold text-slate-400 mt-2"><i class="fa-solid fa-lightbulb mr-1"></i>Petunjuk</button><p class="hidden text-[12px] text-slate-500 bg-slate-50 border border-slate-200 rounded-lg p-2.5 mt-1.5">${q.hint}</p>`:''}
+        ${q.hint?`<button onclick="this.nextElementSibling.classList.toggle('hidden')" class="text-[11px] font-bold text-slate-400 mt-2"><i class="fa-solid fa-lightbulb mr-1"></i>Hint</button><p class="hidden text-[12px] text-slate-500 bg-slate-50 border border-slate-200 rounded-lg p-2.5 mt-1.5">${q.hint}</p>`:''}
         <div id="qres-${i}" class="mt-2.5"></div>
         ${q.why?`<div id="qwhy-${i}" class="hidden text-[12px] text-slate-600 bg-slate-50 border border-slate-200 rounded-lg p-2.5 mt-2">${q.why}</div>`:''}
       </div>`).join('');
@@ -3444,18 +3802,18 @@ const MODE_RENDERERS = {
       <div class="grid grid-cols-2 gap-2 mb-3">
         <div><label class="text-[10px] font-bold text-slate-400 uppercase">Distance to object (m)</label>
           <input type="number" id="clino-d" value="10" step="0.1" oninput="Clino.calc()" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 font-bold num"></div>
-        <div><label class="text-[10px] font-bold text-slate-400 uppercase">Tinggi mata (m)</label>
+        <div><label class="text-[10px] font-bold text-slate-400 uppercase">Eye height (m)</label>
           <input type="number" id="clino-eye" value="1.5" step="0.05" oninput="Clino.calc()" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 font-bold num"></div>
       </div>
       <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center mb-3">
-        <p class="text-[10px] font-bold text-slate-400 uppercase">Angle elevasi</p>
+        <p class="text-[10px] font-bold text-slate-400 uppercase">Elevation angle</p>
         <p id="clino-angle" class="text-3xl font-black text-fuchsia-600 num">—</p>
-        <p class="text-[10px] font-bold text-slate-400 uppercase mt-2">Estimasi tinggi objek</p>
+        <p class="text-[10px] font-bold text-slate-400 uppercase mt-2">Estimated object height</p>
         <p id="clino-h" class="text-xl font-black text-slate-700 num">—</p>
       </div>
       <div class="flex gap-2">
         <button onclick="Clino.start()" class="flex-1 bg-fuchsia-600 text-white font-bold py-2.5 rounded-xl text-sm">Start sensor</button>
-        <button onclick="Clino.hold()" class="flex-1 bg-slate-100 text-slate-700 font-bold py-2.5 rounded-xl text-sm">Tahan / Lepas</button>
+        <button onclick="Clino.hold()" class="flex-1 bg-slate-100 text-slate-700 font-bold py-2.5 rounded-xl text-sm">Hold / Release</button>
       </div>
       <p class="text-[10px] text-slate-400 mt-2">Educational estimate — accuracy depends on sensor calibration and hand stability.</p>
     </div>`;
@@ -3566,8 +3924,8 @@ const Experiments = {
     this.measured=measured;
     if(cfg.compare){
       const theory = FormulaEngine.evaluate(cfg.compare.theory, {});
-      $('ex-compare').innerHTML = Comparison.card(theory, measured, cfg.compare.unit||cfg.unit, cfg.compare.label||'Theory vs Kenyataan')
-        + `<div class="card p-4 mt-3"><p class="text-[11px] font-bold text-slate-400 uppercase mb-1">Metadata eksperimen</p>
+      $('ex-compare').innerHTML = Comparison.card(theory, measured, cfg.compare.unit||cfg.unit, cfg.compare.label||'Theory vs Observation')
+        + `<div class="card p-4 mt-3"><p class="text-[11px] font-bold text-slate-400 uppercase mb-1">Experiment metadata</p>
            <pre class="text-[10px] text-slate-500 overflow-x-auto">${esc(JSON.stringify(Recorder.meta(),null,1))}</pre></div>`;
       Progress.add(20, APP.state.moduleId+':experiment');
     } else {

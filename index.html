@@ -676,7 +676,7 @@ const ExprParser = (() => {
       if(c==='÷'){ t.push({k:'/'}); i++; continue; }
       if(c==='π'){ t.push({k:'id', v:'pi'}); i++; continue; }
       if(c==='√'){ t.push({k:'id', v:'sqrt'}); i++; continue; }
-      throw new Error('Karakter unavailable dikenal: '+c);
+      throw new Error('Unknown character: '+c);
     }
     return t;
   }
@@ -712,7 +712,7 @@ const ExprParser = (() => {
       while(peek() && ['+','-'].includes(peek().k)){ const op=tokens[p++].k; n={n:op, a:n, b:term()}; }
       return n; }
     const ast = expr();
-    if(p<tokens.length) throw new Error('Sisa token unavailable valid');
+    if(p<tokens.length) throw new Error('Invalid remaining tokens');
     return ast;
   }
 
@@ -965,7 +965,7 @@ const Sensors = (() => {
     DRIVERS,
     isSimulated:false,
     async start(kind, cb){
-      this.stop(); handler=cb; const d=DRIVERS[kind]; if(!d) throw new Error('Sensor unavailable dikenal');
+      this.stop(); handler=cb; const d=DRIVERS[kind]; if(!d) throw new Error('Unknown sensor: '+kind);
       const emit = s => handler && handler(s);
       if(APP.simulateSensors || !d.supported()){
         this.isSimulated=true; simT=0;
@@ -2110,11 +2110,11 @@ learn: {
       t: 'list',
       items: [
 
-        '<b>Permukaan mikroskopis:</b> Logam unavailable benar-benar “flat”. Ada microscopic asperities dan lembah kecil.',
+        '<b>Microscopic surface:</b> Metal surfaces are not truly flat. They contain microscopic asperities and valleys.',
 
         '<b>The air-gap problem:</b> Unfilled gaps can contain air. The thermal conductivity of air is about 0.026 W/m·K at room conditions, much lower than heat-conducting metals.',
 
-        '<b>Thermal paste:</b> Pasta mengisi sebagian celah tersebut sehingga kontak termal menjadi lebih baik dan resistansi termal antarmuka berkurang.',
+        '<b>Thermal paste:</b> The paste fills some of those gaps, improving thermal contact and reducing interface thermal resistance.',
 
         '<b>This does not mean paste is better than metal:</b> Paste does not replace metal; it improves the interface where the two surfaces cannot make perfect contact.',
 
@@ -2739,7 +2739,7 @@ learn: {
     },
     everyday:{ items:[
       { q:'Why does an object in water look closer or bent?',
-        options:['Karena air memperbesar benda','Karena cahaya berubah arah (refraksi) saat pindah medium','Karena mata unavailable bisa fokus di air'],
+        options:['Because water magnifies the object','Because light changes direction (refraction) when it enters another medium','Because the eye cannot focus in water'],
         answer:1, concepts:['refraction','refractive index'],
         explain:'The speed of light differs in water and air, so light bends at the interface. The brain assumes light travels straight and the object appears shifted.',
         tryIt:'Put a straw in a glass of water and view it from the side. Photograph it and estimate the bending angle with the AR/Camera module.' }
@@ -2759,7 +2759,7 @@ learn: {
       {t:'h', text:'Why can a metal car provide some protection during lightning?'},
       {t:'p', text:'A metal car body is a conductor. In a strong external electric field, charges redistribute on the metal so the field inside the passenger compartment is greatly reduced. Current can travel along the exterior rather than through the occupants.'},
       {t:'formula', tex:'E_dalam ≈ 0', desc:'For a closed conductor in electrostatic equilibrium.'},
-      {t:'list', items:['Yang melindungi adalah <b>logam yang menutupi</b>, bukan ban karet','Lubang besar mengurangi efektivitas perisai','Kain/plastik (tenda) hampir unavailable melindungi','Microwave & kabel USB juga memakai prinsip yang sama']},
+      {t:'list', items:['Yang melindungi adalah <b>logam yang menutupi</b>, bukan ban karet','Large openings reduce shielding effectiveness','Fabric/plastic (a tent) provides little shielding','Microwaves and USB cables also involve related electromagnetic principles']},
       {t:'note', tone:'warn', text:'A motorcycle does not enclose the rider in a conductive metal cabin, so it does not provide the same type of protection as a car.'}
     ]},
     simulate:{
@@ -2823,7 +2823,7 @@ learn: {
     },
     everyday:{ items:[
       { q:'Why does syrup taste less sweet after adding water even though the amount of sugar has not changed?',
-        options:['Gulanya menghilang','Konsentrasinya turun karena volume naik (M₁V₁ = M₂V₂)','Air menetralkan rasa manis'],
+        options:['The sugar disappears','The concentration decreases because volume increases (M₁V₁ = M₂V₂)','Water neutralizes the sweet taste'],
         answer:1, concepts:['pengenceran','konsentrasi'],
         explain:'The amount of sugar stays the same, but it is spread over a larger volume → moles per liter decrease → less sugar reaches the tongue per sip.',
         tryIt:'Calculate: 0.5 L of 2 M syrup is diluted to 1.5 L → what is M₂?' }
@@ -3213,16 +3213,16 @@ const MODE_RENDERERS = {
   ar(mod, cfg){
     const lvl = Capabilities.level();
     const rows = [
-      { n:1, name:'AR + Depth (WebXR / ARCore)', ok:Capabilities.has('ar'), desc:'Ukur langsung di ruang 3D dengan hit-test permukaan.' },
-      { n:2, name:'Camera + Sensor Gerak', ok:Capabilities.has('camera')&&Capabilities.has('orientation'), desc:'Klinometer: sudut dari sensor + jarak → tinggi.' },
-      { n:3, name:'Camera + Objek Acuan', ok:Capabilities.has('camera'), desc:'Kalibrasi skala piksel lalu ukur di bidang datar.' },
+      { n:1, name:'AR + Depth (WebXR / ARCore)', ok:Capabilities.has('ar'), desc:'Measure directly in 3D space using surface hit-testing.' },
+      { n:2, name:'Camera + Sensor Gerak', ok:Capabilities.has('camera')&&Capabilities.has('orientation'), desc:'Clinometer: angle from the sensor + distance → height.' },
+      { n:3, name:'Camera + Objek Acuan', ok:Capabilities.has('camera'), desc:'Calibrate the pixel scale, then measure on a flat plane.' },
       { n:4, name:'Manual / Trigonometri', ok:true, desc:'Selalu available — kamu ukur, app menghitung.' }
     ];
     Runtime.after(()=>{ Clino.mount(); });
     return `
     <div class="card p-5 mb-3">
       <h3 class="font-bold text-slate-700 text-sm mb-1"><i class="fa-solid fa-layer-group text-fuchsia-500 mr-1.5"></i>Your device capability level</h3>
-      <p class="text-[11px] text-slate-500 mb-3">Active: <b class="text-fuchsia-600">Level ${lvl} — ${Capabilities.levelName()}</b>. Modul unavailable pernah hilang, hanya turun level.</p>
+      <p class="text-[11px] text-slate-500 mb-3">Active: <b class="text-fuchsia-600">Level ${lvl} — ${Capabilities.levelName()}</b>. Modules never disappear; they fall back to the best available level.</p>
       <div class="space-y-2">${rows.map(r=>`
         <div class="flex items-start gap-2.5 p-2.5 rounded-xl border ${r.n===lvl?'border-fuchsia-300 bg-fuchsia-50':'border-slate-200'}">
           <span class="shrink-0 w-6 h-6 rounded-lg text-[10px] font-black flex items-center justify-center ${r.ok?'bg-emerald-100 text-emerald-700':'bg-slate-100 text-slate-400'}">${r.n}</span>
@@ -3234,7 +3234,7 @@ const MODE_RENDERERS = {
     <div class="card p-5 mb-3">
       <h3 class="font-bold text-slate-700 text-sm mb-3"><i class="fa-solid fa-cube text-fuchsia-500 mr-1.5"></i>Sesi AR (WebXR)</h3>
       <button onclick="ARLab.start()" ${Capabilities.has('ar')?'':'disabled'} class="w-full ${Capabilities.has('ar')?'bg-gradient-to-r from-fuchsia-500 to-violet-500':'bg-slate-200 text-slate-400'} text-white font-bold py-3 rounded-xl text-sm shadow">
-        <i class="fa-solid fa-vr-cardboard mr-1"></i>${Capabilities.has('ar')?'Mulai Ukur di AR':'AR not available on this device'}</button>
+        <i class="fa-solid fa-vr-cardboard mr-1"></i>${Capabilities.has('ar')?'Mulai Ukur di AR':'AR is not available on this device'}</button>
       <p class="text-[11px] text-slate-400 mt-2">Ketuk permukaan untuk titik 1 dan 2. Butuh Chrome Android + ARCore. Di APK, bisa diperkuat lewat native bridge (ARCore Depth).</p>
     </div>
 
@@ -3314,7 +3314,7 @@ const Experiments = {
              :`<span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full shrink-0">SENSOR NYATA</span>`}
       </div>
       ${cfg.steps?`<ol class="space-y-2 mt-3">${cfg.steps.map((s,i)=>`<li class="flex gap-2.5 text-[12.5px] text-slate-600"><span class="shrink-0 w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 text-[10px] font-black flex items-center justify-center">${i+1}</span><span>${s}</span></li>`).join('')}</ol>`:''}
-      ${sim?`<p class="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-2.5 mt-3">Sensor unavailable available / mode simulasi aktif. Data yang muncul adalah sintetis agar kamu tetap bisa belajar alurnya (fallback Level 4).</p>`:''}
+      ${sim?`<p class="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-2.5 mt-3">Sensors unavailable / simulation mode active. The data shown is synthetic so you can still practice the workflow (fallback Level 4).</p>`:''}
     </div>`;
   },
 
@@ -3517,10 +3517,10 @@ const Clino = {
     try{ await Sensors.start('orientation', s=>{ if(this.held) return;
         this.angle = clamp(90 - Math.abs(s.beta), -89, 89);
         $('clino-angle').textContent = Precision.format(this.angle,{decimals:1})+'°'; this.calc(); });
-      UI.toast('Sensor orientasi aktif','emerald');
-    }catch(e){ UI.toast('Sensor unavailable available: '+e.message,'rose'); }
+      UI.toast('Orientation sensor active','emerald');
+    }catch(e){ UI.toast('Orientation sensor failed: '+e.message,'rose'); }
   },
-  hold(){ this.held=!this.held; UI.toast(this.held?'Nilai ditahan':'Kembali live','indigo'); },
+  hold(){ this.held=!this.held; UI.toast(this.held?'Value held':'Back to live','indigo'); },
   calc(){
     if(this.angle==null) return;
     const d=parseFloat($('clino-d').value)||0, eye=parseFloat($('clino-eye').value)||0;
@@ -3730,7 +3730,7 @@ const CUSTOM_VIEWS = {
           <select id="uc-to" onchange="UnitView.run()" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold"></select></div>
       </div>
     </div>
-    <div class="card p-5"><h3 class="font-bold text-slate-700 text-sm mb-3">Semua satuan dalam keluarga ini</h3><div id="uc-table" class="space-y-1.5"></div></div>`;
+    <div class="card p-5"><h3 class="font-bold text-slate-700 text-sm mb-3">All units in this family</h3><div id="uc-table" class="space-y-1.5"></div></div>`;
   },
 
   /* ---------- VEKTOR ---------- */
@@ -3975,7 +3975,7 @@ const VectorView = {
       <div class="flex justify-between items-center bg-fuchsia-50 border border-fuchsia-100 rounded-xl px-3 py-2">
         <span class="text-[11px] font-bold text-fuchsia-700 uppercase">${k}</span>
         <span class="font-black text-fuchsia-900 num text-sm">${typeof v==='number'?Precision.format(v,{decimals:4}):v} ${u}</span></div>`).join('')}</div>
-      <p class="text-[11px] text-slate-500 mt-3">a · b = 0 → tegak lurus. |a × b| = luas jajar genjang yang dibentuk a dan b.</p></div>`;
+      <p class="text-[11px] text-slate-500 mt-3" >a · b = 0 → perpendicular. |a × b| = area of the parallelogram formed by a and b.</p></div>`;
   }
 };
 

@@ -1233,7 +1233,7 @@ const SIM_ENGINES = {
     },
     readout(s,p){
       const cond=[0,0.97,0.99,0.15][p.shield], inside = p.shield===0?1:clamp((1-cond)+clamp(p.openings*0.22,0,.9)*0.5,0,1);
-      return [['E luar',p.E,'kV/m'],['E dalam',p.E*inside,'kV/m'],['Reduksi',(1-inside)*100,'%'],
+      return [['External E',p.E,'kV/m'],['Internal E',p.E*inside,'kV/m'],['Reduction',(1-inside)*100,'%'],
               ['Lubang',p.openings,''],['Perisai',p.shield,''],['Aman?',inside<0.2?1:0,'(1=ya)']]; }
   },
 
@@ -1551,7 +1551,7 @@ const MODULES = [
     calculate:{ custom:'stats' },
     learn:{ blocks:[
       {t:'h', text:'Raw data → a story'},
-      {t:'list', items:['<b>Mean</b>: pusat data, tapi mudah tertipu outlier','<b>Median</b>: nilai tengah, tahan outlier','<b>Standar deviasi</b>: seberapa "menyebar" datanya','<b>Regresi</b>: garis terbaik untuk pasangan (x, y)']},
+      {t:'list', items:['<b>Mean</b>: the center of the data, but sensitive to outliers','<b>Median</b>: the middle value, resistant to outliers','<b>Standard deviation</b>: how spread out the data is','<b>Regression</b>: best-fit line for (x, y) pairs']},
       {t:'formula', tex:'σ = √( Σ(xᵢ − x̄)² / n )', desc:'The larger σ is, the less consistent your measurements are.'},
       {t:'note', tone:'tip', text:'After a sensor experiment, bring the data here to explore measurement uncertainty.'}
     ]},
@@ -1614,14 +1614,14 @@ const MODULES = [
     },
     everyday:{ items:[
       { q:'Mana lebih murah: diskon 50% lalu tambahan 20%, atau langsung diskon 70%?',
-        options:['Sama saja','Diskon 50%+20% lebih murah','Diskon 70% lebih murah'],
+        options:['The same','50% + 20% discount is cheaper','70% discount is cheaper'],
         answer:2, concepts:['persen bertingkat'],
-        explain:'50% lalu 20% = 0.5 × 0.8 = 0.40 → hanya diskon efektif 60%. Diskon 70% menyisakan 30%. Jadi 70% lebih murah.',
-        tryIt:'Evidencekan di tab Calculate: harga 100000, diskon 50, catat hasilnya, lalu masukkan lagi sebagai harga dengan diskon 20.' }
+        explain:'50% then 20% = 0.5 × 0.8 = 0.40 → an effective 60% discount. A 70% discount leaves 30%, so it is cheaper.',
+        tryIt:'Verify it in the Calculate tab: enter 100000, apply a 50% discount, record the result, then use that result as the price and apply another 20% discount.' }
     ]},
     challenge:{ questions:[
-      { q:'Baju Rp240.000 diskon 25%. Berapa yang dibayar (tanpa pajak)?', type:'numeric', answer:180000, tol:1, unit:'Rp', xp:10, hint:'Sisa = 75% dari harga.' },
-      { q:'Harga setelah diskon 40% adalah Rp90.000. Berapa harga aslinya?', type:'numeric', answer:150000, tol:1, unit:'Rp', xp:15, hint:'90.000 adalah 60% dari harga asli.' }
+      { q:'A shirt costs IDR 240,000 with a 25% discount. How much is paid before tax?', type:'numeric', answer:180000, tol:1, unit:'Rp', xp:10, hint:'Amount remaining = 75% of the original price.' },
+      { q:'The price after a 40% discount is IDR 90,000. What was the original price?', type:'numeric', answer:150000, tol:1, unit:'Rp', xp:15, hint:'90,000 is 60% of the original price.' }
     ]}
   }
 },
@@ -1655,7 +1655,7 @@ const MODULES = [
     },
     everyday:{ items:[
       { q:'If you start with 1 E. coli bacterium that divides every 20 minutes, how many would there be after 24 hours?',
-        options:['Sekitar 1.000 sel','Lebih dari 1 miliar sel','Cukup untuk menutupi seluruh permukaan Bumi'],
+        options:['About 1,000 cells','More than 1 billion cells','Enough to cover the entire surface of Earth'],
         answer:2, concepts:['exponential growth','ecological limits'],
         explain:'In pure mathematics, 1 cell after 24 hours (72 cycles) becomes 2^72 cells (4.7 × 10^21). The mass would reach thousands of tonnes. This does not happen in reality because resources run out long before that.',
         tryIt:'Open the Calculate tab, set the initial population to 1, and set observation time to 1440 minutes (24 hours).' }
@@ -1694,7 +1694,7 @@ const MODULES = [
     },
     everyday:{ items:[
       { q:'Why can people with more muscle sometimes eat more without gaining weight as quickly?',
-        options:['Karena otot langsung menyerap lemak','Karena jaringan otot membutuhkan lebih banyak kalori untuk dipelihara (BMR lebih tinggi) dibanding lemak','Karena orang berotot punya pencernaan lebih cepat'],
+        options:['Because muscle directly absorbs fat','Because muscle tissue generally requires more energy to maintain than fat tissue','Because muscular people have faster digestion'],
         answer:1, concepts:['metabolism','muscle'],
         explain:'Muscle tissue is metabolically active, so maintaining more lean tissue generally requires additional energy even at rest.',
         tryIt:'In the Calculate tab, change age from 20 to 60 and observe how the estimated energy requirement changes with age.' }
@@ -1713,7 +1713,7 @@ const MODULES = [
       {t:'p', text:'The Hardy-Weinberg principle is used to calculate genotype frequencies in a stable population. It can help estimate how many phenotypically unaffected individuals may carry a recessive allele.'},
       {t:'formula', tex:'p + q = 1', desc:'p = dominant-allele frequency, q = recessive-allele frequency.'},
       {t:'formula', tex:'p² + 2pq + q² = 1', desc:'p² = homozygous dominant, 2pq = heterozygous, q² = homozygous recessive.'},
-      {t:'list', items:['Banyak dipakai di kedokteran untuk memprediksi sebaran penyakit genetik seperti Albino atau Buta Warna.']}
+      {t:'list', items:['Often used in population genetics to model the distribution of inherited traits and alleles.']}
     ]},
     calculate:{
       inputs:[
@@ -1747,8 +1747,8 @@ const MODULES = [
       {t:'p', text:'Pyrolysis is the thermal decomposition of organic material such as wood at high temperature with limited oxygen. It can produce char (biochar), bio-oil, and synthesis gas (syngas).'},
       {t:'formula', tex:'Biomass + Heat → Biochar + Syngas', desc:'Molecular breakdown driven by high temperature.'},
       {t:'list', items:[
-        '<b>Biochar mengunci karbon:</b> Arang unavailable akan membusuk ratusan tahun, mencegah karbon kembali menjadi gas rumah kaca CO₂ (Bagus untuk melawan krisis iklim!)',
-        '<b>Bahan Crafting:</b> Arang punya jutaan pori-pori mikroskopis. Sangat bagus untuk menyaring air kotor atau menyuburkan tanah pertanian.'
+        '<b>Biochar can store carbon:</b> charcoal can persist for long periods and may keep some carbon from returning quickly to the atmosphere.',
+        '<b>Crafting material:</b> charcoal has many microscopic pores and can be useful in filtration demonstrations or some soil applications.'
       ]}
     ]},
     calculate:{
@@ -1779,13 +1779,13 @@ const MODULES = [
     'The experiment must be supervised by an adult.',
     'The process can produce flammable gases and carbon monoxide (CO). Never perform it indoors.',
     'Use heat-resistant gloves and suitable tools when handling hot cans.',
-    'Jangan membuka atau menyentuh kaleng bagian dalam ketika masih panas. Biochar dapat tetap menyala atau sangat panas meskipun api sudah unavailable terlihat.',
+    'Do not open or touch the inner can while it is hot. Biochar can remain hot or continue smoldering after visible flames disappear.',
     'Keep your face and body away from gas outlets.'
   ],
 
   materials: [
     '1 clean large metal can with no hazardous residue',
-    '1 kaleng logam kecil yang dapat ditempatkan di dalam kaleng besar',
+    '1 small metal can that fits inside the large can',
     'Clean dry twigs or other dry biomass',
     'External heating fuel',
     'Metal hole punch',
@@ -1868,11 +1868,11 @@ const MODULES = [
   },
 
   note:
-    '🔥 Dari limbah biomassa menjadi karbon: pyrolysis menunjukkan bagaimana panas, oksigen, dan material dapat mengubah suatu bahan menjadi produk baru.'
+    '🔥 From biomass waste to carbon: pyrolysis shows how heat, oxygen availability, and material properties can transform one material into new products.'
 },
     everyday:{ items:[
       { q:'Why might a satay vendor prefer charcoal over ordinary wood?',
-        options:['Karena arang lebih murah didapat','Karena arang menghasilkan panas sangat tinggi dan nyaris tanpa asap yang pedih di mata','Karena kayu biasa unavailable bisa dibakar untuk daging'],
+        options:['Because charcoal is cheaper to obtain','Because charcoal can provide steady high heat with much less irritating smoke','Because ordinary wood cannot be used to cook meat'],
         answer:1, concepts:['cleaner combustion','heat energy','smoke'],
         explain:'Ordinary wood still contains moisture, resins, and other compounds that contribute to smoke. Charcoal is mostly carbon, so it burns differently and can provide steady heat with much less visible smoke.',
         tryIt:'In the Calculate tab, raise wood moisture content to 60% and observe how dry mass and biochar yield change.' }
@@ -1931,49 +1931,49 @@ const MODULES = [
   materials: [
     '1 botol plastik bersih ukuran sekitar 1,5 L',
     'Kapas bersih atau kain bersih',
-    'Biochar hasil eksperimen sebelumnya',
-    'Pasir halus yang sudah dicuci',
-    'Kerikil kecil yang bersih',
-    'Batu berukuran lebih besar yang bersih',
-    'Wadah bersih untuk menampung air',
-    'Air percobaan yang unavailable untuk dikonsumsi'
+    'Biochar from the previous experiment',
+    'Washed fine sand',
+    'Clean small gravel',
+    'Clean larger stones',
+    'Clean container for collecting water',
+    'Experimental water clearly labeled as non-consumable'
   ],
 
   steps: [
 
     'Potong bagian bawah botol plastik. Balik botol sehingga tutup botol menghadap ke bawah.',
 
-    'Buat beberapa lubang kecil pada tutup botol agar air dapat mengalir perlahan melalui filter.',
+    'Make several small holes in the bottle cap so water can flow slowly through the filter.',
 
-    'Masukkan segumpal kapas atau kain bersih pada bagian paling bawah, dekat tutup botol. Lapisan ini membantu menahan material filter agar unavailable ikut keluar.',
+    'Place clean cotton or cloth at the bottom near the cap. This layer helps keep filter material from escaping with the water.',
 
-    'Masukkan biochar yang sudah dihancurkan hingga membentuk lapisan sekitar 5–10 cm. Sebaiknya bilas biochar terlebih dahulu untuk menghilangkan debu arang yang mudah terlepas.',
+    'Add crushed biochar to form a layer about 5–10 cm thick. Rinse the biochar first to remove loose charcoal dust.',
 
-    'Masukkan lapisan pasir halus yang sudah dicuci. Pasir membantu menangkap partikel-partikel kecil yang tersuspensi di dalam air.',
+    'Add a layer of washed fine sand. Sand helps capture small suspended particles.',
 
-    'Tambahkan lapisan kerikil kecil, kemudian tambahkan batu yang lebih besar pada bagian paling atas. Lapisan ini membantu menyebarkan air dan menjaga lapisan pasir tetap pada tempatnya.',
+    'Add a layer of small gravel, then larger stones on top. These layers help distribute water and keep the sand in place.',
 
-    'Buat air percobaan dengan mencampurkan air bersih dengan sedikit tanah dan pewarna makanan. Air ini hanya digunakan untuk demonstrasi dan TIDAK untuk diminum.',
+    'Prepare test water by mixing clean water with a little soil and food coloring. Use it only for demonstration and DO NOT drink it.',
 
-    'Tuangkan air percobaan secara perlahan ke bagian atas filter. Letakkan wadah bersih di bawah botol untuk menampung air yang keluar.',
+    'Slowly pour the test water into the top of the filter. Place a clean container underneath to collect the output.',
 
-    'Amati air yang keluar pertama kali. Air mungkin masih mengandung debu biochar. Perhatikan perubahan yang terjadi selama proses penyaringan.',
+    'Observe the first water that comes out. It may still contain biochar dust. Watch how the output changes during filtration.',
 
-    'Bandingkan air sebelum dan sesudah penyaringan. Apakah air menjadi lebih jernih? Apakah warnanya berubah? Apakah baunya berubah? Apakah alirannya semakin lambat?',
+    'Compare the water before and after filtration. Is it clearer? Did the color change? Did the smell change? Did the flow become slower?',
 
-    'Catat hasil pengamatanmu dan buang air percobaan dengan aman. JANGAN gunakan air hasil eksperimen untuk minum, memasak, mencuci makanan, atau keperluan konsumsi lainnya.'
+    'Record your observations and dispose of the test water safely. DO NOT use experimental water for drinking, cooking, washing food, or any other consumption.'
   ],
 
   observation: {
     title: '🔬 Observe Like a Scientist',
 
     questions: [
-      'Apakah air hasil penyaringan lebih jernih dibandingkan air awal?',
+      'Is the filtered water clearer than the starting water?',
       'Apakah intensitas warna berubah setelah melewati biochar?',
-      'Apakah bau air berubah?',
-      'Lapisan mana yang tampaknya menangkap paling banyak partikel?',
-      'Apa yang terjadi pada kecepatan aliran ketika filter mulai tersumbat?',
-      'Apakah air yang terlihat lebih jernih selalu berarti lebih aman?'
+      'Did the smell of the water change?',
+      'Which layer appears to capture the most particles?',
+      'What happens to the flow rate when the filter begins to clog?',
+      'Does water that looks clearer always mean it is safer?'
     ]
   },
 
@@ -1981,13 +1981,13 @@ const MODULES = [
     title: '📊 Measure Your Result',
 
     parameters: [
-      'Volume air awal (mL)',
-      'Volume air hasil penyaringan (mL)',
-      'Time penyaringan (detik)',
-      'Kekeruhan awal: skor visual 1–5',
-      'Kekeruhan akhir: skor visual 1–5',
-      'Intensitas warna awal: skor visual 1–5',
-      'Intensitas warna akhir: skor visual 1–5'
+      'Initial water volume (mL)',
+      'Filtered water volume (mL)',
+      'Filtration time (seconds)',
+      'Initial turbidity: visual score 1–5',
+      'Final turbidity: visual score 1–5',
+      'Initial color intensity: visual score 1–5',
+      'Final color intensity: visual score 1–5'
     ],
 
     calculation: {
@@ -2011,7 +2011,7 @@ const MODULES = [
     ],
 
     explanation:
-      'Setiap lapisan memiliki fungsi berbeda. Batu dan kerikil membantu menyebarkan air serta menahan partikel berukuran lebih besar. Pasir menangkap sebagian partikel yang lebih kecil. Biochar memiliki struktur berpori dan dapat mengadsorpsi sebagian senyawa atau zat terlarut, tergantung pada jenis bahan baku dan proses pembuatannya.',
+      'Each layer has a different function. Stones and gravel distribute water and retain larger particles. Sand captures some smaller suspended particles. Biochar has a porous structure and can adsorb some compounds depending on its feedstock and production process.',
 
     keyMessage:
       '💧 JERNIH ≠ BERSIH ≠ AMAN DIMINUM'
@@ -2021,11 +2021,11 @@ const MODULES = [
     title: '🧪 Compare Before & After',
 
     steps: [
-      'Ambil foto air sebelum penyaringan.',
-      'Ambil foto air setelah penyaringan.',
-      'Gunakan latar belakang dan pencahayaan yang sama.',
-      'Bandingkan kekeruhan, warna, dan partikel yang terlihat.',
-      'Ingat: perubahan visual bukan bukti bahwa mikroorganisme atau bahan kimia berbahaya telah hilang.'
+      'Take a photo of the water before filtration.',
+      'Take a photo of the water after filtration.',
+      'Use the same background and lighting.',
+      'Compare turbidity, color, and visible particles.',
+      'Remember: a visual change does not prove that microorganisms or harmful chemicals have been removed.'
     ]
   },
 
@@ -2033,20 +2033,20 @@ const MODULES = [
     title: '🚀 Next Mission: Improve the Filter',
 
     challenges: [
-      'Apa yang terjadi jika lapisan pasir dibuat lebih tebal?',
-      'Apa yang terjadi jika jumlah biochar ditambah?',
+      'What happens if the sand layer is made thicker?',
+      'What happens if you add more biochar?',
       'Bagaimana jika urutan lapisan diubah?',
       'Bagaimana jumlah biochar memengaruhi kecepatan aliran?',
-      'Bisakah kamu merancang filter yang menghasilkan air lebih jernih tetapi tetap memiliki kecepatan aliran yang baik?'
+      'Can you design a filter that produces clearer water while maintaining a useful flow rate?'
     ]
   },
 
   note:
-    '💧 Experiment ini menunjukkan prinsip filtrasi dan adsorpsi, bukan pemurnian air minum. Air yang terlihat jernih masih dapat mengandung mikroorganisme, bahan kimia terlarut, atau kontaminan lain yang unavailable terlihat. Perlakukan air hasil eksperimen sebagai AIR NON-KONSUMSI.'
+    '💧 This experiment demonstrates filtration and adsorption principles, not drinking-water purification. Water that looks clear can still contain microorganisms, dissolved chemicals, or other invisible contaminants. Treat experimental water as NON-CONSUMABLE.'
 },
     challenge:{ questions:[
       { q:'Which filter layer helps remove unpleasant odors and some dissolved compounds?', type:'choice', options:['Fine sand','Arang (Biochar)','Coarse stones'], answer:1, xp:15, why:'Charcoal/biochar can adsorb some compounds because its porous surface provides sites where molecules can bind.' },
-      { q:'If muddy brown water becomes crystal clear after this filter, is it automatically 100% safe to drink?', type:'choice', options:['Sangat aman karena sudah bening','No, because it may still contain viruses and bacteria'], answer:1, xp:15, why:'Filter DIY fisik menyaring partikel solid, tapi patogen (kuman/virus) ukurannya sangat kecil sehingga bisa lolos dari pasir dan arang. Air harus didihkan dulu.' }
+      { q:'If muddy brown water becomes crystal clear after this filter, is it automatically 100% safe to drink?', type:'choice', options:['Very safe because it is clear','No, because it may still contain viruses and bacteria'], answer:1, xp:15, why:'A DIY physical filter can remove some solid particles, but pathogens can be much smaller and may pass through sand and charcoal. Water intended for drinking requires an appropriate disinfection step.' }
     ]}
   }
 },
@@ -2068,7 +2068,7 @@ learn: {
     {
       t: 'p',
       text:
-        'Thermal paste unavailable berfungsi sebagai “pendingin” seperti kipas, heatsink, atau radiator. CPU menghasilkan panas, kemudian panas tersebut harus dipindahkan dari CPU ke heatsink dan akhirnya dilepaskan ke lingkungan. Thermal paste membantu proses perpindahan panas dengan memperbaiki kontak termal antara dua permukaan.'
+        'Thermal paste is not a cooler like a fan, heatsink, or radiator. The CPU generates heat, which must move from the CPU to the heatsink and then to the environment. Thermal paste improves thermal contact between the two surfaces.'
     },
 
     {
@@ -2079,7 +2079,7 @@ learn: {
     {
       t: 'p',
       text:
-        'Aliran panas utama secara sederhana adalah: CPU → IHS/permukaan CPU → thermal interface material (thermal paste) → heatsink → udara. Kipas kemudian membantu memindahkan panas dari heatsink ke udara.'
+        'The simplified heat path is: CPU → IHS/CPU surface → thermal interface material (thermal paste) → heatsink → air. The fan then helps move heat from the heatsink into the air.'
     },
 
     {
@@ -2092,7 +2092,7 @@ learn: {
     {
       t: 'p',
       text:
-        'Persamaan tersebut menunjukkan sesuatu yang sangat important: material yang lebih konduktif, area kontak yang lebih besar, dan lapisan yang lebih tipis secara umum membantu perpindahan panas. Namun pada CPU, masalahnya bukan hanya konduktivitas bahan—thermal contact resistance juga sangat important.'
+        'The equation shows an important point: higher conductivity, larger contact area, and a thinner layer generally improve heat transfer. For CPUs, however, the issue is not only material conductivity—thermal contact resistance also matters.'
     },
 
     {
@@ -2103,7 +2103,7 @@ learn: {
     {
       t: 'p',
       text:
-        'Permukaan CPU dan heatsink terlihat halus dengan mata, tetapi pada skala mikroskopis keduanya memiliki tonjolan dan lembah kecil. Ketika kedua permukaan ditempelkan, kontak nyata hanya terjadi pada sebagian area.'
+        'CPU and heatsink surfaces look smooth to the eye, but microscopically they have small peaks and valleys. When pressed together, real contact occurs over only part of the apparent area.'
     },
 
     {
@@ -2112,13 +2112,13 @@ learn: {
 
         '<b>Permukaan mikroskopis:</b> Logam unavailable benar-benar “flat”. Ada microscopic asperities dan lembah kecil.',
 
-        '<b>Masalah udara:</b> Celah yang unavailable terisi dapat mengandung udara. Konduktivitas termal udara sekitar 0,026 W/m·K pada kondisi ruang, jauh lebih rendah daripada logam penghantar panas.',
+        '<b>The air-gap problem:</b> Unfilled gaps can contain air. The thermal conductivity of air is about 0.026 W/m·K at room conditions, much lower than heat-conducting metals.',
 
         '<b>Thermal paste:</b> Pasta mengisi sebagian celah tersebut sehingga kontak termal menjadi lebih baik dan resistansi termal antarmuka berkurang.',
 
-        '<b>Bukan berarti pasta lebih baik daripada logam:</b> Tujuan pasta bukan menggantikan logam, melainkan memperbaiki bagian antarmuka yang unavailable dapat bersentuhan sempurna.',
+        '<b>This does not mean paste is better than metal:</b> Paste does not replace metal; it improves the interface where the two surfaces cannot make perfect contact.',
 
-        '<b>Lapisan sangat tebal juga unavailable ideal:</b> Semakin tebal material yang harus dilewati panas, semakin besar resistansi konduksinya, sehingga thermal paste umumnya digunakan dalam lapisan tipis.'
+        '<b>A very thick layer is not ideal:</b> The thicker the material layer heat must cross, the greater the conduction resistance, so thermal paste is generally used as a thin interface layer.'
       ]
     },
 
@@ -2137,7 +2137,7 @@ learn: {
     {
       t: 'p',
       text:
-        'Untuk sebuah lapisan material, konduktivitas tinggi dan ketebalan rendah akan menghasilkan thermal resistance yang lebih kecil. Inilah alasan thermal paste unavailable perlu dioles setebal mungkin.'
+        'For a material layer, higher conductivity and lower thickness produce lower thermal resistance. This is why thermal paste does not need to be applied as a thick layer.'
     },
 
     {
@@ -2148,7 +2148,7 @@ learn: {
     {
       t: 'p',
       text:
-        'Bayangkan CPU dan heatsink seperti dua balok Lego yang harus saling menempel. Sekilas terlihat rapat, tetapi pada skala sangat kecil masih ada celah. Thermal paste bertindak seperti material pengisi celah tersebut agar jalur panas menjadi lebih baik.'
+        'Imagine the CPU and heatsink as two Lego blocks that need to touch. They look tightly fitted, but microscopic gaps remain. Thermal paste acts as a gap-filling interface so heat can travel more effectively.'
     },
 
     {
@@ -2157,9 +2157,9 @@ learn: {
 
         '<b>Tanpa interface material:</b> Sebagian kecil area benar-benar bersentuhan, sementara celah lain dapat terisi udara.',
 
-        '<b>Dengan thermal paste tipis:</b> Celah kecil terisi dan kontak termal menjadi lebih konsisten.',
+        '<b>With a thin thermal-paste layer:</b> Small gaps are filled and thermal contact becomes more consistent.',
 
-        '<b>Terlalu banyak paste:</b> Anda menambahkan lapisan material tambahan yang juga harus dilewati panas.'
+        '<b>Too much paste:</b> You add another material layer that heat must also cross.'
       ]
     },
 
@@ -2192,7 +2192,7 @@ learn: {
       t: 'note',
       tone: 'warn',
       text:
-        '⚠️ PENTING: Jangan berpikir “thermal paste punya k lebih rendah daripada logam, berarti thermal paste buruk”. Paste diperlukan karena celah mikroskopis tanpa pengisi dapat menyebabkan kontak termal yang jauh lebih buruk. Tujuannya adalah memperbaiki interface, bukan menggantikan heatsink.'
+        '⚠️ IMPORTANT: Do not conclude that lower conductivity than metal makes thermal paste bad. Paste is useful because unfilled microscopic gaps can create much worse thermal contact. Its purpose is to improve the interface, not replace the heatsink.'
     },
 
     {
@@ -2203,14 +2203,14 @@ learn: {
     {
       t: 'p',
       text:
-        'Dalam model sederhana, resistansi termal meningkat ketika ketebalan lapisan meningkat: Rₜₕ = d/(k·A). Karena itu thermal paste biasanya digunakan secukupnya untuk mengisi keunavailablesempurnaan permukaan, bukan untuk membuat lapisan tebal.'
+        'In a simple model, thermal resistance increases as layer thickness increases: Rₜₕ = d/(k·A). Therefore thermal paste is used only enough to fill surface imperfections, not to create a thick layer.'
     },
 
     {
       t: 'formula',
       tex: 'ΔT = Q̇ · Rₜₕ',
       desc:
-        'Perbedaan temperatur dapat dipandang sebagai laju panas dikalikan resistansi termal. Untuk beban panas yang sama, resistansi termal yang lebih besar berarti perbedaan temperatur yang lebih besar.'
+        'Temperature difference can be viewed as heat flow multiplied by thermal resistance. For the same heat load, greater thermal resistance means a greater temperature difference.'
     },
 
     {
@@ -2221,14 +2221,14 @@ learn: {
     {
       t: 'p',
       text:
-        'Misalkan CPU menghasilkan sekitar 100 W panas. Jika total resistansi termal jalur pendinginan adalah 0,20 K/W, maka kenaikan temperatur pada model sederhana adalah sekitar 20 °C. Jika resistansi tersebut meningkat menjadi 0,30 K/W, kenaikannya menjadi sekitar 30 °C.'
+        'Suppose a CPU produces about 100 W of heat. If the total thermal resistance is 0.20 K/W, the simplified temperature rise is about 20 °C. If it increases to 0.30 K/W, the rise becomes about 30 °C.'
     },
 
     {
       t: 'formula',
       tex: 'ΔT = 100 W × 0.20 K/W = 20 K',
       desc:
-        'Contoh ilustrasi sederhana. Sistem nyata lebih kompleks karena memiliki beberapa resistansi termal sekaligus.'
+        'A simplified illustration. Real systems are more complex because several thermal resistances act together.'
     },
 
     {
@@ -2240,7 +2240,7 @@ learn: {
       t: 'formula',
       tex: 'CPU → TIM → Heatsink → Air',
       desc:
-        'Setiap tahap memiliki hambatan perpindahan panas. Thermal paste hanya salah satu bagian dari keseluruhan sistem.'
+        'Each stage contributes thermal resistance. Thermal paste is only one part of the overall system.'
     },
 
     {
@@ -2249,13 +2249,13 @@ learn: {
 
         '<b>CPU / die:</b> tempat panas dihasilkan.',
 
-        '<b>IHS:</b> membantu menyebarkan panas dari chip ke area yang lebih besar.',
+        '<b>IHS:</b> helps spread heat from the chip over a larger area.',
 
         '<b>TIM / thermal paste:</b> memperbaiki kontak antara permukaan.',
 
-        '<b>Heatsink:</b> menyebarkan panas ke area permukaan yang besar.',
+        '<b>Heatsink:</b> spreads heat over a large surface area.',
 
-        '<b>Fan:</b> meningkatkan perpindahan panas dari heatsink ke udara.',
+        '<b>Fan:</b> increases heat transfer from the heatsink to the air.',
 
         '<b>Ambient:</b> batas akhir tempat panas dilepaskan.'
       ]
@@ -2270,13 +2270,13 @@ learn: {
       t: 'list',
       items: [
 
-        '<b>❌ “Thermal paste mendinginkan CPU.”</b><br>✅ Thermal paste membantu memindahkan panas dari CPU ke heatsink.',
+        '<b>❌ “Thermal paste cools the CPU.”</b><br>✅ Thermal paste helps transfer heat from the CPU to the heatsink.',
 
-        '<b>❌ “Semakin banyak thermal paste semakin dingin.”</b><br>✅ Thermal paste cukup digunakan untuk mengisi keunavailablesempurnaan permukaan. Terlalu tebal dapat menambah resistansi.',
+        '<b>❌ “More thermal paste means more cooling.”</b><br>✅ Use enough paste to fill surface imperfections. Too much can add resistance.',
 
-        '<b>❌ “Thermal paste lebih konduktif daripada tembaga.”</b><br>✅ Umumnya jauh lebih rendah daripada logam seperti tembaga.',
+        '<b>❌ “Thermal paste is more conductive than copper.”</b><br>✅ Its conductivity is generally much lower than metals such as copper.',
 
-        '<b>❌ “CPU panas karena unavailable ada thermal paste.”</b><br>✅ Thermal interface yang buruk memang dapat meningkatkan temperatur, tetapi desain heatsink, airflow, fan, mounting pressure, beban CPU, dan suhu lingkungan juga berpengaruh.',
+        '<b>❌ “A CPU gets hot because there is no thermal paste.”</b><br>✅ A poor thermal interface can raise temperatures, but heatsink design, airflow, fan performance, mounting pressure, CPU load, and ambient temperature also matter.',
 
         '<b>❌ “CPU 70°C berarti pasti thermal paste jelek.”</b><br>✅ Temperatur CPU harus dianalisis bersama beban kerja, ambient temperature, cooler, airflow, dan karakteristik CPU.'
       ]
@@ -2290,7 +2290,7 @@ learn: {
     {
       t: 'p',
       text:
-        'Gunakan dua permukaan logam yang bersih dan sebuah sensor temperatur. Bandingkan perubahan temperatur atau thermal response dengan kontak langsung dan dengan lapisan thermal interface yang sangat tipis. Fokuskan pengamatan pada kecepatan perpindahan panas, bukan hanya angka temperatur akhir.'
+        'Use two clean metal surfaces and a temperature sensor. Compare thermal response with direct contact and with a very thin thermal interface layer. Focus on heat-transfer rate, not only the final temperature.'
     },
 
     {
@@ -2299,13 +2299,13 @@ learn: {
 
         'Catat temperatur awal.',
 
-        'Berikan sumber panas yang sama.',
+        'Use the same heat source.',
 
-        'Ukur temperatur pada interval waktu yang sama.',
+        'Measure temperature at the same time intervals.',
 
         'Bandingkan kurva kenaikan temperatur.',
 
-        'Ulangi beberapa kali untuk mengurangi kesalahan pengukuran.'
+        'Repeat several times to reduce measurement error.'
       ]
     },
 
@@ -2317,7 +2317,7 @@ learn: {
     {
       t: 'p',
       text:
-        'Jika thermal paste memiliki konduktivitas lebih rendah daripada tembaga, mengapa kita tetap menggunakannya?'
+        'If thermal paste is less conductive than copper, why do we still use it?'
     },
 
     {
@@ -2325,7 +2325,7 @@ learn: {
       items: [
         'A. Karena thermal paste menghasilkan udara dingin.',
         'B. Karena thermal paste menghasilkan listrik.',
-        'C. Karena thermal paste memperbaiki kontak termal dengan mengisi celah mikroskopis.',
+        'C. Because thermal paste improves thermal contact by filling microscopic gaps.',
         'D. Karena thermal paste menggantikan fungsi heatsink.'
       ]
     },
@@ -2334,7 +2334,7 @@ learn: {
       t: 'note',
       tone: 'success',
       text:
-        '✅ Jawaban: C. Thermal paste bukan sumber pendinginan. Ia adalah thermal interface material yang membantu mengurangi hambatan perpindahan panas pada antarmuka CPU–heatsink.'
+        '✅ Answer: C. Thermal paste is not the cooling source. It is a thermal interface material that helps reduce heat-transfer resistance at the CPU–heatsink interface.'
     },
 
     {
@@ -2345,7 +2345,7 @@ learn: {
     {
       t: 'p',
       text:
-        'CPU cooling bukan soal mencari material yang “dingin”. Ini adalah masalah perpindahan panas. Thermal paste bekerja pada bagian yang sangat spesifik: memperbaiki thermal contact antara dua permukaan agar panas dapat bergerak lebih efektif dari CPU menuju heatsink.'
+        'CPU cooling is not about finding a “cold” material. It is a heat-transfer problem. Thermal paste serves one specific role: improving thermal contact between two surfaces so heat can move more effectively from the CPU to the heatsink.'
     },
 
     {
@@ -2359,7 +2359,7 @@ learn: {
       t: 'note',
       tone: 'info',
       text:
-        '🔬 Pertanyaan lanjutan: Kalau thermal paste hanya salah satu bagian dari jalur panas, mana yang lebih berpengaruh pada temperatur CPU—thermal paste, heatsink, fan, airflow, atau suhu ruangan?'
+        '🔬 Follow-up question: If thermal paste is only one part of the heat path, which may have the larger effect on CPU temperature—the paste, heatsink, fan, airflow, or room temperature?'
     }
 
   ]
@@ -2774,7 +2774,7 @@ learn: {
     },
     everyday:{ items:[
       { q:'Two people are outdoors during a severe storm: one is inside a sedan, the other is on a motorcycle. Which situation provides more shielding?',
-        options:['Pengendara motor, karena ban karet','Pengemudi mobil, karena rangka logam bekerja seperti sangkar Faraday','Sama saja'],
+        options:['Pengendara motor, karena ban karet','Pengemudi mobil, karena rangka logam bekerja seperti sangkar Faraday','The same'],
         answer:1, concepts:['sangkar Faraday','konduktor','arus permukaan'],
         explain:'A metal car body conducts current over its exterior and strongly reduces the electric field inside the cabin. Rubber tires are not what provides the main protection.',
         tryIt:'Set “Object = Car,” then increase the number of open windows in Simulate and observe the shielding reduction.' },

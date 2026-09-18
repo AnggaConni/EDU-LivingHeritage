@@ -1734,18 +1734,18 @@ const MODULES = [
 
 // --- MODUL CRAFTING 1: PIROLISIS & BIOCHAR ---
 {
-  id:'env-pyrolysis', category:'Climate & Environment', title:'Pirolisis & Biochar', subtitle:'Membakar kayu tanpa oksigen',
+  id:'env-pyrolysis', category:'Climate & Environment', title:'Pyrolysis & Biochar', subtitle:'Heating biomass with limited oxygen',
   icon:'fa-fire-flame-curved', color:'orange', tags:['lingkungan','iklim','karbon','arang','crafting'],
   capabilities:['calculator'], visual:'chart',
   safety:{ level:'high', warnings:[
-    {severity:'critical', text:'Eksperimen api HARUS dilakukan di luar ruangan terbuka dan diawasi oleh orang dewasa. Siapkan air atau pasir di dekatmu untuk memadamkan api.'},
-    {severity:'warning', text:'Gas yang dihasilkan (syngas) sangat mudah terbakar dan mengandung karbon monoksida. Jangan dihirup!'}
+    {severity:'critical', text:'Fire experiments MUST be conducted outdoors under adult supervision. Keep water or sand nearby for fire control.'},
+    {severity:'warning', text:'The gases produced (syngas) can be highly flammable and may contain carbon monoxide. Do not inhale them!'}
   ]},
   modes:{
     learn:{ blocks:[
-      {t:'h', text:'Membakar Tanpa Oksigen?'},
-      {t:'p', text:'Pirolisis adalah proses memanaskan materi organik (seperti ranting kayu) pada suhu tinggi di ruang tertutup tanpa oksigen. Alih-alih menjadi abu, kayu berubah bentuk menjadi arang murni (Biochar), asap cair (Bio-oil), dan gas sintesis (Syngas).'},
-      {t:'formula', tex:'Biomassa + Panas → Biochar + Syngas', desc:'Reaksi pemecahan molekul karena suhu ekstrem.'},
+      {t:'h', text:'Heating Without Oxygen?'},
+      {t:'p', text:'Pyrolysis is the thermal decomposition of organic material such as wood at high temperature with limited oxygen. It can produce char (biochar), bio-oil, and synthesis gas (syngas).'},
+      {t:'formula', tex:'Biomass + Heat → Biochar + Syngas', desc:'Molecular breakdown driven by high temperature.'},
       {t:'list', items:[
         '<b>Biochar mengunci karbon:</b> Arang unavailable akan membusuk ratusan tahun, mencegah karbon kembali menjadi gas rumah kaca CO₂ (Bagus untuk melawan krisis iklim!)',
         '<b>Bahan Crafting:</b> Arang punya jutaan pori-pori mikroskopis. Sangat bagus untuk menyaring air kotor atau menyuburkan tanah pertanian.'
@@ -1753,16 +1753,16 @@ const MODULES = [
     ]},
     calculate:{
       inputs:[
-        { id:'kayu', label:'Mass ranting/kayu basah (kg)', default:5, min:1, step:1 },
-        { id:'air', label:'Kadar air kayu (%)', default:20, type:'range', min:0, max:60, step:1 },
-        { id:'yield', label:'Efisiensi Pirolisis (%)', default:30, type:'range', min:15, max:40, step:1 }
+        { id:'kayu', label:'Wet biomass mass (kg)', default:5, min:1, step:1 },
+        { id:'air', label:'Wood moisture content (%)', default:20, type:'range', min:0, max:60, step:1 },
+        { id:'yield', label:'Pyrolysis efficiency (%)', default:30, type:'range', min:15, max:40, step:1 }
       ],
       outputs:[
-        { id:'massa_kering', label:'Mass Kayu Kering', formula:{expr:'kayu * (1 - air/100)'}, unit:'kg', decimals:2 },
-        { id:'biochar', label:'Estimasi Arang (Biochar) Dihasilkan', formula:{expr:'(kayu * (1 - air/100)) * (yield/100)'}, unit:'kg', decimals:2 },
-        { id:'co2', label:'Karbon Dioksida (CO₂) Yang Dikunci', formula:{expr:'((kayu * (1 - air/100)) * (yield/100)) * 2.5'}, unit:'kg', decimals:1, hint:'Setiap kg biochar berhasil mencegah sekitar 2.5 kg CO2 kembali ke atmosfer. Kamu baru saja menyelamatkan iklim!' }
+        { id:'massa_kering', label:'Dry wood mass', formula:{expr:'kayu * (1 - air/100)'}, unit:'kg', decimals:2 },
+        { id:'biochar', label:'Estimated biochar produced', formula:{expr:'(kayu * (1 - air/100)) * (yield/100)'}, unit:'kg', decimals:2 },
+        { id:'co2', label:'Estimated CO₂ stored', formula:{expr:'((kayu * (1 - air/100)) * (yield/100)) * 2.5'}, unit:'kg', decimals:1, hint:'This is a simplified educational estimate of carbon storage; actual values depend on biomass and production conditions.' }
       ],
-      chart:{ title:'Hasil Biochar vs Efisiensi Alat Pirolisis', xLabel:'Efisiensi Alat (%)', yLabel:'Arang (kg)',
+      chart:{ title:'Biochar Yield vs Pyrolysis Efficiency', xLabel:'Pyrolysis Efficiency (%)', yLabel:'Biochar (kg)',
         x:{ id:'yield', from:15, to:40, steps:25 },
         series:[{ label:'Biochar (kg)', expr:'(kayu * (1 - air/100)) * (yield/100)', color:'#ea580c' }] }
     },
@@ -1772,73 +1772,73 @@ const MODULES = [
   image: 'thum/pirolisis.png',
 
   objective:
-    'Mengamati bagaimana biomassa dapat mengalami dekomposisi termal dengan oksigen terbatas dan menghasilkan biochar.',
+    'Observe how biomass undergoes thermal decomposition under limited oxygen and produces biochar.',
 
   safety: [
-    'Lakukan hanya di ruang terbuka dengan ventilasi sangat baik dan jauh dari bahan mudah terbakar.',
-    'Eksperimen harus dilakukan dengan pengawasan orang dewasa.',
-    'Proses menghasilkan gas mudah terbakar dan dapat menghasilkan karbon monoksida (CO). Jangan dilakukan di dalam ruangan.',
-    'Gunakan sarung tangan tahan panas dan alat penjepit yang sesuai saat menangani kaleng.',
+    'Only perform this experiment outdoors with very good ventilation and away from flammable materials.',
+    'The experiment must be supervised by an adult.',
+    'The process can produce flammable gases and carbon monoxide (CO). Never perform it indoors.',
+    'Use heat-resistant gloves and suitable tools when handling hot cans.',
     'Jangan membuka atau menyentuh kaleng bagian dalam ketika masih panas. Biochar dapat tetap menyala atau sangat panas meskipun api sudah unavailable terlihat.',
-    'Jauhkan wajah dan tubuh dari lubang keluarnya gas.'
+    'Keep your face and body away from gas outlets.'
   ],
 
   materials: [
-    '1 kaleng logam besar yang bersih dan unavailable memiliki sisa bahan berbahaya',
+    '1 clean large metal can with no hazardous residue',
     '1 kaleng logam kecil yang dapat ditempatkan di dalam kaleng besar',
-    'Ranting kayu kering atau biomassa kering yang bersih',
-    'Bahan bakar untuk pemanasan eksternal',
-    'Alat pelubang logam',
-    'Sarung tangan tahan panas',
-    'Penjepit atau alat untuk menangani kaleng panas'
+    'Clean dry twigs or other dry biomass',
+    'External heating fuel',
+    'Metal hole punch',
+    'Heat-resistant gloves',
+    'Tongs or a suitable tool for handling hot cans'
   ],
 
   steps: [
 
-    'Siapkan dua kaleng logam. Kaleng kecil harus dapat ditempatkan di dalam kaleng besar dengan ruang di sekelilingnya.',
+    'Prepare two metal cans. The smaller can should fit inside the larger can with space around it.',
 
-    'Buat beberapa lubang udara pada bagian bawah kaleng besar untuk memungkinkan udara masuk ke ruang pembakaran eksternal. Kaleng kecil digunakan sebagai ruang biomassa dan harus tetap tertutup.',
+    'Make several air holes near the bottom of the large can to allow air into the external heating space. The small can holds the biomass and should remain closed.',
 
-    'Buat satu lubang kecil pada bagian atas/tutup kaleng kecil sebagai jalur keluarnya gas dan uap hasil pemanasan biomassa.',
+    'Make a small opening in the top/lid of the small can as an outlet for gases and vapors produced during heating.',
 
-    'Isi kaleng kecil dengan ranting kayu kering atau biomassa kering yang bersih. Jangan menggunakan bahan yang dicat, dilapisi bahan kimia, plastik, atau sampah campuran. Tutup kaleng kecil dengan rapat.',
+    'Fill the small can with clean, dry twigs or biomass. Do not use painted, chemically coated, plastic, or mixed-waste materials. Close the small can tightly.',
 
-    'Tempatkan kaleng kecil di tengah kaleng besar. Beri bahan bakar di ruang antara kedua kaleng. Jangan memasukkan bahan bakar ke dalam kaleng kecil.',
+    'Place the small can in the center of the large can. Add fuel to the space between the cans. Do not put fuel inside the small can.',
 
-    'Nyalakan api pada ruang di luar kaleng kecil. Api eksternal berfungsi memberikan panas ke biomassa di dalam kaleng kecil.',
+    'Light the fire in the space outside the small can. The external fire provides heat to the biomass inside.',
 
-    'Amati perubahan yang terjadi. Ketika temperatur meningkat, biomassa mengalami pyrolysis: komponen organik terurai karena panas dalam kondisi oksigen terbatas dan menghasilkan padatan karbon, gas, serta uap volatil.',
+    'Observe the changes. As temperature rises, the biomass undergoes pyrolysis: organic components break down under limited oxygen, producing carbon-rich solids, gases, and volatile vapors.',
 
-    'Gas dan uap yang keluar dari lubang kaleng kecil dapat terlihat sebagai asap atau volatil dan sebagian dapat terbakar ketika bertemu oksigen serta sumber panas. Jangan menghirup gas atau asap tersebut.',
+    'Gas and vapors leaving the small can may appear as smoke or volatile compounds, and some may burn when they meet oxygen and heat. Do not inhale the gases or smoke.',
 
-    'Biarkan proses berlangsung tanpa membuka kaleng kecil. Setelah pemanasan complete, matikan api eksternal dan biarkan seluruh sistem mendingin sepenuhnya di tempat yang aman.',
+    'Let the process continue without opening the small can. After heating is complete, extinguish the external fire and allow the entire system to cool fully in a safe place.',
 
-    'Pastikan kaleng benar-benar dingin sebelum dibuka. Periksa biochar yang terbentuk. Biomassa yang berhasil diproses akan berubah menjadi material padat berwarna gelap dan kaya karbon.'
+    'Make sure the can is completely cool before opening it. Inspect the resulting biochar. Successfully processed biomass should become a dark, carbon-rich solid material.'
   ],
 
   observation: {
     title: '🔬 Observe Like a Scientist',
     questions: [
-      'Apa yang terjadi pada biomassa ketika temperatur meningkat?',
-      'Kapan gas atau uap mulai keluar?',
-      'Apakah gas yang keluar dapat terbakar?',
-      'Bagaimana perubahan warna dan tekstur biomassa?',
-      'Apakah seluruh biomassa berubah menjadi biochar atau masih terdapat bagian yang belum terproses?'
+      'What happens to the biomass as temperature increases?',
+      'When do gases or vapors start to escape?',
+      'Can the escaping gas burn?',
+      'How do the color and texture of the biomass change?',
+      'Does all the biomass become biochar, or does some remain unprocessed?'
     ]
   },
 
   measurement: {
     title: '📊 Measure Your Result',
     parameters: [
-      'Mass biomassa awal (gram)',
-      'Mass biochar setelah dingin (gram)',
-      'Durasi pemanasan (menit)',
-      'Durasi pendinginan (menit)'
+      'Initial biomass mass (g)',
+      'Biochar mass after cooling (g)',
+      'Heating duration (minutes)',
+      'Cooling duration (minutes)'
     ],
 
     calculation: {
       title: 'Biochar Yield',
-      formula: '(massa biochar ÷ massa biomassa awal) × 100%',
+      formula: '(biochar mass ÷ initial biomass mass) × 100%',
       unit: '%'
     }
   },
@@ -1861,21 +1861,21 @@ const MODULES = [
   nextExperiment: {
     title: '🧪 Next Mission: Biochar Adsorption',
     description:
-      'Gunakan biochar sebagai bahan untuk eksperimen adsorpsi sederhana menggunakan air non-konsumsi. Bandingkan perubahan visual sebelum dan sesudah penyaringan.',
+      'Use biochar for a simple adsorption demonstration with non-consumable water. Compare visual changes before and after filtration.',
 
     warning:
-      'Hasil eksperimen ini unavailable boleh digunakan sebagai air minum. Biochar sederhana belum tentu memiliki kualitas atau keamanan yang sesuai untuk pengolahan air konsumsi.'
+      'The result of this experiment must not be used as drinking water. Simple biochar may not meet the quality or safety requirements for treating drinking water.'
   },
 
   note:
     '🔥 Dari limbah biomassa menjadi karbon: pyrolysis menunjukkan bagaimana panas, oksigen, dan material dapat mengubah suatu bahan menjadi produk baru.'
 },
     everyday:{ items:[
-      { q:'Kenapa tukang sate lebih memilih membakar arang daripada membakar kayu biasa?',
+      { q:'Why might a satay vendor prefer charcoal over ordinary wood?',
         options:['Karena arang lebih murah didapat','Karena arang menghasilkan panas sangat tinggi dan nyaris tanpa asap yang pedih di mata','Karena kayu biasa unavailable bisa dibakar untuk daging'],
-        answer:1, concepts:['pembakaran murni','kalor','asap'],
-        explain:'Kayu biasa masih mengandung air, resin, dan getah. Saat dibakar, getah ini menguap jadi asap tebal dan membuang panas. Arang hampir 100% murni karbon, sehingga api yang dihasilkan panasnya konstan, tenang, merah membara, dan tanpa asap.',
-        tryIt:'Di tab Calculate, ubah "Kadar Air Kayu" menjadi tinggi (60%). Lihat bagaimana massa kering dan hasil biocharnya terjun bebas.' }
+        answer:1, concepts:['cleaner combustion','heat energy','smoke'],
+        explain:'Ordinary wood still contains moisture, resins, and other compounds that contribute to smoke. Charcoal is mostly carbon, so it burns differently and can provide steady heat with much less visible smoke.',
+        tryIt:'In the Calculate tab, raise wood moisture content to 60% and observe how dry mass and biochar yield change.' }
     ]}
   }
 },
@@ -2054,7 +2054,7 @@ const MODULES = [
 // --- MODUL FISIKA: TERMODINAMIKA & THERMAL PASTE ---
 {
   id:'phys-thermo-cpu', category:'Physics', title:'Termodinamika Thermal Paste', subtitle:'Hukum Fourier pada CPU komputer',
-  icon:'fa-microchip', color:'rose', tags:['termodinamika','kalor','suhu','cpu','komputer'],
+  icon:'fa-microchip', color:'rose', tags:['termodinamika','heat energy','suhu','cpu','komputer'],
   capabilities:['calculator'], visual:'chart',
   modes:{
 learn: {

@@ -1,62 +1,74 @@
-# 🔬 Pocket Science Lab (Science-HUB)
+# Living Heritage in Education
 
-![Version](https://img.shields.io/badge/version-0.2-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-Web%20%7C%20PWA-success.svg)
+![Language](https://img.shields.io/badge/interface-English-blue.svg)
 ![Stack](https://img.shields.io/badge/stack-Vanilla%20JS%20%7C%20TailwindCSS-orange.svg)
 
-**Pocket Science Lab** adalah aplikasi web modular berbasis *Single Page Application* (SPA) yang dirancang untuk mengubah smartphone biasa menjadi instrumen laboratorium sains yang canggih. Aplikasi ini menggabungkan simulasi interaktif, kalkulator saintifik, panduan merakit (*crafting*), dan pembacaan sensor *hardware* secara *real-time*.
+**Living Heritage in Education** is a modular, browser-based learning environment designed to connect observation, experimentation, science, and social learning with living heritage.
 
-🌍 **Live Demo:** [https://anggaconni.github.io/Science-HUB/](https://anggaconni.github.io/Science-HUB/)
+The current application contains interactive learning modules for mathematics, physics, biology, chemistry, climate and environment, geography, sensors, mapping, camera-based measurement, and AR-capable workflows. The architecture is intentionally modular so living heritage contexts and ICH-based learning activities can be added without replacing the core learning engine.
 
----
+🌍 **Live Demo:** https://anggaconni.github.io/EDU-LivingHeritage/
 
-## ✨ Fitur Utama
+## Learning approach
 
-- 📡 **Integrasi Sensor Hardware:** Membaca data nyata dari Akselerometer, Giroskop, Magnetometer, Mikrofon, dan Kamera HP.
-- ⚙️ **Engine Simulasi Kustom:** Memiliki simulasi fisika dinamis (gerak parabola, bandul, gelombang, sangkar Faraday) yang dihitung secara *real-time*.
-- 🧮 **Custom Expression Parser:** Kalkulator pintar tanpa fungsi `eval()` bawaan yang berbahaya, mampu membaca rumus kompleks seperti `sin(45)^2 + sqrt(25)`.
-- 🛠️ **DIY & Crafting Guides:** Panduan eksperimen sains fisik (membuat filter air, pirolisis biochar) lengkap dengan perhitungan dampak lingkungannya.
-- 📱 **Progressive Web App (PWA):** Dapat diinstal langsung ke layar utama (*Home Screen*) HP dan **dapat digunakan 100% secara offline** tanpa kuota internet.
+The platform is built around an inquiry loop:
 
----
+**Ask → Predict → Calculate → Simulate → Measure → Compare → Reflect**
 
-## 📚 Daftar Modul Sains
+The goal is not only to provide answers, but to help learners connect concepts with observable phenomena, measurements, experiments, and real-world contexts.
 
-Aplikasi ini menggunakan arsitektur modular sehingga materi baru sangat mudah ditambahkan. Modul yang tersedia saat ini:
+A future ICH layer can use the same structure to connect living heritage with academic concepts—for example, a gong with acoustics and wave physics, or *tepa slira* with social science, empathy, and interpersonal relationships.
 
-### 📐 Matematika
-- Kalkulator Sains & Parser Ekspresi
-- Kalkulator Grafik Fungsi ($y = f(x)$)
-- Statistika & Regresi Linear
-- Vektor 3D & Konversi Satuan
+## Current capabilities
 
-### 🍎 Fisika
-- Gerak Parabola (Dilengkapi pelacakan bola via Kamera)
-- Jatuh Bebas & Gravitasi
-- Ayunan Sederhana (Pendulum)
-- Hukum Ohm, Daya Listrik, & Sangkar Faraday
-- Termodinamika & Konduksi (Studi Kasus: *Thermal Paste* CPU)
+- Interactive calculators and formula engines
+- Physics simulations and graphing
+- Statistics and regression
+- Camera-based measurement workflows
+- Device sensor experiments
+- Interactive maps and Haversine distance measurement
+- AR / WebXR capability detection with fallbacks
+- CSV / JSON experiment data export
+- Progressive Web App support
+- Offline-first caching through a service worker
 
-### 🧬 Biologi
-- Pertumbuhan Populasi Bakteri (Fase Eksponensial)
-- Fisiologi Manusia (Kalkulator BMR & Kebutuhan Kalori)
-- Genetika Populasi (Hukum Hardy-Weinberg)
+## Architecture
 
-### 🌍 Iklim & Lingkungan
-- Pirolisis & Pembuatan Biochar (*Carbon Sequestration*)
-- *Crafting*: Filter Air Alami Berlapis
+The project is intentionally lightweight and serverless:
 
-### 📟 Sensor & AR Lab
-- Lab Akselerometer, Giroskop, Magnetometer, & Suara (Desibel/Frekuensi)
-- Alat Ukur Jarak AR (Klinometer & *WebXR*)
-- Pengukur Jarak Peta (GIS & Formula Haversine)
+- HTML5
+- Vanilla JavaScript
+- Tailwind CSS
+- Leaflet
+- Chart.js
+- Web APIs for camera, motion, orientation, microphone, geolocation, and WebXR
+- GitHub Pages for deployment
 
----
+The module registry separates **what learners study** from **how the application calculates, simulates, measures, or visualizes it**. This makes it possible to add new heritage-learning modules as structured content rather than redesigning the application.
 
-## 🚀 Cara Menjalankan di Komputer Lokal (Development)
+## Repository structure
 
-Karena aplikasi ini adalah PWA yang menggunakan Service Worker (`sw.js`) dan modul kamera, aplikasi **wajib** dijalankan di atas server lokal (Localhost) dan tidak bisa hanya dengan mengklik ganda file HTML.
+- `index.html` — application, module registry, learning content, renderers, and interaction logic
+- `manifest.json` — PWA metadata
+- `sw.js` — service worker and offline cache
+- `icon-192.png` / `icon-512.png` — application icons
+- `thumbnail.png` — social / preview image
+- `thum/` — module supporting images
 
-1. Clone repositori ini:
-   ```bash
-   git clone https://github.com/anggaconni/Science-HUB.git
+## Deployment
+
+The application is designed for GitHub Pages and is configured for:
+
+https://anggaconni.github.io/EDU-LivingHeritage/
+
+Because camera, sensors, geolocation, and WebXR require secure browser contexts, use the deployed HTTPS version or a local HTTPS-capable development environment when testing hardware features.
+
+## Status
+
+The LMS interface and public-facing metadata are now in English. The current science-learning modules remain available as the technical learning foundation.
+
+The next development layer is the integration of **Intangible Cultural Heritage (ICH)** and **living heritage-based learning**, including cross-disciplinary examples such as:
+
+**Living Heritage → Observation / Practice → Academic Concept → Experiment / Inquiry → Reflection → Contemporary Application**
+

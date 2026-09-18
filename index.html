@@ -1227,7 +1227,7 @@ const SIM_ENGINES = {
         c.fillStyle='#0f172a'; c.font='bold 11px sans-serif';
         c.fillText(['','MOBIL (rangka logam)','KOTAK LOGAM','TENDA (kain)'][p.shield], box.x+8, box.y+box.h/2);
         c.fillStyle='#64748b'; c.font='10px sans-serif';
-        c.fillText(`E dalam ≈ ${rnd(p.E*inside,2)} kV/m`, box.x+8, box.y+box.h/2+16);
+        c.fillText(`Internal E ≈ ${rnd(p.E*inside,2)} kV/m`, box.x+8, box.y+box.h/2+16);
       }
       c.fillStyle='#0f172a'; c.font='bold 11px sans-serif'; c.fillText(`E luar = ${p.E} kV/m`, 10, 16);
     },
@@ -1370,7 +1370,7 @@ const CameraLab = {
     } else if(this.mode==='measure'){
       if(!this.calib.pxPerM){ UI.toast('Kalibrasi dulu ya','amber'); return; }
       const m = dist(p1,p2)/this.calib.pxPerM;
-      $('cam-readout').innerHTML=`<b>Jarak ≈ ${rnd(m,3)} m</b> (${rnd(m*100,1)} cm) · estimasi 2D pada bidang terkalibrasi`;
+      $('cam-readout').innerHTML=`<b>Distance ≈ ${rnd(m,3)} m</b> (${rnd(m*100,1)} cm) · 2D estimate on the calibrated plane`;
     } else if(this.mode==='angle'){
       const v1=[p1[0]-p2[0],p1[1]-p2[1]], v2=[p3[0]-p2[0],p3[1]-p2[1]];
       const ang = Math.acos(clamp((v1[0]*v2[0]+v1[1]*v2[1])/(Math.hypot(...v1)*Math.hypot(...v2)),-1,1))*180/Math.PI;
@@ -1613,7 +1613,7 @@ const MODULES = [
         series:[{ label:'Total payment', expr:'(harga - harga*diskon/100) * (1 + pajak/100)', color:'#e11d48' }] }
     },
     everyday:{ items:[
-      { q:'Mana lebih murah: diskon 50% lalu tambahan 20%, atau langsung diskon 70%?',
+      { q:'Which is cheaper: a 50% discount followed by another 20%, or a direct 70% discount?',
         options:['The same','50% + 20% discount is cheaper','70% discount is cheaper'],
         answer:2, concepts:['persen bertingkat'],
         explain:'50% then 20% = 0.5 × 0.8 = 0.40 → an effective 60% discount. A 70% discount leaves 30%, so it is cheaper.',

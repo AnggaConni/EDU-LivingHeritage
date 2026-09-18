@@ -5682,8 +5682,7 @@ const HomeSlider = {
           '<h2 class="mt-2 text-[20px] sm:text-2xl leading-[1.2] font-extrabold tracking-tight">'+s.title+'</h2>'+
           '<p class="text-[11px] sm:text-xs leading-relaxed text-white/90 mt-3 mx-auto max-w-2xl">'+s.desc+'</p>'+
           '<div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5 mx-auto max-w-2xl text-left">'+s.bullets.map(b=>'<div class="flex items-start gap-1.5 text-[9px] sm:text-[10px] leading-relaxed text-white/90"><i class="fa-solid fa-check mt-0.5 text-white/70"></i><span>'+b+'</span></div>').join('')+'</div>'+
-          '<div class="mt-5 inline-flex items-center gap-1.5 text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/15 border border-white/20"><i class="fa-solid fa-arrow-right"></i>'+s.cta+'</div>'+
-        '</div></div>';
+          ''</div><\/div>';
     }).join('');
     dots.innerHTML=this.data.map((s,i)=>'<button aria-label="Go to slide '+(i+1)+': '+s.title+'" onclick="HomeSlider.goTo('+i+')" class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 '+(i===this.currentIndex?'bg-white w-4 sm:w-5':'bg-white/40 hover:bg-white/70')+'"></button>').join('');
   },

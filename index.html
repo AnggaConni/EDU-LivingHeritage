@@ -2615,15 +2615,15 @@ learn: {
   }
 },
 {
-  id:'phys-circular', category:'Physics', title:'Gerak Melingkar', subtitle:'Sentripetal, ω, dan tikungan',
-  icon:'fa-arrows-spin', color:'violet', tags:['melingkar','sentripetal','rotasi'],
+  id:'phys-circular', category:'Physics', title:'Circular Motion', subtitle:'Centripetal acceleration, ω, and turning',
+  icon:'fa-arrows-spin', color:'violet', tags:['melingkar','centripetal','rotasi'],
   capabilities:['calculator','simulation'], visual:'sim',
   modes:{
     learn:{ blocks:[
-      {t:'h', text:'Berputar = terus dipercepat'},
-      {t:'p', text:'Walau kecepatannya konstan, arahnya berubah terus — dan perubahan arah itu percepatan. Percepatan ini selalu menunjuk ke pusat.'},
-      {t:'formula', tex:'a꜀ = v²/r = ω²r', desc:'Dua kali lebih cepat → butuh gaya empat kali lebih besar.'},
-      {t:'note', tone:'info', text:'"Force sentrifugal" yang kamu rasakan di dalam mobil menikung hanyalah efek kerangka acuan — tubuhmu ingin lurus, mobil yang membelokkanmu.'}
+      {t:'h', text:'Turning means continuous acceleration'},
+      {t:'p', text:'Even at constant speed, the direction keeps changing—and changing direction is acceleration. The acceleration points toward the center.'},
+      {t:'formula', tex:'a꜀ = v²/r = ω²r', desc:'Doubling the speed requires four times the centripetal force.'},
+      {t:'note', tone:'info', text:'The “centrifugal force” you feel in a turning car is an apparent effect of the reference frame: your body tends to continue straight while the car turns.'}
     ]},
     calculate:{
       inputs:[
@@ -2632,13 +2632,13 @@ learn: {
         { id:'m', label:'Mass', default:0.5, unit:{family:'mass', base:'kg', options:['kg','g','ton']} }
       ],
       outputs:[
-        { id:'omega', label:'Speed sudut', formula:{expr:'v/r'}, unit:'rad/s' },
+        { id:'omega', label:'Angular speed', formula:{expr:'v/r'}, unit:'rad/s' },
         { id:'T', label:'Periode', formula:{expr:'2*pi*r/v'}, unit:'s' },
-        { id:'ac', label:'Percepatan sentripetal', formula:{expr:'v^2/r'}, unit:'ms2' },
-        { id:'Fc', label:'Force sentripetal', formula:{expr:'m*v^2/r'}, unit:'N' },
-        { id:'gforce', label:'Setara berapa g', formula:{expr:'(v^2/r)/g'}, decimals:2, hint:'Pilot jet bisa menahan ±9 g sesaat.' }
+        { id:'ac', label:'Centripetal acceleration', formula:{expr:'v^2/r'}, unit:'ms2' },
+        { id:'Fc', label:'Centripetal force', formula:{expr:'m*v^2/r'}, unit:'N' },
+        { id:'gforce', label:'Equivalent g-force', formula:{expr:'(v^2/r)/g'}, decimals:2, hint:'Pilot jet bisa menahan ±9 g sesaat.' }
       ],
-      chart:{ title:'Force sentripetal vs kecepatan', xLabel:'v (m/s)', yLabel:'F (N)',
+      chart:{ title:'Centripetal Force vs Speed', xLabel:'v (m/s)', yLabel:'F (N)',
         x:{ id:'v', from:0, to:20, steps:20 },
         series:[{ label:'F = mv²/r', expr:'m*v^2/r', color:'#7c3aed' }] }
     },
@@ -2652,37 +2652,37 @@ learn: {
       tip:'Perhatikan panah merah (sentripetal) selalu ke pusat, panah kuning (kecepatan) selalu menyinggung lingkaran.'
     },
     everyday:{ items:[
-      { q:'Kenapa jalan tol di tikungan dibuat miring (banked)?',
+      { q:'Why are roads banked at curves?',
         options:['Supaya air hujan mengalir','Supaya komponen gaya normal ikut membantu gaya sentripetal','Supaya mobil terlihat keren'],
-        answer:1, concepts:['gaya normal','gesekan','sentripetal'],
-        explain:'Pada tikungan miring, gaya normal jalan punya komponen mengarah ke pusat tikungan. Jadi mobil unavailable hanya bergantung pada gesekan ban — important saat jalan basah.',
-        tryIt:'Calculate a꜀ untuk mobil 60 km/jam di tikungan radius 50 m di tab Calculate.' }
+        answer:1, concepts:['normal force','friction','centripetal'],
+        explain:'On a banked curve, the road’s normal force has a component toward the center of the turn. This means the vehicle does not rely only on tire friction, which matters on wet roads.',
+        tryIt:'Calculate a꜀ for a car traveling at 60 km/h around a curve with a 50 m radius in the Calculate tab.' }
     ]}
   }
 },
 {
-  id:'phys-wave', category:'Physics', title:'Gelombang & Bunyi', subtitle:'v = λf + ukur frekuensi pakai mikrofon',
+  id:'phys-wave', category:'Physics', title:'Waves & Sound', subtitle:'v = λf + measure frequency with the microphone',
   icon:'fa-wave-square', color:'cyan', tags:['gelombang','bunyi','frekuensi','mikrofon'],
   capabilities:['calculator','simulation','microphone'], visual:'sim',
   modes:{
     learn:{ blocks:[
       {t:'h', text:'Waves transfer energy, not matter'},
-      {t:'formula', tex:'v = λ · f', desc:'Cepat rambat = panjang gelombang × frekuensi.'},
+      {t:'formula', tex:'v = λ · f', desc:'Wave speed = wavelength × frequency.'},
       {t:'kv', items:[['Bunyi di udara','≈ 343 m/s (20 °C)'],['Bunyi di air','≈ 1480 m/s'],['Cahaya','299.792.458 m/s'],['Pendengaran manusia','20 Hz – 20 kHz']]},
-      {t:'note', tone:'tip', text:'Nada A tengah piano = 440 Hz. Coba nyanyikan dan lihat pembacaan mikrofon di tab Experiment!'}
+      {t:'note', tone:'tip', text:'The A above middle C is 440 Hz. Try humming it and inspect the microphone reading in the Experiment tab!'}
     ]},
     calculate:{
       inputs:[
         { id:'f', label:'Frekuensi', default:440, unit:{family:'frequency', base:'Hz', options:['Hz','kHz','MHz']}, min:0.001 },
-        { id:'v', label:'Cepat rambat', default:343, unit:{family:'speed', base:'ms', options:['ms','kmh']} }
+        { id:'v', label:'Wave speed', default:343, unit:{family:'speed', base:'ms', options:['ms','kmh']} }
       ],
       outputs:[
-        { id:'lambda', label:'Length gelombang', formula:{expr:'v/f'}, unit:'m', decimals:4 },
+        { id:'lambda', label:'Wavelength', formula:{expr:'v/f'}, unit:'m', decimals:4 },
         { id:'T', label:'Periode', formula:{expr:'1/f'}, unit:'s', decimals:5 },
-        { id:'oktaf', label:'Frekuensi 1 oktaf lebih tinggi', formula:{expr:'2*f'}, unit:'Hz' },
-        { id:'energiFoton', label:'Jika ini gelombang EM: energi foton (J)', formula:{expr:'h*f'}, format:'sci', hint:'E = h·f (Planck).' }
+        { id:'oktaf', label:'Frequency one octave higher', formula:{expr:'2*f'}, unit:'Hz' },
+        { id:'energiFoton', label:'If this is an EM wave: photon energy (J)', formula:{expr:'h*f'}, format:'sci', hint:'E = h·f (Planck).' }
       ],
-      chart:{ title:'Length gelombang vs frekuensi', xLabel:'f (Hz)', yLabel:'λ (m)',
+      chart:{ title:'Wavelength vs Frequency', xLabel:'f (Hz)', yLabel:'λ (m)',
         x:{ id:'f', from:100, to:2000, steps:20 },
         series:[{ label:'λ = v/f', expr:'v/f', color:'#0891b2' }] }
     },
@@ -2697,57 +2697,57 @@ learn: {
     },
     experiment:{
       type:'sensor', sensor:'sound', field:'freq', measure:'mode',
-      title:'Deteksi frekuensi bunyi', unit:'Hz', label:'Frekuensi dominan',
-      steps:['Izinkan akses mikrofon.','Mainkan nada dari alat musik / aplikasi tuner.','Perhatikan frekuensi dominan & tingkat kebisingan (dB).','Calculate λ = 343/f untuk nada tersebut.'],
-      note:'dB di sini adalah nilai relatif tanpa kalibrasi mikrofon — gunakan untuk membandingkan, bukan sebagai alat ukur resmi.'
+      title:'Sound Frequency Detection', unit:'Hz', label:'Frekuensi dominan',
+      steps:['Allow microphone access.','Play a tone from a musical instrument or tuner app.','Observe the dominant frequency and noise level (dB).','Calculate λ = 343/f for that tone.'],
+      note:'The dB value here is relative and not microphone-calibrated. Use it for comparison, not as an official measurement.'
     }
   }
 },
 {
-  id:'phys-lens', category:'Physics', title:'Lensa & Optik', subtitle:'Diagram sinar interaktif',
+  id:'phys-lens', category:'Physics', title:'Lenses & Optics', subtitle:'Interactive ray diagram',
   icon:'fa-glasses', color:'teal', tags:['optik','lensa','cahaya','bayangan'],
   capabilities:['calculator','simulation'], visual:'sim',
   modes:{
     learn:{ blocks:[
-      {t:'h', text:'Lensa membelokkan cahaya untuk membentuk bayangan'},
-      {t:'formula', tex:'1/f = 1/s + 1/s′', desc:'f fokus, s jarak benda, s′ jarak bayangan.'},
-      {t:'formula', tex:'M = −s′/s = h′/h', desc:'Perbesaran. Negatif berarti bayangan terbalik.'},
+      {t:'h', text:'Lenses bend light to form images'},
+      {t:'formula', tex:'1/f = 1/s + 1/s′', desc:'f = focal length, s = object distance, s′ = image distance.'},
+      {t:'formula', tex:'M = −s′/s = h′/h', desc:'Magnification. A negative sign means the image is inverted.'},
       {t:'kv', items:[['Kacamata minus','lensa cekung (f negatif)'],['Lup','lensa cembung, benda di dalam f'],['Kamera HP','lensa cembung, bayangan nyata di sensor']]}
     ]},
     calculate:{
       inputs:[
-        { id:'f', label:'Jarak fokus f (cm)', default:6, step:0.5 },
-        { id:'s', label:'Jarak benda s (cm)', default:14, min:0.1, step:0.5 },
-        { id:'h', label:'Tinggi benda (cm)', default:3, step:0.1 }
+        { id:'f', label:'Focal length f (cm)', default:6, step:0.5 },
+        { id:'s', label:'Object distance s (cm)', default:14, min:0.1, step:0.5 },
+        { id:'h', label:'Object height (cm)', default:3, step:0.1 }
       ],
       outputs:[
         { id:'si', label:"Jarak bayangan s′", formula:{expr:'1/(1/f - 1/s)'}, unit:'cm' },
-        { id:'M', label:'Perbesaran M', formula:{expr:'-si/s'}, decimals:3 },
+        { id:'M', label:'Magnification M', formula:{expr:'-si/s'}, decimals:3 },
         { id:'hi', label:"Tinggi bayangan h′", formula:{expr:'M*h'}, unit:'cm' },
-        { id:'kuat', label:'Kekuatan lensa (dioptri)', formula:{expr:'100/f'}, decimals:2, hint:'s′ positif = bayangan nyata; negatif = maya.' }
+        { id:'kuat', label:'Lens power (diopters)', formula:{expr:'100/f'}, decimals:2, hint:'Positive s′ = real image; negative = virtual image.' }
       ]
     },
     simulate:{
       engine:'lens', params:{ f:6, do_:14, ho:3, type:1 },
       controls:[
-        { id:'f', label:'Jarak fokus', min:2, max:20, step:0.5, unit:'cm' },
-        { id:'do_', label:'Jarak benda', min:2, max:40, step:0.5, unit:'cm' },
-        { id:'ho', label:'Tinggi benda', min:0.5, max:6, step:0.1, unit:'cm' },
-        { id:'type', label:'Jenis lensa (1 cembung / −1 cekung)', min:-1, max:1, step:2 }
+        { id:'f', label:'Focal length', min:2, max:20, step:0.5, unit:'cm' },
+        { id:'do_', label:'Object distance', min:2, max:40, step:0.5, unit:'cm' },
+        { id:'ho', label:'Object height', min:0.5, max:6, step:0.1, unit:'cm' },
+        { id:'type', label:'Lens type (1 convex / −1 concave)', min:-1, max:1, step:2 }
       ],
       tip:'Geser benda mendekati titik fokus — bayangannya membesar lalu "meledak" ke infinitas.'
     },
     everyday:{ items:[
-      { q:'Kenapa objek di dalam air terlihat lebih dekat / bengkok?',
+      { q:'Why does an object in water look closer or bent?',
         options:['Karena air memperbesar benda','Karena cahaya berubah arah (refraksi) saat pindah medium','Karena mata unavailable bisa fokus di air'],
-        answer:1, concepts:['refraksi','indeks bias'],
-        explain:'Speed of light berbeda di air dan udara, sehingga sinar dibelokkan di permukaan. Otak menganggap cahaya datang lurus, jadi posisinya tampak bergeser.',
-        tryIt:'Masukkan sedotan ke gelas air, lihat dari samping. Foto dan ukur sudut belokannya di modul AR/Kamera.' }
+        answer:1, concepts:['refraction','refractive index'],
+        explain:'The speed of light differs in water and air, so light bends at the interface. The brain assumes light travels straight and the object appears shifted.',
+        tryIt:'Put a straw in a glass of water and view it from the side. Photograph it and estimate the bending angle with the AR/Camera module.' }
     ]}
   }
 },
 {
-  id:'phys-faraday', category:'Physics', title:'Sangkar Faraday 2.0', subtitle:'Simulasi perisai medan listrik',
+  id:'phys-faraday', category:'Physics', title:'Faraday Cage 2.0', subtitle:'Electric-field shielding simulation',
   icon:'fa-car-side', color:'rose', tags:['listrik statis','perisai','petir','keselamatan'],
   capabilities:['simulation'], visual:'sim',
   safety:{ level:'high', warnings:[
@@ -2756,33 +2756,33 @@ learn: {
   
   modes:{
     learn:{ blocks:[
-      {t:'h', text:'Kenapa di dalam mobil relatif aman saat petir?'},
-      {t:'p', text:'Rangka logam mobil adalah konduktor. Ketika medan listrik luar sangat besar, elektron di logam bergerak dan menata ulang diri sampai medan di dalam rongga hampir nol. Arus petir mengalir di kulit luar, bukan lewat penumpang.'},
-      {t:'formula', tex:'E_dalam ≈ 0', desc:'Untuk konduktor tertutup dalam keadaan setimbang.'},
+      {t:'h', text:'Why can a metal car provide some protection during lightning?'},
+      {t:'p', text:'A metal car body is a conductor. In a strong external electric field, charges redistribute on the metal so the field inside the passenger compartment is greatly reduced. Current can travel along the exterior rather than through the occupants.'},
+      {t:'formula', tex:'E_dalam ≈ 0', desc:'For a closed conductor in electrostatic equilibrium.'},
       {t:'list', items:['Yang melindungi adalah <b>logam yang menutupi</b>, bukan ban karet','Lubang besar mengurangi efektivitas perisai','Kain/plastik (tenda) hampir unavailable melindungi','Microwave & kabel USB juga memakai prinsip yang sama']},
-      {t:'note', tone:'warn', text:'Motor unavailable punya kandang logam yang menutupi pengendara → unavailable memberi perlindungan seperti mobil.'}
+      {t:'note', tone:'warn', text:'A motorcycle does not enclose the rider in a conductive metal cabin, so it does not provide the same type of protection as a car.'}
     ]},
     simulate:{
       engine:'efield', params:{ E:5, shield:1, openings:0 },
       controls:[
-        { id:'E', label:'Kuat medan luar', min:1, max:20, step:0.5, unit:'kV/m' },
-        { id:'shield', label:'Objek (0 tanpa · 1 mobil · 2 kotak logam · 3 tenda)', min:0, max:3, step:1,
+        { id:'E', label:'External field strength', min:1, max:20, step:0.5, unit:'kV/m' },
+        { id:'shield', label:'Object (0 none · 1 car · 2 metal box · 3 tent)', min:0, max:3, step:1,
           presets:[['Tanpa perisai',0],['Mobil',1],['Kotak logam',2],['Tenda kain',3]] },
-        { id:'openings', label:'Jumlah lubang / jendela terbuka', min:0, max:4, step:1 }
+        { id:'openings', label:'Number of openings / open windows', min:0, max:4, step:1 }
       ],
       tip:'Bandingkan reduksi medan: kotak logam tertutup vs mobil dengan 3 jendela terbuka vs tenda kain.'
     },
     everyday:{ items:[
-      { q:'Dua orang di lapangan saat mendung tebal: satu di dalam mobil sedan, satu di atas motor. Siapa lebih terlindungi?',
+      { q:'Two people are outdoors during a severe storm: one is inside a sedan, the other is on a motorcycle. Which situation provides more shielding?',
         options:['Pengendara motor, karena ban karet','Pengemudi mobil, karena rangka logam bekerja seperti sangkar Faraday','Sama saja'],
         answer:1, concepts:['sangkar Faraday','konduktor','arus permukaan'],
-        explain:'Rangka logam mobil mengarahkan arus di permukaan luar dan meniadakan medan di dalam kabin. Ban karet bukan pelindung — tegangan petir jutaan volt bisa menembus lapisan karet tipis dengan mudah.',
-        tryIt:'Set "Objek = Mobil" lalu naikkan jumlah jendela terbuka di tab Simulate, lihat reduksi medannya turun.' },
-      { q:'Kenapa HP susah dapat sinyal di dalam lift?',
+        explain:'A metal car body conducts current over its exterior and strongly reduces the electric field inside the cabin. Rubber tires are not what provides the main protection.',
+        tryIt:'Set “Object = Car,” then increase the number of open windows in Simulate and observe the shielding reduction.' },
+      { q:'Why can a phone have difficulty receiving a signal inside an elevator?',
         options:['Karena lift bergerak','Karena dinding logam lift bertindak seperti sangkar Faraday terhadap gelombang radio','Karena operator memblokir sinyal'],
-        answer:1, concepts:['perisai elektromagnetik','gelombang radio'],
-        explain:'Kotak logam melemahkan gelombang elektromagnetik. Efeknya sama seperti sangkar Faraday untuk medan listrik statis — hanya sekarang untuk gelombang radio.',
-        tryIt:'Perhatikan bar sinyal HP-mu saat pintu lift menutup, lalu bandingkan saat pintu terbuka.' }
+        answer:1, concepts:['electromagnetic shielding','radio waves'],
+        explain:'A metal enclosure attenuates electromagnetic waves. It is related to Faraday-cage behavior, here applied to radio-frequency signals.',
+        tryIt:'Watch your phone’s signal bars as the elevator doors close, then compare them after the doors open.' }
     ]},
     challenge:{ questions:[
       { q:'Medan luar 12 kV/m, di dalam kotak logam tertutup terukur 0.15 kV/m. Berapa persen reduksinya?', type:'numeric', answer:98.75, tol:1, unit:'%', xp:15, hint:'(1 − dalam/luar) × 100' },
@@ -2793,53 +2793,53 @@ learn: {
 
 /* ───────── KIMIA ───────── */
 {
-  id:'chem-solution', category:'Chemistry', title:'Mol & Konsentrasi', subtitle:'Molaritas, pengenceran, ppm',
+  id:'chem-solution', category:'Chemistry', title:'Moles & Concentration', subtitle:'Molarity, dilution, ppm',
   icon:'fa-vial', color:'emerald', tags:['kimia','mol','molaritas','larutan'],
   capabilities:['calculator'], visual:'chart',
   modes:{
     learn:{ blocks:[
-      {t:'h', text:'Mol = "lusin"-nya kimiawan'},
-      {t:'p', text:'1 mol = 6.022 × 10²³ partikel. Kimiawan menimbang gram, tapi reaksi terjadi per partikel — mol adalah jembatannya.'},
-      {t:'formula', tex:'n = massa / Mr', desc:'Jumlah mol dari massa dan massa molar.'},
-      {t:'formula', tex:'M = n / V', desc:'Molaritas: mol zat terlarut per liter larutan.'},
-      {t:'formula', tex:'M₁V₁ = M₂V₂', desc:'Pengenceran: jumlah mol unavailable berubah, hanya volumenya bertambah.'}
+      {t:'h', text:'A mole is the chemist’s “dozen”'},
+      {t:'p', text:'1 mol = 6.022 × 10²³ particles. Chemists weigh substances in grams, but reactions occur at the particle level—moles bridge the two scales.'},
+      {t:'formula', tex:'n = massa / Mr', desc:'Number of moles from mass and molar mass.'},
+      {t:'formula', tex:'M = n / V', desc:'Molarity: moles of solute per liter of solution.'},
+      {t:'formula', tex:'M₁V₁ = M₂V₂', desc:'Dilution: the amount of solute stays constant while the volume increases.'}
     ]},
     calculate:{
       inputs:[
-        { id:'massa', label:'Mass zat terlarut', default:5.85, unit:{family:'mass', base:'kg', options:['g','kg','mg']} },
-        { id:'Mr', label:'Mass molar Mr (g/mol)', default:58.5, min:0.001, step:0.01 },
+        { id:'massa', label:'Solute mass', default:5.85, unit:{family:'mass', base:'kg', options:['g','kg','mg']} },
+        { id:'Mr', label:'Molar mass Mr (g/mol)', default:58.5, min:0.001, step:0.01 },
         { id:'V', label:'Volume larutan', default:0.5, unit:{family:'volume', base:'m3', options:['L','mL','m3']}, min:1e-9 }
       ],
       outputs:[
-        { id:'n', label:'Jumlah mol', formula:{expr:'(massa*1000)/Mr'}, unit:'mol', decimals:4 },
+        { id:'n', label:'Amount of substance (mol)', formula:{expr:'(massa*1000)/Mr'}, unit:'mol', decimals:4 },
         { id:'M', label:'Molaritas', formula:{expr:'n/(V*1000)'}, unit:'mol/L', decimals:4 },
-        { id:'partikel', label:'Jumlah partikel', formula:{expr:'n*Na'}, format:'sci' },
-        { id:'ppm', label:'Konsentrasi (ppm, anggap ρ=1 g/mL)', formula:{expr:'(massa*1e6)/(V*1000)'}, decimals:1,
-          hint:'Mass dinormalkan ke kg, volume ke m³ oleh unit engine.' }
+        { id:'partikel', label:'Number of particles', formula:{expr:'n*Na'}, format:'sci' },
+        { id:'ppm', label:'Concentration (ppm, assume ρ=1 g/mL)', formula:{expr:'(massa*1e6)/(V*1000)'}, decimals:1,
+          hint:'Mass is normalized to kg and volume to m³ by the unit engine.' }
       ],
-      chart:{ title:'Molaritas vs volume pelarut', xLabel:'Volume (m³)', yLabel:'M (mol/L)',
+      chart:{ title:'Molarity vs Solvent Volume', xLabel:'Volume (m³)', yLabel:'M (mol/L)',
         x:{ id:'V', from:0.0001, to:0.002, steps:20 },
         series:[{ label:'M', expr:'((massa*1000)/Mr)/(V*1000)', color:'#059669' }] }
     },
     everyday:{ items:[
-      { q:'Kenapa sirup terasa kurang manis setelah ditambah air, padahal gulanya unavailable dikurangi?',
+      { q:'Why does syrup taste less sweet after adding water even though the amount of sugar has not changed?',
         options:['Gulanya menghilang','Konsentrasinya turun karena volume naik (M₁V₁ = M₂V₂)','Air menetralkan rasa manis'],
         answer:1, concepts:['pengenceran','konsentrasi'],
-        explain:'Jumlah mol gula tetap, tapi tersebar di volume lebih besar → mol per liter turun → lidah mendeteksi lebih sedikit molekul gula per tegukan.',
-        tryIt:'Calculate: 0.5 L sirup 2 M ditambah air jadi 1.5 L → M₂ = ?' }
+        explain:'The amount of sugar stays the same, but it is spread over a larger volume → moles per liter decrease → less sugar reaches the tongue per sip.',
+        tryIt:'Calculate: 0.5 L of 2 M syrup is diluted to 1.5 L → what is M₂?' }
     ]}
   }
 },
 {
-  id:'chem-gas', category:'Chemistry', title:'Gas Ideal (PV = nRT)', subtitle:'Pressure, volume, suhu',
+  id:'chem-gas', category:'Chemistry', title:'Ideal Gas (PV = nRT)', subtitle:'Pressure, volume, temperature',
   icon:'fa-wind', color:'blue', tags:['gas','tekanan','suhu','termodinamika'],
   capabilities:['calculator'], visual:'chart',
   modes:{
     learn:{ blocks:[
       {t:'h', text:'Tiga saudara: P, V, T'},
-      {t:'formula', tex:'P·V = n·R·T', desc:'R = 8.314 J/mol·K. Temperature HARUS dalam Kelvin.'},
+      {t:'formula', tex:'P·V = n·R·T', desc:'R = 8.314 J/mol·K. Temperature MUST be in Kelvin.'},
       {t:'list', items:['Volume tetap, suhu naik → tekanan naik (kaleng meledak di panas)','Temperature tetap, volume ditekan → tekanan naik (pompa sepeda)','Pressure tetap, suhu naik → volume naik (balon mengembang)']},
-      {t:'note', tone:'warn', text:'Jangan memanaskan wadah tertutup. Pressure naik jauh lebih cepat daripada dugaan intuitif.'}
+      {t:'note', tone:'warn', text:'Do not heat a sealed container. Pressure can rise much faster than intuition suggests.'}
     ]},
     calculate:{
       inputs:[
@@ -2849,10 +2849,10 @@ learn: {
       ],
       outputs:[
         { id:'P', label:'Pressure', formula:{expr:'n*R*T/V'}, unit:'Pa', decimals:0 },
-        { id:'Patm', label:'…dalam atm', formula:{expr:'P/101325'}, decimals:3 },
-        { id:'rho', label:'Kerapatan molar', formula:{expr:'n/V'}, unit:'mol/m³', decimals:2 },
-        { id:'vrms', label:'Speed rata-rata molekul (udara, M=0.029)', formula:{expr:'sqrt(3*R*T/0.029)'}, unit:'ms', decimals:1,
-          hint:'Molekul udara di suhu ruang bergerak ±500 m/s!' }
+        { id:'Patm', label:'…in atm', formula:{expr:'P/101325'}, decimals:3 },
+        { id:'rho', label:'Molar density', formula:{expr:'n/V'}, unit:'mol/m³', decimals:2 },
+        { id:'vrms', label:'RMS molecular speed (air, M=0.029)', formula:{expr:'sqrt(3*R*T/0.029)'}, unit:'ms', decimals:1,
+          hint:'Air molecules at room temperature move at roughly 500 m/s (order of magnitude)!' }
       ],
       chart:{ title:'Pressure vs volume (isotermal)', xLabel:'V (m³)', yLabel:'P (Pa)',
         x:{ id:'V', from:0.005, to:0.05, steps:20 },

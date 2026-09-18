@@ -1882,33 +1882,33 @@ const MODULES = [
 
 // --- MODUL CRAFTING 2: FILTER AIR SEDERHANA ---
 {
-  id:'env-waterfilter', category:'Climate & Environment', title:'Filter Air Alami', subtitle:'Crafting sistem penjernih air',
+  id:'env-waterfilter', category:'Climate & Environment', title:'Natural Water Filter', subtitle:'Build a simple water-filtration system',
   icon:'fa-droplet', color:'cyan', tags:['lingkungan','air','filter','crafting','adsorpsi'],
   capabilities:['calculator'], visual:'none',
   safety:{ level:'medium', warnings:[
-    {severity:'warning', text:'Air hasil saringan botol DIY ini HANYA JERNIH SECARA FISIK. Bukan berarti bebas dari bakteri mikroskopis.'},
-    {severity:'critical', text:'Untuk air minum darurat sungguhan, air hasil saringan DIY HARUS direbus mendidih minimal 3 menit untuk membunuh patogen.'}
+    {severity:'warning', text:'Water filtered with this DIY bottle is ONLY physically clearer. That does not mean it is free of microorganisms.'},
+    {severity:'critical', text:'For actual emergency drinking water, DIY-filtered water MUST be boiled thoroughly for at least 3 minutes to kill pathogens.'}
   ]},
   modes:{
     learn:{ blocks:[
-      {t:'h', text:'Meniru Mekanisme Bumi Menyaring Air'},
-      {t:'p', text:'Mata air di pegunungan sangat jernih karena air hujan disaring berlapis-lapis menembus bebatuan, kerikil, dan pasir tanah sebelum mencapai akuifer bawah tanah. Kita bisa meniru arsitektur alam ini (Crafting).'},
+      {t:'h', text:'How Nature Filters Water'},
+      {t:'p', text:'Mountain springs can be clear because rainwater is filtered through layers of rock, gravel, and soil before reaching groundwater. We can model this layered process in a simple classroom activity.'},
       {t:'list', items:[
         '<b>Kerikil & Batu</b>: Filter mekanis raksasa. Mencegat sampah, daun, dan lumpur pekat.',
         '<b>Pasir Halus</b>: Filter mekanis mikroskopis. Mengunci partikel debu halus.',
         '<b>Biochar / Arang Aktif</b>: Filter Kimiawi. Pori-porinya bekerja bagai magnet penjebak klorin, racun, pewarna, dan bau (Adsorpsi).'
       ]},
-      {t:'formula', tex:'Adsorpsi ≠ Absorpsi', desc:'Arang mengikat racun menempel di permukaannya (Ad-sorpsi), bukan meresap ke dalam seperti spons basah (Ab-sorpsi).'}
+      {t:'formula', tex:'Adsorpsi ≠ Absorpsi', desc:'Adsorption binds substances to a material’s surface; absorption means a substance enters the material itself, like water entering a sponge.'}
     ]},
     calculate:{
       inputs:[
-        { id:'vol_air', label:'Volume Air Kotor (Liter)', default:5, min:0.5, step:0.5 },
-        { id:'tebal_arang', label:'Ketebalan Lapisan Arang (cm)', default:10, type:'range', min:2, max:40, step:1 }
+        { id:'vol_air', label:'Dirty Water Volume (L)', default:5, min:0.5, step:0.5 },
+        { id:'tebal_arang', label:'Charcoal Layer Thickness (cm)', default:10, type:'range', min:2, max:40, step:1 }
       ],
       outputs:[
-        { id:'waktu', label:'Estimasi Time Tunggu Menetes', formula:{expr:'vol_air * (20 / tebal_arang)'}, unit:'menit', decimals:1 },
-        { id:'kejernihan', label:'Tingkat Kejernihan Fisik', formula:{expr:'100 - (100 / (tebal_arang * 0.5))'}, unit:'%', decimals:1 },
-        { id:'racun', label:'Maksimum Racun/Pewarna Terikat', formula:{expr:'tebal_arang * 15'}, unit:'mg', hint:'Arang punya batas jenuh. Setelah pori-porinya penuh racun, arang kehilangan fungsinya dan harus diganti baru.' }
+        { id:'waktu', label:'Estimated Dripping Time', formula:{expr:'vol_air * (20 / tebal_arang)'}, unit:'menit', decimals:1 },
+        { id:'kejernihan', label:'Physical Clarity', formula:{expr:'100 - (100 / (tebal_arang * 0.5))'}, unit:'%', decimals:1 },
+        { id:'racun', label:'Estimated Adsorbed Dye/Contaminant', formula:{expr:'tebal_arang * 15'}, unit:'mg', hint:'Charcoal has a saturation limit. Once its pores are occupied, its adsorption capacity decreases and the material may need replacement.' }
       ]
     },
     experiment: {
@@ -1920,12 +1920,12 @@ const MODULES = [
     'Mempelajari bagaimana beberapa lapisan filter dapat mengurangi partikel tersuspensi dan bagaimana biochar dapat melakukan adsorpsi terhadap sebagian zat terlarut.',
 
   safety: [
-    'Eksperimen ini hanya untuk pembelajaran dan BUKAN sistem pengolahan air minum.',
-    'JANGAN meminum air hasil penyaringan, meskipun air terlihat sangat jernih.',
-    'Gunakan hanya air percobaan yang unavailable untuk dikonsumsi.',
-    'Jangan menggunakan air limbah, air got, air laut, air industri, atau air yang unavailable diketahui sumber kontaminasinya.',
-    'Gunakan bahan filter yang bersih dan botol plastik yang bersih.',
-    'Cuci tangan setelah menangani air kotor dan bahan eksperimen.'
+    'This experiment is for learning only and is NOT a drinking-water treatment system.',
+    'DO NOT drink the filtered water, even if it looks very clear.',
+    'Use only water clearly labeled for experimental use and not for consumption.',
+    'Do not use wastewater, sewage water, seawater, industrial water, or water with an unknown contamination source.',
+    'Use clean filter materials and a clean plastic bottle.',
+    'Wash your hands after handling dirty water and experimental materials.'
   ],
 
   materials: [
@@ -1965,7 +1965,7 @@ const MODULES = [
   ],
 
   observation: {
-    title: '🔬 Amati Seperti Ilmuwan',
+    title: '🔬 Observe Like a Scientist',
 
     questions: [
       'Apakah air hasil penyaringan lebih jernih dibandingkan air awal?',
@@ -1978,7 +1978,7 @@ const MODULES = [
   },
 
   measurement: {
-    title: '📊 Ukur Hasil Eksperimen',
+    title: '📊 Measure Your Result',
 
     parameters: [
       'Volume air awal (mL)',
@@ -1991,14 +1991,14 @@ const MODULES = [
     ],
 
     calculation: {
-      title: 'Speed Aliran',
-      formula: 'Volume air hasil penyaringan ÷ waktu penyaringan',
+      title: 'Flow Rate',
+      formula: 'Filtered water volume ÷ filtration time',
       unit: 'mL/detik'
     }
   },
 
   science: {
-    title: '🧠 Apa yang Terjadi?',
+    title: '🧠 What Happened?',
 
     concepts: [
       'Filtrasi mekanis (mechanical filtration)',
@@ -2018,7 +2018,7 @@ const MODULES = [
   },
 
   comparison: {
-    title: '🧪 Bandingkan Sebelum & Sesudah',
+    title: '🧪 Compare Before & After',
 
     steps: [
       'Ambil foto air sebelum penyaringan.',
@@ -2030,7 +2030,7 @@ const MODULES = [
   },
 
   nextExperiment: {
-    title: '🚀 Misi Berikutnya: Tingkatkan Filter',
+    title: '🚀 Next Mission: Improve the Filter',
 
     challenges: [
       'Apa yang terjadi jika lapisan pasir dibuat lebih tebal?',
@@ -2045,15 +2045,15 @@ const MODULES = [
     '💧 Eksperimen ini menunjukkan prinsip filtrasi dan adsorpsi, bukan pemurnian air minum. Air yang terlihat jernih masih dapat mengandung mikroorganisme, bahan kimia terlarut, atau kontaminan lain yang unavailable terlihat. Perlakukan air hasil eksperimen sebagai AIR NON-KONSUMSI.'
 },
     challenge:{ questions:[
-      { q:'Lapisan material mana yang bertugas untuk menghilangkan bau tak sedap dan racun kimia (pestisida) pada air kotor?', type:'choice', options:['Pasir halus','Arang (Biochar)','Bebatuan besar'], answer:1, xp:15, why:'Arang/Biochar bekerja dengan prinsip adsorpsi, di mana permukaannya yang sangat berpori menangkap senyawa organik penyebab bau dan warna.' },
-      { q:'Setelah air lumpur coklat disaring dengan filter ini dan keluar menjadi sangat bening kristal, apakah air tersebut sudah 100% aman langsung diminum?', type:'choice', options:['Sangat aman karena sudah bening','Tidak, karena masih berpotensi mengandung virus dan bakteri'], answer:1, xp:15, why:'Filter DIY fisik menyaring partikel solid, tapi patogen (kuman/virus) ukurannya sangat kecil sehingga bisa lolos dari pasir dan arang. Air harus didihkan dulu.' }
+      { q:'Which filter layer helps remove unpleasant odors and some dissolved compounds?', type:'choice', options:['Fine sand','Arang (Biochar)','Coarse stones'], answer:1, xp:15, why:'Charcoal/biochar can adsorb some compounds because its porous surface provides sites where molecules can bind.' },
+      { q:'If muddy brown water becomes crystal clear after this filter, is it automatically 100% safe to drink?', type:'choice', options:['Sangat aman karena sudah bening','No, because it may still contain viruses and bacteria'], answer:1, xp:15, why:'Filter DIY fisik menyaring partikel solid, tapi patogen (kuman/virus) ukurannya sangat kecil sehingga bisa lolos dari pasir dan arang. Air harus didihkan dulu.' }
     ]}
   }
 },
 
 // --- MODUL FISIKA: TERMODINAMIKA & THERMAL PASTE ---
 {
-  id:'phys-thermo-cpu', category:'Physics', title:'Termodinamika Thermal Paste', subtitle:'Hukum Fourier pada CPU komputer',
+  id:'phys-thermo-cpu', category:'Physics', title:'Thermodynamics: Thermal Paste', subtitle:'Fourier’s law and computer CPU cooling',
   icon:'fa-microchip', color:'rose', tags:['termodinamika','heat energy','suhu','cpu','komputer'],
   capabilities:['calculator'], visual:'chart',
   modes:{
@@ -2062,7 +2062,7 @@ learn: {
 
     {
       t: 'h',
-      text: 'Mitos: Thermal Paste Mendinginkan CPU. (SALAH!)'
+      text: 'Myth: Thermal paste cools the CPU. (FALSE!)'
     },
 
     {
@@ -2073,7 +2073,7 @@ learn: {
 
     {
       t: 'h',
-      text: '🔥 Jadi, Ke Mana Panas CPU Pergi?'
+      text: '🔥 So Where Does the CPU Heat Go?'
     },
 
     {
@@ -2097,7 +2097,7 @@ learn: {
 
     {
       t: 'h',
-      text: '🔬 Masalah Sebenarnya: Permukaan Logam Tidak Benar-Benar Rata'
+      text: '🔬 The Real Problem: Metal Surfaces Are Not Perfectly Flat'
     },
 
     {
@@ -2124,7 +2124,7 @@ learn: {
 
     {
       t: 'h',
-      text: '⚙️ Thermal Resistance: Cara Lebih Tepat Memahaminya'
+      text: '⚙️ Thermal Resistance: A Better Way to Understand It'
     },
 
     {
@@ -2142,7 +2142,7 @@ learn: {
 
     {
       t: 'h',
-      text: '🧱 Analogi Sederhana'
+      text: '🧱 A Simple Analogy'
     },
 
     {
@@ -2165,7 +2165,7 @@ learn: {
 
     {
       t: 'h',
-      text: '📊 Bagaimana dengan Konduktivitas Termal?'
+      text: '📊 What About Thermal Conductivity?'
     },
 
     {
@@ -2197,7 +2197,7 @@ learn: {
 
     {
       t: 'h',
-      text: '🧠 Mengapa Thermal Paste Tidak Boleh Terlalu Tebal?'
+      text: '🧠 Why Should Thermal Paste Not Be Too Thick?'
     },
 
     {
@@ -2215,7 +2215,7 @@ learn: {
 
     {
       t: 'h',
-      text: '🌡️ Contoh Sederhana'
+      text: '🌡️ A Simple Example'
     },
 
     {
@@ -2233,7 +2233,7 @@ learn: {
 
     {
       t: 'h',
-      text: '🧩 CPU Cooling Sebenarnya Adalah Rangkaian Thermal Resistance'
+      text: '🧩 CPU Cooling Is Really a Network of Thermal Resistances'
     },
 
     {
@@ -2263,7 +2263,7 @@ learn: {
 
     {
       t: 'h',
-      text: '❌ Mitos vs ✅ Fakta'
+      text: '❌ Myth vs ✅ Fact'
     },
 
     {
@@ -2284,7 +2284,7 @@ learn: {
 
     {
       t: 'h',
-      text: '🧪 Mini Experiment: Apakah Thermal Paste Benar-Benar “Mendinginkan”?'
+      text: '🧪 Mini Experiment: Does Thermal Paste Really “Cool” the CPU?'
     },
 
     {
@@ -2311,7 +2311,7 @@ learn: {
 
     {
       t: 'h',
-      text: '🎯 Tantangan Berpikir'
+      text: '🎯 Thinking Challenge'
     },
 
     {
@@ -2366,36 +2366,36 @@ learn: {
 },
     calculate:{
       inputs:[
-        { id:'A', label:'Luas Permukaan CPU (cm²)', default:12, min:1, step:1 },
-        { id:'dT', label:'Beda Temperature CPU & Heatsink (ΔT dalam °C)', default:40, min:1, step:1 },
-        { id:'k', label:'Material Penghubung (Konduktivitas k)', default:4, type:'select', options:[
-          {label:'Rongga Udara (k = 0.026)', value:0.026},
-          {label:'Kecap / Pasta Gigi / Mitos (k ≈ 0.5)', value:0.5},
-          {label:'Pasta Termal Biasa (k = 4.0)', value:4},
-          {label:'Pasta Termal Premium (k = 8.5)', value:8.5},
+        { id:'A', label:'CPU Surface Area (cm²)', default:12, min:1, step:1 },
+        { id:'dT', label:'CPU & Heatsink Temperature Difference (ΔT, °C)', default:40, min:1, step:1 },
+        { id:'k', label:'Interface Material (Thermal Conductivity k)', default:4, type:'select', options:[
+          {label:'Air Gap (k = 0.026)', value:0.026},
+          {label:'Ketchup / Toothpaste / Myth (k ≈ 0.5)', value:0.5},
+          {label:'Standard Thermal Paste (k = 4.0)', value:4},
+          {label:'Premium Thermal Paste (k = 8.5)', value:8.5},
           {label:'Liquid Metal (k = 73.0)', value:73}
         ]},
-        { id:'d', label:'Ketebalan Lapisan (mm)', default:0.1, type:'range', min:0.01, max:1, step:0.01 }
+        { id:'d', label:'Layer Thickness (mm)', default:0.1, type:'range', min:0.01, max:1, step:0.01 }
       ],
       outputs:[
-        { id:'Q', label:'Laju Perpindahan Panas (Q)', formula:{expr:'(k * (A/10000) * dT) / (d/1000)'}, unit:'Watt', decimals:1 },
-        { id:'status', label:'Kemampuan Pendinginan', formula:{expr:'(k * (A/10000) * dT) / (d/1000)'}, decimals:0, hint:'CPU gaming modern menghasilkan panas sekitar 65W hingga 150W. Coba ganti material menjadi "Udara" dan lihat apakah Watt-nya cukup untuk membuang panas CPU!' }
+        { id:'Q', label:'Heat Transfer Rate (Q)', formula:{expr:'(k * (A/10000) * dT) / (d/1000)'}, unit:'Watt', decimals:1 },
+        { id:'status', label:'Cooling Capacity', formula:{expr:'(k * (A/10000) * dT) / (d/1000)'}, decimals:0, hint:'A modern gaming CPU may produce roughly 65–150 W of heat. Try the Air Gap option and compare the estimated heat-transfer rate.' }
       ],
-      chart:{ title:'Laju Buang Panas (Watt) vs Ketebalan Pasta', xLabel:'Ketebalan (mm)', yLabel:'Laju Panas (W)',
+      chart:{ title:'Heat Transfer Rate (W) vs Paste Thickness', xLabel:'Thickness (mm)', yLabel:'Heat Transfer Rate (W)',
         x:{ id:'d', from:0.01, to:1, steps:20 },
         series:[{ label:'Laju Panas Q (W)', expr:'(k * (A/10000) * dT) / (d/1000)', color:'#e11d48' }] }
     },
     everyday:{ items:[
-      { q:'Seorang ahli IT mengoleskan thermal paste setebal mentega pada roti dengan alasan "biar dinginnya maksimal". Menurut Hukum Fourier, apa yang akan terjadi?',
+      { q:'An IT specialist spreads thermal paste as thick as buttered bread, thinking it will maximize cooling. According to Fourier’s law, what happens?',
         options:['Temperature CPU akan sangat dingin dan super stabil','Pasta akan tumpah tapi pendinginan meningkat 200%','Temperature CPU justru akan naik dan berpotensi overheat (kepanasan)'],
         answer:2, concepts:['konduksi','ketebalan','resistansi termal'],
-        explain:'Menurut persamaan Fourier (Q berbanding terbalik dengan d / jarak). Semakin tebal pasta (d besar), semakin KECIL laju perpindahan panas (Q). Thermal paste memang lebih baik dari udara, tapi konduktivitasnya JAUH DI BAWAH logam heatsink. Oleskan setipis mungkin, cukup untuk mengisi pori-pori.',
-        tryIt:'Di tab Calculate, geser Ketebalan Lapisan (mm) menjadi sangat tebal (1 mm). Lihat bagaimana Laju Panas (Watt) terjun bebas di grafik.' },
-      { q:'Kenapa laptop gaming yang sudah dipakai 2 tahun tanpa dibersihkan suhunya jauh lebih panas dan performanya melambat (lag)?',
+        explain:'In Fourier’s equation, heat transfer is inversely related to layer thickness. As the paste layer gets thicker, the heat-transfer rate decreases. Thermal paste is better than an air gap, but its conductivity is still far below that of a metal heatsink; use only enough to fill surface imperfections.',
+        tryIt:'In the Calculate tab, increase Layer Thickness to 1 mm and observe how the estimated heat-transfer rate changes.' },
+      { q:'Why might a gaming laptop become much hotter and slower after two years without cleaning?',
         options:['Kipas komputernya sudah mulai usang dan melemah','Debu yang tebal bertindak sebagai "selimut" isolator penahan panas','Software dan Windows yang semakin berat menghasilkan panas tambahan'],
-        answer:1, concepts:['isolator termal','konveksi'],
-        explain:'Debu adalah kumpulan serat kain dan kotoran yang memiliki rongga udara mikroskopis, menjadikannya isolator panas yang sangat baik (sama seperti cara kerja selimut atau jaket bulu angsa). Debu mencegah panas terbuang ke udara luar.',
-        tryIt:'Bongkar dan bersihkan sirip kipas laptopmu setahun sekali untuk mengembalikan performa!' }
+        answer:1, concepts:['thermal insulation','convection'],
+        explain:'Dust can trap pockets of air and obstruct airflow, reducing heat transfer from the cooling system to the surrounding air.',
+        tryIt:'Clean the laptop cooling fins and fans regularly to help maintain thermal performance.' }
     ]}
   }
 },

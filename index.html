@@ -201,6 +201,14 @@
   .chipbtn{ padding:.3rem .7rem;border-radius:99px;font-size:.7rem;font-weight:700;border:1px solid #e2e8f0;background:#fff }
   .chipbtn.on{ background:#4f46e5;color:#fff;border-color:#4f46e5 }
   .num{ font-variant-numeric:tabular-nums }
+
+  /* Sembunyikan UI bawaan Google Translate */
+  .skiptranslate iframe { display: none !important; }
+  body { top: 0px !important; position: static !important; }
+  .goog-te-banner-frame { display: none !important; }
+  #goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
+  .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
+
 </style>
 </head>
 
@@ -1030,18 +1038,22 @@ const SIM_ENGINES = {
   /* ---------- WAYANG KULIT (LIGHT PROJECTION) ---------- */
   wayang:{
     defaults:{ d_lamp: 10, d_wayang: 40, d_layar: 100, h_wayang: 15 },
-    init(p){ return { t:0 }; },
-    step(s,dt){ s.t+=dt; },
+    init(p){ return { t:0, autoMove: 0 }; },
+    step(s,dt,p){ 
+      s.t += dt; 
+      // Wayang bergerak otomatis membesar/mengecil saat tombol Play ditekan!
+      s.autoMove = Math.sin(s.t * 2) * 5; 
+    },
     draw(c,W,H,s,p){
       c.fillStyle='#0f172a'; c.fillRect(0,0,W,H); // Dark night background
       
-      const cy = H/2 + 20; // Vertical center line
-      const sc = Math.min(W/120, 8); // Responsive scale
-      const X = x => 20 + x * sc; // X-axis transformation
+      const cy = H/2 + 20; 
+      const sc = Math.min(W/120, 8); 
+      const X = x => 20 + x * sc; 
       
-      // Calculate magnification & shadow height
-      // M = Distance Light to Screen / Distance Light to Puppet
-      const distLampToWayang = p.d_wayang - p.d_lamp;
+      const actual_d_wayang = p.d_wayang + s.autoMove;
+
+      const distLampToWayang = actual_d_wayang - p.d_lamp;
       const distLampToLayar = p.d_layar - p.d_lamp;
       const M = distLampToWayang > 0 ? distLampToLayar / distLampToWayang : 0;
       const h_bayangan = M * p.h_wayang;
@@ -1049,13 +1061,9 @@ const SIM_ENGINES = {
       // 1. Draw Light Rays (Transparent yellow)
       if (M > 0) {
         c.fillStyle = 'rgba(251, 191, 36, 0.15)';
-        c.beginPath();
-        c.moveTo(X(p.d_lamp), cy); // Light point
-        c.lineTo(X(p.d_layar), cy - h_bayangan*sc); // Top of shadow
-        c.lineTo(X(p.d_layar), cy); // Center of screen
-        c.fill();
+        c.beginPath(); c.moveTo(X(p.d_lamp), cy); 
+        c.lineTo(X(p.d_layar), cy - h_bayangan*sc); c.lineTo(X(p.d_layar), cy); c.fill();
         
-        // Ray borders
         c.strokeStyle = 'rgba(251, 191, 36, 0.5)'; c.lineWidth = 1;
         c.beginPath(); c.moveTo(X(p.d_lamp), cy); c.lineTo(X(p.d_layar), cy - h_bayangan*sc); c.stroke();
       }
@@ -1072,9 +1080,9 @@ const SIM_ENGINES = {
 
       // 4. Draw Actual Puppet
       c.strokeStyle = '#000'; c.lineWidth = 6;
-      c.beginPath(); c.moveTo(X(p.d_wayang), cy); c.lineTo(X(p.d_wayang), cy - p.h_wayang*sc); c.stroke();
-      c.fillStyle = '#b45309'; // Skin/leather color
-      c.beginPath(); c.arc(X(p.d_wayang), cy - p.h_wayang*sc*0.7, p.h_wayang*sc*0.3, 0, Math.PI*2); c.fill();
+      c.beginPath(); c.moveTo(X(actual_d_wayang), cy); c.lineTo(X(actual_d_wayang), cy - p.h_wayang*sc); c.stroke();
+      c.fillStyle = '#b45309'; 
+      c.beginPath(); c.arc(X(actual_d_wayang), cy - p.h_wayang*sc*0.7, p.h_wayang*sc*0.3, 0, Math.PI*2); c.fill();
 
       // 5. Draw Light Source (Blencong) + Flicker effect
       const kedip = Math.sin(s.t * 10) * 2;
@@ -1082,10 +1090,9 @@ const SIM_ENGINES = {
       c.beginPath(); c.arc(X(p.d_lamp), cy, 6 + kedip, 0, Math.PI*2); c.fill();
       c.fillStyle = '#fff'; c.beginPath(); c.arc(X(p.d_lamp), cy, 3, 0, Math.PI*2); c.fill();
 
-      // Text labels
       c.fillStyle='#94a3b8'; c.font='10px sans-serif';
       c.fillText('Light', X(p.d_lamp)-12, cy+15);
-      c.fillText('Puppet', X(p.d_wayang)-15, cy+15);
+      c.fillText('Puppet', X(actual_d_wayang)-15, cy+15);
       c.fillText('Screen', X(p.d_layar)-15, cy+15);
       if(M > 0) {
         c.fillStyle='#fde047'; c.font='bold 11px sans-serif';
@@ -1093,7 +1100,7 @@ const SIM_ENGINES = {
       }
     },
     readout(s,p){ 
-      const dp = p.d_wayang - p.d_lamp;
+      const dp = (p.d_wayang + s.autoMove) - p.d_lamp;
       const ds = p.d_layar - p.d_lamp;
       const M = dp > 0 ? ds / dp : 0;
       return [
@@ -1372,6 +1379,228 @@ const SIM_ENGINES = {
     }
   },
 
+  /* ---------- KOBO FUDE (ADAPTABILITY & CALIBRATION) ---------- */
+  kobo:{
+    defaults: { tool_error: 30, compensation: 0 },
+    init(p){ return { x: 0, y: 0, t: 0, trail: [], status: 'flying' }; },
+    step(s,dt,p){
+      if (s.status !== 'flying') return;
+      s.t += dt;
+      
+      const speedY = 40; // Kecepatan maju
+      // INTI PELAJARAN: Kecepatan menyamping = Eror Alat + Skill Kompensasi Manusia
+      const netDrift = p.tool_error + p.compensation; 
+      
+      s.y += speedY * dt;
+      s.x += netDrift * dt;
+      
+      if (s.t * 60 % 3 < 1) s.trail.push({x: s.x, y: s.y}); // Simpan jejak
+
+      // Cek garis finish (Tinggi layar relatif)
+      if (s.y > 120) {
+        // Jika melenceng lebih dari 15 unit, gagal. Jika kurang, sukses.
+        s.status = Math.abs(s.x) <= 15 ? 'success' : 'miss';
+      }
+    },
+    draw(c, W, H, s, p){
+      c.fillStyle='#f8fbff'; c.fillRect(0,0,W,H);
+      
+      const cx = W/2; // Titik tengah start
+      const startY = H - 30; // Mulai dari bawah
+      const sc = Math.min(H/150, 3); // Skala
+      
+      const px = cx + s.x * sc;
+      const py = startY - s.y * sc;
+
+      // 1. Gambar Garis Target Lurus (Sempurna)
+      c.strokeStyle = '#e2e8f0'; c.lineWidth = 2; c.setLineDash([5,5]);
+      c.beginPath(); c.moveTo(cx, startY); c.lineTo(cx, 20); c.stroke(); c.setLineDash([]);
+
+      // 2. Gambar Zona Sukses di Finish
+      c.fillStyle = s.status === 'success' ? '#22c55e' : (s.status === 'miss' ? '#ef4444' : '#e2e8f0');
+      c.fillRect(cx - 15*sc, 15, 30*sc, 10);
+      c.fillStyle = '#fff'; c.font = 'bold 9px sans-serif'; c.textAlign = 'center';
+      c.fillText('TARGET', cx, 23);
+
+      // 3. Gambar Jejak (Trail)
+      c.strokeStyle = '#94a3b8'; c.lineWidth = 2;
+      c.beginPath();
+      s.trail.forEach((tr, i) => {
+        const tx = cx + tr.x * sc;
+        const ty = startY - tr.y * sc;
+        if(i===0) c.moveTo(tx, ty); else c.lineTo(tx, ty);
+      });
+      c.stroke();
+
+      // 4. Gambar Pesawat Kertas / Roket
+      c.save();
+      c.translate(px, py);
+      
+      // Rotasi pesawat berdasarkan arah drift
+      const netDrift = p.tool_error + p.compensation;
+      const angle = Math.atan2(netDrift, 40); 
+      c.rotate(angle);
+
+      // Menggambar panah / pesawat
+      c.fillStyle = s.status === 'flying' ? '#6366f1' : (s.status === 'success' ? '#22c55e' : '#ef4444');
+      c.beginPath(); c.moveTo(0, -15); c.lineTo(10, 10); c.lineTo(0, 5); c.lineTo(-10, 10); c.fill();
+      c.restore();
+
+      // 5. HUD Status (Kiri Bawah)
+      c.fillStyle = '#475569'; c.font = 'bold 11px sans-serif'; c.textAlign = 'left';
+      c.fillText(`Tool Error: ${p.tool_error > 0 ? '+'+p.tool_error : p.tool_error}`, 10, H - 35);
+      c.fillText(`Your Skill: ${p.compensation > 0 ? '+'+p.compensation : p.compensation}`, 10, H - 20);
+      
+      const net = p.tool_error + p.compensation;
+      c.fillStyle = net === 0 ? '#22c55e' : '#ef4444';
+      c.fillText(`Net Result: ${net} (0 is straight)`, 10, H - 5);
+
+      // 6. Teks Besar di Tengah Jika Selesai
+      if (s.status !== 'flying') {
+        c.fillStyle = s.status === 'success' ? '#22c55e' : '#ef4444';
+        c.font = 'black 20px sans-serif'; c.textAlign = 'center';
+        c.fillText(s.status === 'success' ? 'PERFECT ADAPTATION!' : 'CRASHED! FIX YOUR SKILL.', W/2, H/2);
+      }
+    },
+    readout(s,p){
+      const net = p.tool_error + p.compensation;
+      return [
+        ['Tool Error Bias', p.tool_error, 'units'],
+        ['Human Compensation', p.compensation, 'units'],
+        ['Net Deviation', net, ''],
+        ['Flight Status', s.status.toUpperCase(), ''],
+        ['Adaptability', net === 0 ? '100%' : 'FAIL', '']
+      ];
+    }
+  },
+
+  /* ---------- GOTONG ROYONG (INFORMATION THEORY & NETWORK) ---------- */
+  gotongroyong:{
+    defaults: { nodes: 6, distortion: 20, mode: 0 },
+    init(p){ return { t:0 }; },
+    step(s,dt,p){ s.t += dt; },
+    draw(c, W, H, s, p){
+      c.fillStyle='#f8fbff'; c.fillRect(0,0,W,H);
+      
+      const cy = H/2 + 10;
+      const pad = 40;
+      const nodes = Math.max(2, parseInt(p.nodes) || 6);
+      const spacing = (W - pad*2) / (nodes - 1);
+      
+      const duration = 5; // 5 detik per siklus
+      const progress = (s.t % duration) / duration; 
+
+      const getClarityColor = (clarity) => {
+        if(clarity > 80) return '#22c55e'; // Hijau
+        if(clarity > 40) return '#eab308'; // Kuning
+        return '#ef4444'; // Merah
+      };
+
+      c.lineWidth = 2;
+      
+      if(p.mode === 0) {
+        // MODE 0: BISIK-BISIK (Chain)
+        c.strokeStyle = '#e2e8f0';
+        c.beginPath(); c.moveTo(pad, cy); c.lineTo(W - pad, cy); c.stroke();
+
+        const currentHop = Math.floor(progress * nodes);
+        const hopProgress = (progress * nodes) - currentHop;
+
+        for(let i=0; i<nodes; i++) {
+          const px = pad + i * spacing;
+          const clarity = 100 * Math.pow(1 - (p.distortion/100), i);
+          const isReceived = i <= currentHop;
+          const color = getClarityColor(clarity);
+
+          // Node (Orang) - Abu-abu jika belum menerima pesan
+          c.fillStyle = isReceived ? color : '#cbd5e1'; 
+          c.beginPath(); c.arc(px, cy, 14, 0, Math.PI*2); c.fill();
+          c.strokeStyle = '#fff'; c.lineWidth = 3; c.stroke();
+
+          // Label
+          if(isReceived) {
+            c.fillStyle = '#334155'; c.font = 'bold 10px sans-serif'; c.textAlign='center';
+            c.fillText(`${Math.round(clarity)}%`, px, cy + 25);
+          }
+        }
+
+        // Pesan Bergerak (Bulatan Berjalan)
+        if(currentHop < nodes - 1) {
+          const px = pad + currentHop * spacing;
+          const nextX = pad + (currentHop + 1) * spacing;
+          const msgX = px + (nextX - px) * hopProgress;
+          
+          const clarity = 100 * Math.pow(1 - (p.distortion/100), currentHop + hopProgress);
+          
+          c.fillStyle = getClarityColor(clarity);
+          c.beginPath(); c.arc(msgX, cy - 20, 8, 0, Math.PI*2); c.fill();
+          c.fillStyle = '#fff'; c.font = '10px sans-serif'; c.textAlign='center';
+          c.fillText('✉', msgX, cy - 17);
+        }
+      } else {
+        // MODE 1: LANGSUNG (Broadcast)
+        const leaderX = W/2;
+        const leaderY = 30;
+        
+        c.fillStyle = '#22c55e';
+        c.beginPath(); c.arc(leaderX, leaderY, 18, 0, Math.PI*2); c.fill();
+        c.strokeStyle = '#fff'; c.lineWidth = 3; c.stroke();
+        c.fillStyle = '#334155'; c.font = 'bold 11px sans-serif'; c.textAlign='center';
+        c.fillText(`Leader`, leaderX, leaderY - 22);
+
+        // Pesan berjalan 30% dari waktu animasi
+        const isMoving = progress <= 0.3;
+        const animP = isMoving ? progress / 0.3 : 1;
+
+        for(let i=0; i<nodes; i++) {
+          const px = pad + i * spacing;
+          const py = H - 40;
+          
+          const clarity = 100 * (1 - (p.distortion/100));
+          const color = getClarityColor(clarity);
+
+          c.strokeStyle = '#e2e8f0'; c.lineWidth=2;
+          c.beginPath(); c.moveTo(leaderX, leaderY); c.lineTo(px, py); c.stroke();
+
+          // Node menunggu pesan
+          c.fillStyle = !isMoving ? color : '#cbd5e1';
+          c.beginPath(); c.arc(px, py, 14, 0, Math.PI*2); c.fill();
+          c.strokeStyle = '#fff'; c.stroke();
+
+          if(!isMoving) {
+            c.fillStyle = '#334155'; c.font = 'bold 10px sans-serif';
+            c.fillText(`${Math.round(clarity)}%`, px, py + 25);
+          }
+
+          // Bulatan Pesan Bergerak ke bawah
+          if(isMoving) {
+            const msgX = leaderX + (px - leaderX) * animP;
+            const msgY = leaderY + (py - leaderY) * animP;
+            c.fillStyle = '#22c55e';
+            c.beginPath(); c.arc(msgX, msgY, 8, 0, Math.PI*2); c.fill();
+            c.fillStyle = '#fff'; c.font = '10px sans-serif';
+            c.fillText('✉', msgX, msgY + 3);
+          }
+        }
+      }
+    },
+    readout(s,p){
+      const nodes = Math.max(2, parseInt(p.nodes) || 6);
+      const finalClarityChain = 100 * Math.pow(1 - (p.distortion/100), nodes - 1);
+      const finalClarityDirect = 100 * (1 - (p.distortion/100));
+      const actualClarity = p.mode === 0 ? finalClarityChain : finalClarityDirect;
+      
+      return [
+        ['Network Type', p.mode === 0 ? 'Bisik-Bisik (Chain)' : 'Direct (Broadcast)', ''],
+        ['Total People', nodes, 'nodes'],
+        ['Distortion Rate', p.distortion, '% per hop'],
+        ['Original Msg', '100', '%'],
+        ['Final Msg Clarity', actualClarity, '%'],
+        ['Information Lost', 100 - actualClarity, '%']
+      ];
+    }
+  },
+
   /* ---------- SUBAK (ECOLOGY & WATER MANAGEMENT) ---------- */
   subak:{
     defaults: { inflow: 60, gate1: 50, gate2: 50 }, // gate = % air yang DITERUSKAN ke bawah
@@ -1640,7 +1869,7 @@ const SIM_ENGINES = {
     readout(s,p){ const f=p.f*p.type, di=1/(1/f-1/p.do_), m=-di/p.do_;
       return [['f',f,'cm'],['s (object)',p.do_,'cm'],["s' (image)",di,'cm'],['M',m,'×'],
               ['h′',m*p.ho,'cm'],[di>0?'Nyata':'Maya',1,'']]; }
-  }
+  }, // <--- TAMBAHKAN KOMA DI SINI
 };
 
 /* Runtime simulasi */
@@ -3471,99 +3700,60 @@ learn: {
 },
 {
   id:'life-kobo-fude', category:'Living & Social Learning',
-  title:'Kōbō Fude o Erabazu — Learn to Use the Tool', subtitle:'Adaptability instead of blame',
-  icon:'fa-wand-magic-sparkles', color:'indigo',
-  tags:['Kūkai','Kōbō fude o erabazu','adaptability','problem solving'],
-  capabilities:['calculator'], visual:'none',
+  title:'Kōbō Fude o Erabazu — Engineering Adaptability', subtitle:'Stop blaming tools: Learn Calibration & Compensation',
+  icon:'fa-wand-magic-sparkles', color:'indigo', tags:['Kūkai','adaptability','calibration','problem solving','engineering'], 
+  capabilities:['simulation','calculator'], visual:'sim',
   modes:{
-    learn:{ blocks:[
-      {t:'h', text:'A master does not depend on perfect tools.'},
-      {t:'p', text:'<b>「弘法筆を選ばず」(Kōbō fude o erabazu)</b> is a Japanese proverb commonly understood as a skilled person being able to produce good work without blaming the quality of the tools. The expression is associated with Kōbō Daishi (Kūkai), the famous Buddhist monk and calligrapher.'},
-      {t:'p', text:'There is an important educational nuance: this does <b>not</b> mean that tools, constraints, or working conditions never matter. Historical sources also note that Kūkai himself discussed choosing brushes carefully. The useful lesson is about <b>adaptive skill</b>, not pretending every tool is equally good.'},
-      {t:'formula', tex:'Constraint + Skill + Adaptation → Action', desc:'When the environment changes, change the way you operate.'},
-      {t:'list', items:[
-        '<b>Not:</b> “I must learn how to drive this exact chariot.”',
-        '<b>But:</b> “I should learn how to operate whatever the journey requires.”',
-        'A motorcycle. A machine. A kitchen. A camera. A map.',
-        'A spreadsheet. A database. A piece of code. An AI system.',
-        'A project. A team. An institution. An idea. Or a problem nobody has solved yet.'
+    learn:{blocks:[
+      {t:'h',text:'A master does not complain about the tool. Engineers calibrate and adapt.'},
+      {t:'p',text:'<b>「弘法筆を選ばず」(Kōbō fude o erabazu)</b> is a Japanese proverb: A true master can write beautifully even with a bad brush. Today, people often experience "functional paralysis" when a tool isn\'t 100% perfect. A slow laptop, a glitchy app, or a drifting joystick makes them give up and blame the tool.'},
+      {t:'p',text:'In Science and Engineering, <b>NO tool is flawless</b>. Every sensor has noise, every machine has limits, and every software has bugs. Instead of throwing the tool away, we use <b>Calibration, Compensation, and Workflow Adaptation</b>.'},
+      {t:'formula',tex:'Success = System Limitation + Human Adaptation',desc:'You cannot always fix the tool, but you can change how you operate it.'},
+      
+      {t:'h',text:'Level 1: Physical Compensation (Offsetting Errors)'},
+      {t:'list',items:[
+        '<b>The Broken Cart:</b> You get a shopping cart at the supermarket that constantly pulls to the right (+10 error). <i>Adaptation:</i> You push slightly to the left (-10 compensation). You don\'t abandon your groceries.',
+        '<b>Stick Drift:</b> Your game controller moves on its own. <i>Adaptation:</i> You go into the game settings and increase the "Deadzone" so the software ignores the hardware flaw.'
       ]},
-      {t:'p', text:'The deeper skill is not worshipping the tool. It is learning the controls, understanding the environment, compensating for limitations, and changing technique when conditions change.'},
-      {t:'note', tone:'tip', text:'This principle is about adaptive agency, not accepting unsafe or unjust conditions. Some limitations really do require better tools, more resources, or a system-level fix.'},
-      {t:'note', tone:'info', text:'The proverb’s standard wording is 「弘法筆を択ばず」/「弘法筆を選ばず」. Modern explanations commonly gloss it as a master being able to work with different tools. Source references: Kotobank and the Kumano Fude Business Cooperative.'}
+
+      {t:'h',text:'Level 2: System Adaptation (The Cloud Sync Dilemma)'},
+      {t:'p',text:'Sometimes the "broken tool" is a massive software system. Imagine you and your friend are collaborating on a Word document saved in OneDrive or Google Drive. Due to a split-second internet lag, both of you save at the exact same time. The cloud gets confused, overrides one file, and causes a <b>Phantom Deletion</b> (your work disappears!).'},
+      {t:'kv',items:[
+        ['The Amateur Reaction','Screams, "OneDrive is trash! I lost my homework!" and stops working. They expect Microsoft to magically adapt to their personal internet lag.'],
+        ['The Master\'s Adaptation','Accepts that cloud sync has blind spots. Instead of blindly trusting the auto-save, they change their <b>Workflow</b>.'],
+        ['The Workflow Fix','They use <b>Version Control</b>. Before a major edit, they save the file as <i>Project_v2.0.docx</i>. After revisions, they save it as <i>Project_v2.1.docx</i>.']
+      ]},
+      {t:'p',text:'If the cloud glitches and deletes <i>v2.1</i>, they still have <i>v2.0</i> locally. They didn\'t fix Microsoft\'s servers; they built a human safety net around the tool\'s limitation.'},
+
+      {t:'note',tone:'tip',text:'Go to the SIMULATE tab! Your paper airplane has a broken steering engine (Tool Error). You cannot repair the engine. You must input the exact opposite Compensation to hit the target!'}
     ]},
-    everyday:{
-      items:[
-        {
-          q:'Your team gives you a spreadsheet template that is awkward but usable. What is the adaptive response?',
-          options:[
-            'Spend the whole project complaining about the template',
-            'Learn how it works, build a safer workflow around its limits, and improve the tool where improvement is practical',
-            'Pretend the limitations do not exist'
-          ],
-          answer:1,
-          explain:'Adaptation means learning the operating constraints and designing a workflow that works within them, while still improving the system when appropriate.',
-          concepts:['adaptation','workflow design','systems thinking'],
-          tryIt:'Take one tool you dislike. Write down three constraints, then design one workaround for each.'
-        },
-        {
-          q:'A camera, map, or database behaves differently from what you expected. What is the first useful question?',
-          options:[
-            'Why is this thing so stupid?',
-            'What are its actual operating rules and limitations?',
-            'Who should I blame?'
-          ],
-          answer:1,
-          explain:'Understanding the operating rules turns frustration into actionable information.',
-          concepts:['debugging','systems thinking','adaptability'],
-          tryIt:'Choose one tool you use every week and document five things it can do, three things it cannot do, and two ways to adapt your workflow.'
-        }
-      ]
+    simulate:{
+      engine:'kobo', 
+      params:{ tool_error: 25, compensation: 0 },
+      controls:[
+        { id:'tool_error', label:'Tool Error (Drift Bias)', min:-50, max:50, step:5, unit:' units' },
+        { id:'compensation', label:'Your Skill (Compensation)', min:-50, max:50, step:5, unit:' offset' }
+      ],
+      tip:'Set the Tool Error to +30. If you just press Play, it will crash. Adjust "Your Skill" to -30 to counteract the error. That is how you adapt!'
     },
-    challenge:{
-      questions:[
-        {
-          q:'A tool cannot do exactly what your original plan expected. Which sequence is most adaptive?',
-          type:'choice',
-          options:[
-            'Complain → stop → blame the tool',
-            'Observe constraints → learn controls → change technique → continue',
-            'Ignore constraints → hope it works'
-          ],
-          answer:1, xp:15,
-          why:'Adaptation is an operating skill: understand the environment, then change the method.'
-        },
-        {
-          q:'Which statement best captures the useful lesson of Kōbō fude o erabazu?',
-          type:'choice',
-          options:[
-            'Tools never matter',
-            'Skill includes the ability to adapt to tools and constraints',
-            'Experts should never ask for better tools'
-          ],
-          answer:1, xp:15,
-          why:'The educational lesson is adaptability, not denial of real differences between tools.'
-        }
-      ]
+    calculate:{
+      inputs:[
+        { id:'target', label:'Target Value (What you want)', default:100, min:0, step:1 },
+        { id:'measured', label:'Tool/Sensor Reading (What it shows)', default:104.5, step:0.1 }
+      ],
+      outputs:[
+        { id:'error', label:'Tool Error (Bias)', formula:{expr:'measured - target'}, decimals:2 },
+        { id:'offset', label:'Required Calibration Offset', formula:{expr:'-(measured - target)'}, decimals:2, hint:'In coding and robotics, we simply add this Offset value to the code so the broken tool works perfectly again.' }
+      ],
+      notes:'This is called Zero-Point Calibration. Your digital scale does this when you press the "TARE" button!'
     },
-    explore:{
-      html:`<div class="space-y-3">
-        <div class="card p-4"><h3 class="font-bold text-slate-700 text-sm">The Charioteer Test</h3>
-          <p class="text-[12px] text-slate-600 mt-2 leading-relaxed">When something fails, classify the problem:</p>
-          <div class="space-y-1.5 mt-3 text-[12px] text-slate-600">
-            <div><b>Tool limitation</b> → Can I adapt?</div>
-            <div><b>Skill gap</b> → What do I need to learn?</div>
-            <div><b>Workflow gap</b> → Can I redesign the process?</div>
-            <div><b>System constraint</b> → Do I need a better tool, more resources, or organizational change?</div>
-          </div>
-        </div>
-        <div class="card p-4 bg-indigo-50 border-indigo-200">
-              <p class="text-[12px] text-indigo-900"><b>Example:</b> cloud synchronization produces conflicting file states. Instead of treating the system as an enemy, use versioning, explicit working copies, and a recovery workflow.</p>
-            </div>
-          </div>`
-        }
-      }
-    },
+    everyday:{items:[
+      {q:'You are playing a game, but your controller has "Stick Drift" causing your character to slowly walk left even when you don\'t touch it. What is the engineering mindset to fix this without buying a new one?',options:['Scream and throw the controller','Adapt by going to game settings and increasing the "Stick Deadzone" so it ignores the small error','Stop playing forever'],answer:1,explain:'Adjusting the Deadzone in settings is literally applying a software Calibration/Compensation to fix hardware imperfection.',concepts:['calibration','deadzone','compensation'],tryIt:'Think of one thing in your house that is slightly broken (a wobbly table). How do you compensate for it? (e.g., putting a folded paper under the leg). That is engineering!'},
+      {q:'You are weighing flour on a digital scale, but the empty bowl already weighs 200 grams. How do you get 500g of flour?',options:['Pour flour until the scale says 700g (Target + Bowl Error)','Pour until it says 500g, then blame the scale when the cake fails','Move to a different house'],answer:0,explain:'Adding the error offset to your target (or pressing TARE to reset it to zero) is how we compensate for constraints.',concepts:['tare','offset','problem solving'],tryIt:'Use a kitchen scale. Put a glass on it, press TARE/ZERO, then pour water. You just performed a sensor calibration!'}
+    ]},
+    challenge:{questions:[{q:'A drone\'s broken right propeller makes it drift +40 units to the right every second. To make it fly perfectly straight to the target, what value of "Steering Compensation" must the pilot apply?',type:'numeric',answer:-40,tol:0,unit:'units',xp:20,hint:'To cancel out a +40 error, you must add its exact opposite.'}]}
+  }
+},
 
     /* ───────── PHASE 2 · MAINTAINING HARMONY ───────── */
     {
@@ -4022,18 +4212,47 @@ learn: {
 },
 {
   id:'ich-gotong-royong', category:'Living Heritage Connections',
-  title:'Gotong Royong — The Science of Cooperation', subtitle:'Collective action, social capital, coordination, and fairness',
-  icon:'fa-people-carry-box', color:'violet', tags:['gotong royong','cooperation','sociology','collective action'], capabilities:[], visual:'none',
+  title:'Gotong Royong — Information & Network Theory', subtitle:'Why direct communication is the core of teamwork',
+  icon:'fa-people-carry-box', color:'violet', tags:['gotong royong','cooperation','communication','information theory','network'], 
+  capabilities:['simulation','calculator'], visual:'sim',
   modes:{
     learn:{blocks:[
-      {t:'h',text:'A group can sometimes achieve what individuals cannot.'},
-      {t:'p',text:'Gotong royong provides a living context for learning about cooperation, collective action, role allocation, trust, social capital, and coordination. Learners can ask how many individual contributions become one shared outcome.'},
-      {t:'formula',tex:'Collective capacity ≈ people × coordination × trust',desc:'An educational model rather than a universal scientific equation.'},
-      {t:'list',items:['Who does what?','How are tasks divided?','What happens when one person cannot contribute?','How does trust affect coordination?']},
-      {t:'note',tone:'tip',text:'The lesson also examines workload, fairness, voice, and whether participation is genuinely voluntary.'}
+      {t:'h',text:'Gotong Royong is not just muscle; it is coordination.'},
+      {t:'p',text:'When many people work together (Gotong Royong), moving the object is the easy part. The hard part is <b>Communication</b>. If the leader says "Move left!" but the message is passed indirectly from person to person, the last person might hear "Move right!" causing the team to fail or get hurt.'},
+      {t:'formula',tex:'Final Clarity = 100 \\times (1 - distortion)^{n}',desc:'In Information Theory, every time a message is passed to a new person (n), a small percentage of information is lost or distorted.'},
+      {t:'list',items:[
+        '<b>The Telephone Game (Bisik-Bisik):</b> Even if everyone is honest, human memory and listening skills are not 100% perfect. A 10% distortion over 10 people means the final message is completely ruined.',
+        '<b>Indirect Communication (Chain):</b> "Tell B to tell C to tell D." Slow, and highly prone to fatal errors and misunderstandings.',
+        '<b>Direct Communication (Broadcast):</b> The leader or coordinator speaks directly to everyone at once. Distortion happens only once, saving the teamwork.'
+      ]},
+      {t:'note',tone:'warn',text:'A damaged message causes misunderstandings, resentment, and destroys the social trust needed for Gotong Royong. Speak directly to the source!'}
     ]},
-    everyday:{items:[{q:'A class needs to clean a shared area. Which design best demonstrates collective action?',options:['One student secretly does everything','Tasks are divided clearly, people coordinate, and the group checks the shared result','Everyone waits for someone else'],answer:1,explain:'Collective action depends on coordination, not simply the number of people present.',concepts:['collective action','coordination','social capital'],tryIt:'Run a five-minute task with assigned roles, then compare the result with an unstructured group attempt.'}]},
-    challenge:{questions:[{q:'What should students examine alongside the success of gotong royong?',type:'choice',options:['Only speed','Fairness, workload, participation, and coordination','Nothing; groups are always fair'],answer:1,xp:15,why:'Cooperation is a social system, so how benefits and burdens are distributed matters too.'}]}
+    simulate:{
+      engine:'gotongroyong', 
+      params:{ nodes: 6, distortion: 20, mode: 0 },
+      controls:[
+        { id:'nodes', label:'Number of People (Chain Length)', min:2, max:15, step:1, unit:' people' },
+        { id:'distortion', label:'Distortion/Error per transfer', min:0, max:50, step:1, unit:'%' },
+        { id:'mode', label:'Communication Style (0: Bisik-bisik, 1: Direct)', min:0, max:1, step:1, unit:'' }
+      ],
+      tip:'Keep "Communication Style" at 0 (Chain). Set people to 10 and distortion to 20%. Watch the message turn RED (corrupted). Then, change the style to 1 (Direct Broadcast) and see how the message survives!'
+    },
+    calculate:{
+      inputs:[
+        { id:'initial', label:'Original Message Meaning (%)', default:100, min:100, max:100, step:1 },
+        { id:'people', label:'Number of People Passing the Message (n)', default:10, min:1, step:1 },
+        { id:'error', label:'Error/Misunderstanding per person (%)', default:15, min:0, max:100, step:1 }
+      ],
+      outputs:[
+        { id:'final', label:'Final Message Accuracy', formula:{expr:'initial * (1 - error/100)^(people - 1)'}, unit:'%', decimals:1 },
+        { id:'lost', label:'Total Information Lost', formula:{expr:'100 - (initial * (1 - error/100)^(people - 1))'}, unit:'%', decimals:1, hint:'Notice how it drops exponentially. If 10 people pass a message with just a 15% error rate, the final person only gets about 23% of the true meaning!' }
+      ],
+      chart:{ title:'Message Clarity vs Number of People', xLabel:'Number of People (n)', yLabel:'Clarity (%)',
+        x:{ id:'people', from:1, to:20, steps:19 },
+        series:[{ label:'Message Clarity (%)', expr:'initial * (1 - error/100)^(people - 1)', color:'#8b5cf6' }] }
+    },
+    everyday:{items:[{q:'You are the leader of a group project with 10 members. You need to change tomorrow\'s meeting time. What is the safest way to communicate?',options:['Tell your best friend and ask them to pass it to the others','Gather everyone or send a direct group announcement','Tell 3 people and hope they tell the rest'],answer:1,explain:'Relying on a chain of communication ("bisik-bisik") introduces distortion at every hop. Direct communication (Broadcast) ensures everyone receives the exact same uncorrupted 100% message from the source, preventing conflict and missed deadlines.',concepts:['information theory','direct communication','network topology'],tryIt:'Play the "Telephone Game" with 5 friends. Whisper a complex sentence. See what the 5th person hears. It proves the mathematics of distortion!'}]},
+    challenge:{questions:[{q:'If a message is passed through 3 people (A tells B, B tells C). There are 2 transfers. If the distortion rate is 50% (0.5) per transfer, what is the final accuracy of the message received by C?',type:'numeric',answer:25,tol:1,unit:'%',xp:20,hint:'Transfer 1 (A to B): 100% becomes 50%. Transfer 2 (B to C): 50% is cut in half again. 0.5 * 0.5 = 0.25 (or 25%).'}]}
   }
 },
 {
@@ -5483,8 +5702,47 @@ const UI = {
         <span class="text-[12px] font-bold text-slate-600">Sensor simulation mode<br><span class="font-normal text-slate-400 text-[11px]">For practice on a laptop / phone without sensors</span></span>
         <input type="checkbox" ${APP.simulateSensors?'checked':''} onchange="APP.simulateSensors=this.checked;UI.toast('Sensor simulation '+(this.checked?'ON':'OFF'))" class="w-5 h-5 accent-indigo-600">
       </label>
+
+      <!-- TOMBOL TRANSLATE DI DALAM SETTING -->
+      <label class="flex items-center justify-between bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 transition rounded-xl px-3 py-3 mb-2 cursor-pointer" onclick="UI.languageModal()">
+        <span class="text-[12px] font-bold text-indigo-800"><i class="fa-solid fa-language mr-2"></i>Change App Language</span>
+        <i class="fa-solid fa-chevron-right text-indigo-400 text-xs"></i>
+      </label>
+
       <button onclick="if(confirm('Reset XP & progress?')){localStorage.removeItem('psl.progress');location.reload()}" class="w-full bg-rose-50 border border-rose-200 text-rose-700 font-bold py-2.5 rounded-xl text-sm">Reset progress</button>
-      <p class="text-[10px] text-slate-400 mt-3 text-center">Living Heritage in Education v0.2 · offline-first · engine modular</p>`);
+      <p class="text-[10px] text-slate-400 mt-3 text-center">Living Heritage in Education v0.3 · offline-first · engine modular</p>`);
+  },
+
+  languageModal(){
+    // Deteksi bahasa perangkat otomatis (contoh: 'id' dari 'id-ID')
+    const localLangCode = (navigator.language || navigator.userLanguage).split('-')[0]; 
+    const localName = new Intl.DisplayNames(['en'], { type: 'language' }).of(localLangCode);
+
+    // 6 Bahasa Resmi PBB + Bahasa Perangkat
+    const langs = [
+      { code: 'en', name: 'English (Original)' },
+      { code: 'ar', name: 'العربية (Arabic)' },
+      { code: 'zh-CN', name: '中文 (Chinese)' },
+      { code: 'fr', name: 'Français (French)' },
+      { code: 'ru', name: 'Русский (Russian)' },
+      { code: 'es', name: 'Español (Spanish)' },
+      { code: localLangCode, name: `📍 Device Language (${localName})` }
+    ];
+
+    // Filter agar tidak ada bahasa ganda jika device lang sama dengan bahasa PBB
+    const uniqueLangs = langs.filter((v,i,a) => a.findIndex(t => (t.code === v.code)) === i);
+
+    const body = `<div class="space-y-2 mb-4">
+      <p class="text-[11px] text-slate-500 mb-3 leading-relaxed">Choose a language. Translation is powered by Google and requires an active internet connection.</p>
+      ${uniqueLangs.map(l => `
+        <button onclick="AppTranslate.set('${l.code}'); UI.settingsModal();" class="w-full text-left bg-slate-50 hover:bg-indigo-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 transition-colors">
+          ${l.name}
+        </button>
+      `).join('')}
+    </div>
+    <button onclick="UI.settingsModal()" class="w-full bg-slate-200 text-slate-600 font-bold py-2.5 rounded-xl text-sm">Back to Settings</button>`;
+
+    this.modal('Language & Translation', body);
   },
   constantsModal(){
     this.modal('Scientific Constants', `<div class="space-y-1.5">${Object.keys(CONSTANTS).map(k=>`
@@ -5497,6 +5755,7 @@ const UI = {
     SimEngine.setParam(id, v);
   },
   markSpeed(btn){ [...btn.parentElement.querySelectorAll('.chipbtn')].forEach(b=>b.classList.remove('on')); btn.classList.add('on'); },
+  
   safety(mod){
     const box=$('safety-banner');
     if(!mod.safety){ box.classList.add('hidden'); box.innerHTML=''; return; }
@@ -5509,6 +5768,22 @@ const UI = {
         <div><p class="text-[10px] font-black text-${tone}-600 uppercase tracking-wider">${w.severity==='critical'?'Safety — important':w.severity==='warning'?'Attention':'Notes'}</p>
         <p class="text-[12px] text-${tone}-800 leading-relaxed mt-0.5">${w.text}</p></div></div>`;
     }).join('');
+  }
+}; // <--- INI ADALAH PENUTUP OBJEK UI
+
+/* Controller Terjemahan Kustom */
+const AppTranslate = {
+  set(langCode) {
+    const selectElement = document.querySelector('select.goog-te-combo');
+    if (selectElement) {
+      // Set value pada dropdown rahasia google
+      selectElement.value = langCode;
+      // Trigger event agar google sadar ada perubahan
+      selectElement.dispatchEvent(new Event('change'));
+      UI.toast('Translating interface...', 'emerald');
+    } else {
+      UI.toast('Translation widget is still loading. Please check internet connection.', 'amber');
+    }
   }
 };
 
@@ -5584,6 +5859,19 @@ document.addEventListener('keydown', e=>{
 
 
 </script>
+
+
+<!-- SYSTEM: GOOGLE TRANSLATE (HIDDEN WIDGET) -->
+<div id="google_translate_element" style="display:none;"></div>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en', 
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <!-- SYSTEM: REGISTER PWA SERVICE WORKER -->
 <script>

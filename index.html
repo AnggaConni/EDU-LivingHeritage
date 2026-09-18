@@ -148,7 +148,7 @@
     "url": "https://anggaconni.github.io/EDU-LivingHeritage/",
     "applicationCategory": "EducationalApplication",
     "operatingSystem": "Web Browser",
-    "description": "A modular science learning platform that transforms smartphones into interactive scientific instruments for learning, calculation, experimentation, measurement, and visualization.",
+    "description": "A learning platform connecting living heritage with science, observation, experimentation, and reflection",
     "author": {
       "@type": "Person",
       "name": "AnggaConni"
@@ -851,7 +851,7 @@ const Comparison = {
         <div class="bg-indigo-50 rounded-xl p-2.5 border border-indigo-200"><p class="text-[10px] font-bold text-indigo-400 uppercase">Measured</p><p class="text-lg font-black text-indigo-700 num">${Precision.format(measured)}</p><p class="text-[10px] text-indigo-400">${ulab(unit)}</p></div>
         <div class="bg-${tone}-50 rounded-xl p-2.5 border border-${tone}-200"><p class="text-[10px] font-bold text-${tone}-500 uppercase">Error</p><p class="text-lg font-black text-${tone}-700 num">${Precision.format(r.pct,{decimals:2})}%</p><p class="text-[10px] text-${tone}-500">Δ ${Precision.format(r.abs)}</p></div>
       </div>
-      <p class="text-[11px] text-slate-500 mt-3 leading-relaxed"><b>Why are they different?</b> Sumber galat umum: waktu reaksi manusia, kalibrasi, noise sensor, gesekan/hambatan udara, pembulatan, dan asumsi model yang menyederhanakan kenyataan.</p>
+      <p class="text-[11px] text-slate-500 mt-3 leading-relaxed"><b>Why are they different?</b> Common sources of error include human reaction time, calibration, sensor noise, friction or air resistance, rounding, and simplifying assumptions.</p>
     </div>`;
   }
 };
@@ -1234,7 +1234,7 @@ const SIM_ENGINES = {
     readout(s,p){
       const cond=[0,0.97,0.99,0.15][p.shield], inside = p.shield===0?1:clamp((1-cond)+clamp(p.openings*0.22,0,.9)*0.5,0,1);
       return [['External E',p.E,'kV/m'],['Internal E',p.E*inside,'kV/m'],['Reduction',(1-inside)*100,'%'],
-              ['Lubang',p.openings,''],['Perisai',p.shield,''],['Aman?',inside<0.2?1:0,'(1=ya)']]; }
+              ['Openings',p.openings,''],['Shield',p.shield,''],['Safe?',inside<0.2?1:0,'(1=yes)']]; }
   },
 
   /* ---------- LENS / OPTICS ---------- */
@@ -1257,14 +1257,14 @@ const SIM_ENGINES = {
         c.fillStyle=col; c.beginPath(); const t=cy-h*sc*3; c.moveTo(x,t); c.lineTo(x-5,t+(h>0?9:-9)); c.lineTo(x+5,t+(h>0?9:-9)); c.fill();
         c.font='bold 10px sans-serif'; c.fillText(label,x-8,cy+(h>0?18:-12)); };
       const ox=cx-p.do_*sc, ix=cx+di*sc;
-      arrow(ox,p.ho,'#4f46e5','Benda'); if(isFinite(di)) arrow(ix,hi,'#f59e0b','Bayangan');
+      arrow(ox,p.ho,'#4f46e5','Object'); if(isFinite(di)) arrow(ix,hi,'#f59e0b','Image');
       // sinar utama
       c.strokeStyle='rgba(245,158,11,.8)'; c.lineWidth=1.5;
       c.beginPath(); c.moveTo(ox,cy-p.ho*sc*3); c.lineTo(cx,cy-p.ho*sc*3); c.lineTo(ix,cy-hi*sc*3); c.stroke();
       c.beginPath(); c.moveTo(ox,cy-p.ho*sc*3); c.lineTo(cx,cy); c.lineTo(ix,cy-hi*sc*3); c.stroke();
     },
     readout(s,p){ const f=p.f*p.type, di=1/(1/f-1/p.do_), m=-di/p.do_;
-      return [['f',f,'cm'],['s (benda)',p.do_,'cm'],["s' (bayangan)",di,'cm'],['M',m,'×'],
+      return [['f',f,'cm'],['s (object)',p.do_,'cm'],["s' (image)",di,'cm'],['M',m,'×'],
               ['h′',m*p.ho,'cm'],[di>0?'Nyata':'Maya',1,'']]; }
   }
 };
@@ -1538,7 +1538,7 @@ const MODULES = [
     learn:{ blocks:[
       {t:'h', text:'A function is a number machine'},
       {t:'p', text:'Enter x and get y. A graph is a snapshot of all possible (x, y) pairs. Its shape reveals the behavior of the function.'},
-      {t:'kv', items:[['y = 2x + 4','garis lurus (linear)'],['y = x^2','parabola (kuadrat)'],['y = sin(x)','gelombang (periodik)'],['y = e^x','ledakan (eksponensial)'],['y = 1/x','hiperbola (asimtot)']]},
+      {t:'kv', items:[['y = 2x + 4','straight line (linear)'],['y = x^2','parabola (quadratic)'],['y = sin(x)','wave (periodic)'],['y = e^x','exponential growth'],['y = 1/x','hyperbola (asymptote)']]},
       {t:'note', tone:'info', text:'Change one value in the formula and watch the graph shift. That is the essence of understanding parameters.'}
     ]}
   }
@@ -1580,7 +1580,7 @@ const MODULES = [
 },
 {
   id:'math-vector', category:'Mathematics', title:'3D Vectors', subtitle:'Dot product, cross product, magnitude, angle',
-  icon:'fa-arrows-up-down-left-right', color:'fuchsia', tags:['vektor','geometri','fisika'],
+  icon:'fa-arrows-up-down-left-right', color:'fuchsia', tags:['vectors','geometry','physics'],
   capabilities:['calculator'], visual:'none',
   modes:{
     calculate:{ custom:'vector' },
@@ -1630,7 +1630,7 @@ const MODULES = [
 
 {
   id:'bio-populasi', category:'Biology', title:'Bacterial Growth', subtitle:'Exponential cell-division phase',
-  icon:'fa-bacteria', color:'emerald', tags:['biologi','bakteri','populasi','exponential growth'],
+  icon:'fa-bacteria', color:'emerald', tags:['biology','bacteria','population','exponential growth'],
   capabilities:['calculator'], visual:'chart',
   modes:{
     learn:{ blocks:[
@@ -1666,7 +1666,7 @@ const MODULES = [
 // --- MODUL BIOLOGI 2: FISIOLOGI (KALORI & METABOLISME) ---
 {
   id:'bio-bmr', category:'Biology', title:'Metabolism & BMR', subtitle:'Calculate calories for basic survival',
-  icon:'fa-heart-pulse', color:'rose', tags:['biologi','manusia','kalori','kesehatan'],
+  icon:'fa-heart-pulse', color:'rose', tags:['biology','human','calories','health'],
   capabilities:['calculator'], visual:'chart',
   modes:{
     learn:{ blocks:[
@@ -1705,7 +1705,7 @@ const MODULES = [
 // --- MODUL BIOLOGI 3: GENETIKA (HARDY-WEINBERG) ---
 {
   id:'bio-genetika', category:'Biology', title:'Population Genetics', subtitle:'Hardy-Weinberg principle & DNA',
-  icon:'fa-dna', color:'fuchsia', tags:['biologi','genetika','DNA','evolusi'],
+  icon:'fa-dna', color:'fuchsia', tags:['biology','genetics','DNA','evolution'],
   capabilities:['calculator'], visual:'none',
   modes:{
     learn:{ blocks:[
@@ -1735,7 +1735,7 @@ const MODULES = [
 // --- MODUL CRAFTING 1: PIROLISIS & BIOCHAR ---
 {
   id:'env-pyrolysis', category:'Climate & Environment', title:'Pyrolysis & Biochar', subtitle:'Heating biomass with limited oxygen',
-  icon:'fa-fire-flame-curved', color:'orange', tags:['lingkungan','iklim','karbon','arang','crafting'],
+  icon:'fa-fire-flame-curved', color:'orange', tags:['environment','climate','carbon','charcoal','crafting'],
   capabilities:['calculator'], visual:'chart',
   safety:{ level:'high', warnings:[
     {severity:'critical', text:'Fire experiments MUST be conducted outdoors under adult supervision. Keep water or sand nearby for fire control.'},
@@ -1883,7 +1883,7 @@ const MODULES = [
 // --- MODUL CRAFTING 2: FILTER AIR SEDERHANA ---
 {
   id:'env-waterfilter', category:'Climate & Environment', title:'Natural Water Filter', subtitle:'Build a simple water-filtration system',
-  icon:'fa-droplet', color:'cyan', tags:['lingkungan','air','filter','crafting','adsorpsi'],
+  icon:'fa-droplet', color:'cyan', tags:['environment','water','filter','crafting','adsorption'],
   capabilities:['calculator'], visual:'none',
   safety:{ level:'medium', warnings:[
     {severity:'warning', text:'Water filtered with this DIY bottle is ONLY physically clearer. That does not mean it is free of microorganisms.'},
@@ -1906,7 +1906,7 @@ const MODULES = [
         { id:'tebal_arang', label:'Charcoal Layer Thickness (cm)', default:10, type:'range', min:2, max:40, step:1 }
       ],
       outputs:[
-        { id:'waktu', label:'Estimated Dripping Time', formula:{expr:'vol_air * (20 / tebal_arang)'}, unit:'menit', decimals:1 },
+        { id:'waktu', label:'Estimated Dripping Time', formula:{expr:'vol_air * (20 / tebal_arang)'}, unit:'minutes', decimals:1 },
         { id:'kejernihan', label:'Physical Clarity', formula:{expr:'100 - (100 / (tebal_arang * 0.5))'}, unit:'%', decimals:1 },
         { id:'racun', label:'Estimated Adsorbed Dye/Contaminant', formula:{expr:'tebal_arang * 15'}, unit:'mg', hint:'Charcoal has a saturation limit. Once its pores are occupied, its adsorption capacity decreases and the material may need replacement.' }
       ]
@@ -2131,7 +2131,7 @@ learn: {
       t: 'formula',
       tex: 'Rₜₕ = d / (k · A)',
       desc:
-        'Resistansi termal sederhana suatu lapisan. Rₜₕ dinyatakan dalam K/W. Semakin kecil Rₜₕ, semakin mudah panas melewati lapisan tersebut.'
+        'A simple thermal resistance for a material layer. Rₜₕ is expressed in K/W. The smaller Rₜₕ is, the easier heat can pass through the layer.'
     },
 
     {
@@ -2171,20 +2171,20 @@ learn: {
     {
       t: 'p',
       text:
-        'Logam seperti tembaga dan aluminium memiliki konduktivitas termal jauh lebih tinggi daripada kebanyakan thermal paste. Nilai aktual bergantung pada jenis material dan formulasi produk, tetapi secara umum tembaga berada di kisaran ratusan W/m·K, aluminium juga berada di kisaran ratusan W/m·K, sedangkan thermal paste biasanya jauh lebih rendah.'
+        'Metals such as copper and aluminum have much higher thermal conductivity than most thermal pastes. Actual values depend on the material and formulation, but copper and aluminum are generally in the hundreds of W/m·K, while thermal paste is usually much lower.'
     },
 
     {
       t: 'list',
       items: [
 
-        '<b>Copper:</b> sekitar 400 W/m·K untuk tembaga murni pada kondisi tertentu.',
+        '<b>Copper:</b> about 400 W/m·K for pure copper under certain conditions.',
 
-        '<b>Aluminum:</b> sekitar 200 W/m·K untuk aluminium murni pada kondisi tertentu.',
+        '<b>Aluminum:</b> about 200 W/m·K for pure aluminum under certain conditions.',
 
-        '<b>Thermal paste:</b> sangat bervariasi menurut formulasi; jangan menganggap semua thermal paste memiliki nilai k yang sama.',
+        '<b>Thermal paste:</b> varies widely by formulation; do not assume all thermal pastes have the same k value.',
 
-        '<b>Air:</b> sekitar 0,026 W/m·K pada kondisi ruang.'
+        '<b>Air:</b> about 0.026 W/m·K at room conditions.'
       ]
     },
 
@@ -2247,7 +2247,7 @@ learn: {
       t: 'list',
       items: [
 
-        '<b>CPU / die:</b> tempat panas dihasilkan.',
+        '<b>CPU / die:</b> where heat is generated.',
 
         '<b>IHS:</b> helps spread heat from the chip over a larger area.',
 
@@ -2387,12 +2387,12 @@ learn: {
     },
     everyday:{ items:[
       { q:'An IT specialist spreads thermal paste as thick as buttered bread, thinking it will maximize cooling. According to Fourier’s law, what happens?',
-        options:['Temperature CPU akan sangat dingin dan super stabil','Pasta akan tumpah tapi pendinginan meningkat 200%','Temperature CPU justru akan naik dan berpotensi overheat (kepanasan)'],
+        options:['The CPU temperature will become extremely cool and stable','The paste will spill and cooling will increase by 200%','The CPU temperature can rise and potentially overheat'],
         answer:2, concepts:['konduksi','ketebalan','resistansi termal'],
         explain:'In Fourier’s equation, heat transfer is inversely related to layer thickness. As the paste layer gets thicker, the heat-transfer rate decreases. Thermal paste is better than an air gap, but its conductivity is still far below that of a metal heatsink; use only enough to fill surface imperfections.',
         tryIt:'In the Calculate tab, increase Layer Thickness to 1 mm and observe how the estimated heat-transfer rate changes.' },
       { q:'Why might a gaming laptop become much hotter and slower after two years without cleaning?',
-        options:['Kipas komputernya sudah mulai usang dan melemah','Debu yang tebal bertindak sebagai "selimut" isolator penahan panas','Software dan Windows yang semakin berat menghasilkan panas tambahan'],
+        options:['The computer fan has become worn and weak','Thick dust acts like an insulating “blanket” that traps heat','Heavier software and Windows versions produce additional heat'],
         answer:1, concepts:['thermal insulation','convection'],
         explain:'Dust can trap pockets of air and obstruct airflow, reducing heat transfer from the cooling system to the surrounding air.',
         tryIt:'Clean the laptop cooling fins and fans regularly to help maintain thermal performance.' }
@@ -2416,7 +2416,7 @@ learn: {
       {t:'formula', tex:'y(t) = v₀·sinθ·t − ½g·t²', desc:'Vertikal: ditarik gravitasi terus-menerus.'},
       {t:'formula', tex:'R = v₀²·sin(2θ) / g', desc:'Maximum range. It occurs at θ = 45° for level ground with no air resistance.'},
       {t:'note', tone:'tip', text:'Angles of 30° and 60° can give the same range under ideal conditions, but their trajectories and flight times differ.'},
-      {t:'steps', items:['Tebak dulu: sudut berapa paling jauh?','Uji di tab Simulate','Aktifkan hambatan udara, lihat sudut optimum turun','Lempar bola sungguhan di tab Experiment']}
+      {t:'steps', items:['Predict first: which angle gives the greatest range?','Test it in the Simulate tab','Enable air resistance and observe the optimum angle decrease','Throw a real ball in the Experiment tab']}
     ]},
     calculate:{
       inputs:[
@@ -2447,7 +2447,7 @@ learn: {
         { id:'v0', label:'Initial speed', min:5, max:60, step:1, unit:'m/s' },
         { id:'angle', label:'Angle', min:5, max:85, step:1, unit:'°' },
         { id:'g', label:'Gravity', min:1.6, max:25, step:0.01, unit:'m/s²',
-          presets:[['Bumi',9.80665],['Bulan',1.62],['Mars',3.72],['Jupiter',24.79]] },
+          presets:[['Earth',9.80665],['Moon',1.62],['Mars',3.72],['Jupiter',24.79]] },
         { id:'drag', label:'Hambatan udara (k)', min:0, max:0.25, step:0.005 },
         { id:'h0', label:'Tinggi awal', min:0, max:20, step:0.5, unit:'m' }
       ],
@@ -2462,15 +2462,15 @@ learn: {
              'Tap <b>Choose a color</b>, then tap the ball so the tracker knows the target color.',
              'Tap <b>Record</b>, throw the ball parallel to the calibration plane, then tap <b>Stop</b>.',
              'Tap <b>Analyze</b> to fit a parabola and compare it with theory.'],
-      compare:{ measuredKey:'gMeas', theory:{constant:'g'}, unit:'ms2', label:'Percepatan gravitasi dari lintasan bola' }
+      compare:{ measuredKey:'gMeas', theory:{constant:'g'}, unit:'ms2', label:'Gravitational acceleration from ball trajectory' }
     },
     challenge:{ game:'projectile-target' },
     everyday:{ items:[
       { q:'Why do snipers and basketball players not always use a 45° angle?',
-        options:['Karena 45° hanya optimum untuk ketinggian awal & akhir sama tanpa hambatan udara','Karena 45° salah rumus','Karena gravitasi berubah-ubah'],
+        options:['Because 45° is optimal only when launch and landing heights are equal and there is no air resistance','Because 45° is the wrong formula','Because gravity changes constantly'],
         answer:0, concepts:['optimal angle','initial height','air resistance'],
-        explain:'Rumus R = v₀²sin2θ/g berlaku untuk tanah datar tanpa udara. Jika titik lepas lebih tinggi dari target atau ada hambatan udara, sudut optimum menjadi lebih kecil dari 45°.',
-        tryIt:'Di tab Simulate, set h₀ = 10 m lalu cari sudut yang menghasilkan jarak terbesar.' }
+        explain:'The range formula R = v₀²sin2θ/g applies to level ground without air resistance. If the launch point is higher than the target or air resistance is present, the optimum angle can be lower than 45°.',
+        tryIt:'In the Simulate tab, set h₀ = 10 m and find the angle that produces the greatest range.' }
     ]}
   }
 },
@@ -2496,7 +2496,7 @@ learn: {
         { id:'t', label:'Fall time', formula:{expr:'sqrt(2*h/g)'}, unit:'s' },
         { id:'v', label:'Impact speed', formula:{expr:'g*t'}, unit:'ms' },
         { id:'vkmh', label:'…in km/h', formula:{expr:'g*t*3.6'}, unit:'kmh' },
-        { id:'ek', label:'Kinetic energy per kg', formula:{expr:'0.5*v^2'}, unit:'J', hint:'Untuk massa m, kalikan dengan m.' }
+        { id:'ek', label:'Kinetic energy per kg', formula:{expr:'0.5*v^2'}, unit:'J', hint:'For mass m, multiply by m.' }
       ],
       chart:{ title:'Speed vs waktu jatuh', xLabel:'waktu (s)', yLabel:'v (m/s)',
         x:{ id:'t', from:0, to:6, steps:24 },
@@ -2509,7 +2509,7 @@ learn: {
         { id:'g', label:'Gravity', min:1.6, max:25, step:0.01, unit:'m/s²', presets:[['Bumi',9.80665],['Bulan',1.62],['Mars',3.72]] },
         { id:'drag', label:'Hambatan udara "bulu"', min:0, max:3, step:0.05 }
       ],
-      tip:'Set hambatan udara ke 0 → keduanya jatuh identik. Itulah kondisi Bulan.'
+      tip:'Set air resistance to 0 → both objects fall identically. That approximates the Moon-like vacuum condition.'
     },
     experiment:{
       type:'sensor', sensor:'motion', field:'mag', measure:'mean',
@@ -2551,16 +2551,16 @@ learn: {
       controls:[
         { id:'L', label:'String length', min:0.1, max:3, step:0.05, unit:'m' },
         { id:'theta0', label:'Initial angle', min:5, max:85, step:1, unit:'°' },
-        { id:'g', label:'Gravity', min:1.6, max:25, step:0.01, unit:'m/s²', presets:[['Bumi',9.80665],['Bulan',1.62]] },
-        { id:'damping', label:'Redaman', min:0, max:0.5, step:0.01 }
+        { id:'g', label:'Gravity', min:1.6, max:25, step:0.01, unit:'m/s²', presets:[['Earth',9.80665],['Moon',1.62]] },
+        { id:'damping', label:'Damping', min:0, max:0.5, step:0.01 }
       ],
-      tip:'Bandingkan "T teori" dan "T terukur" pada HUD saat sudut awal besar.'
+      tip:'Compare “theoretical T” and “measured T” in the HUD at a large initial angle.'
     },
     experiment:{
       type:'timer', title:'Measure g with a real pendulum', cyclesPerLap:1,
       steps:['Build a pendulum with a string and a small weight. Measure L from the pivot to the center of mass.',
              'Displace it by about ±10° and release.','Tap <b>Lap</b> each time the weight returns to the same point in the same direction.',
-             'Ambil minimal 10 lap agar rata-rata stabil, lalu Stop.'],
+             'Take at least 10 laps so the average stabilizes, then tap Stop.'],
       inputs:[{ id:'L', label:'Length tali (m)', default:0.5, step:0.01 }],
       derive:[
         { id:'T', label:'Periode rata-rata', expr:'lapMean', unit:'s' },
@@ -2636,7 +2636,7 @@ learn: {
         { id:'T', label:'Periode', formula:{expr:'2*pi*r/v'}, unit:'s' },
         { id:'ac', label:'Centripetal acceleration', formula:{expr:'v^2/r'}, unit:'ms2' },
         { id:'Fc', label:'Centripetal force', formula:{expr:'m*v^2/r'}, unit:'N' },
-        { id:'gforce', label:'Equivalent g-force', formula:{expr:'(v^2/r)/g'}, decimals:2, hint:'Pilot jet bisa menahan ±9 g sesaat.' }
+        { id:'gforce', label:'Equivalent g-force', formula:{expr:'(v^2/r)/g'}, decimals:2, hint:'Jet pilots can experience forces of roughly ±9 g for short periods.' }
       ],
       chart:{ title:'Centripetal Force vs Speed', xLabel:'v (m/s)', yLabel:'F (N)',
         x:{ id:'v', from:0, to:20, steps:20 },
@@ -2653,7 +2653,7 @@ learn: {
     },
     everyday:{ items:[
       { q:'Why are roads banked at curves?',
-        options:['Supaya air hujan mengalir','Supaya komponen gaya normal ikut membantu gaya sentripetal','Supaya mobil terlihat keren'],
+        options:['To help rainwater flow','So the normal-force component helps provide centripetal force','To make the car look cool'],
         answer:1, concepts:['normal force','friction','centripetal'],
         explain:'On a banked curve, the road’s normal force has a component toward the center of the turn. This means the vehicle does not rely only on tire friction, which matters on wet roads.',
         tryIt:'Calculate a꜀ for a car traveling at 60 km/h around a curve with a 50 m radius in the Calculate tab.' }
@@ -2668,7 +2668,7 @@ learn: {
     learn:{ blocks:[
       {t:'h', text:'Waves transfer energy, not matter'},
       {t:'formula', tex:'v = λ · f', desc:'Wave speed = wavelength × frequency.'},
-      {t:'kv', items:[['Bunyi di udara','≈ 343 m/s (20 °C)'],['Bunyi di air','≈ 1480 m/s'],['Cahaya','299.792.458 m/s'],['Pendengaran manusia','20 Hz – 20 kHz']]},
+      {t:'kv', items:[['Sound in air','≈ 343 m/s (20 °C)'],['Sound in water','≈ 1480 m/s'],['Light','299,792,458 m/s'],['Human hearing','20 Hz – 20 kHz']]},
       {t:'note', tone:'tip', text:'The A above middle C is 440 Hz. Try humming it and inspect the microphone reading in the Experiment tab!'}
     ]},
     calculate:{
@@ -2712,7 +2712,7 @@ learn: {
       {t:'h', text:'Lenses bend light to form images'},
       {t:'formula', tex:'1/f = 1/s + 1/s′', desc:'f = focal length, s = object distance, s′ = image distance.'},
       {t:'formula', tex:'M = −s′/s = h′/h', desc:'Magnification. A negative sign means the image is inverted.'},
-      {t:'kv', items:[['Kacamata minus','lensa cekung (f negatif)'],['Lup','lensa cembung, benda di dalam f'],['Camera HP','lensa cembung, bayangan nyata di sensor']]}
+      {t:'kv', items:[['Minus glasses','concave lens (negative f)'],['Magnifying glass','convex lens, object inside f'],['Phone camera','convex lens, real image on the sensor']]}
     ]},
     calculate:{
       inputs:[
@@ -2735,7 +2735,7 @@ learn: {
         { id:'ho', label:'Object height', min:0.5, max:6, step:0.1, unit:'cm' },
         { id:'type', label:'Lens type (1 convex / −1 concave)', min:-1, max:1, step:2 }
       ],
-      tip:'Geser benda mendekati titik fokus — bayangannya membesar lalu "meledak" ke infinitas.'
+      tip:'Move the object toward the focal point — the image grows and approaches infinity.'
     },
     everyday:{ items:[
       { q:'Why does an object in water look closer or bent?',
@@ -2751,8 +2751,8 @@ learn: {
   icon:'fa-car-side', color:'rose', tags:['listrik statis','perisai','petir','keselamatan'],
   capabilities:['simulation'], visual:'sim',
   safety:{ level:'high', warnings:[
-    {severity:'critical', text:'Ini simulasi edukatif, BUKAN panduan keselamatan petir. Saat ada petir: masuk bangunan permanen atau mobil beratap logam, jauhi lapangan terbuka, pohon tinggi, dan air.'},
-    {severity:'warning', text:'Jangan pernah melakukan eksperimen listrik tegangan tinggi sendiri.'}]},
+    {severity:'critical', text:'This is an educational simulation, NOT lightning-safety guidance. During lightning, move into a permanent building or a hard-top vehicle; avoid open fields, tall trees, and water.'},
+    {severity:'warning', text:'Never conduct high-voltage electrical experiments on your own.'}]},
   
   modes:{
     learn:{ blocks:[
@@ -2770,7 +2770,7 @@ learn: {
           presets:[['Tanpa perisai',0],['Mobil',1],['Kotak logam',2],['Tenda kain',3]] },
         { id:'openings', label:'Number of openings / open windows', min:0, max:4, step:1 }
       ],
-      tip:'Bandingkan reduksi medan: kotak logam tertutup vs mobil dengan 3 jendela terbuka vs tenda kain.'
+      tip:'Compare field reduction: a closed metal box vs a car with 3 open windows vs a fabric tent.'
     },
     everyday:{ items:[
       { q:'Two people are outdoors during a severe storm: one is inside a sedan, the other is on a motorcycle. Which situation provides more shielding?',
@@ -2785,8 +2785,8 @@ learn: {
         tryIt:'Watch your phone’s signal bars as the elevator doors close, then compare them after the doors open.' }
     ]},
     challenge:{ questions:[
-      { q:'Medan luar 12 kV/m, di dalam kotak logam tertutup terukur 0.15 kV/m. Berapa persen reduksinya?', type:'numeric', answer:98.75, tol:1, unit:'%', xp:15, hint:'(1 − dalam/luar) × 100' },
-      { q:'Bahan mana paling efektif sebagai sangkar Faraday?', type:'choice', options:['Kain tebal','Jaring aluminium rapat','Kayu kering'], answer:1, xp:10, why:'Hanya konduktor yang bisa menata ulang muatan untuk meniadakan medan di dalam.' }
+      { q:'An external field is 12 kV/m and the measured field inside a closed metal box is 0.15 kV/m. What is the percentage reduction?', type:'numeric', answer:98.75, tol:1, unit:'%', xp:15, hint:'(1 − dalam/luar) × 100' },
+      { q:'Which material is most effective as a Faraday cage?', type:'choice', options:['Thick fabric','Fine aluminum mesh','Dry wood'], answer:1, xp:10, why:'A conductor can redistribute charge to strongly reduce the electric field inside.' }
     ]}
   }
 },
@@ -2838,7 +2838,7 @@ learn: {
     learn:{ blocks:[
       {t:'h', text:'Tiga saudara: P, V, T'},
       {t:'formula', tex:'P·V = n·R·T', desc:'R = 8.314 J/mol·K. Temperature MUST be in Kelvin.'},
-      {t:'list', items:['Volume tetap, suhu naik → tekanan naik (kaleng meledak di panas)','Temperature tetap, volume ditekan → tekanan naik (pompa sepeda)','Pressure tetap, suhu naik → volume naik (balon mengembang)']},
+      {t:'list', items:['At constant volume, higher temperature → higher pressure (a container can rupture when heated)','At constant temperature, lower volume → higher pressure (like a bicycle pump)','At constant pressure, higher temperature → higher volume (a balloon expands)']},
       {t:'note', tone:'warn', text:'Do not heat a sealed container. Pressure can rise much faster than intuition suggests.'}
     ]},
     calculate:{
@@ -2884,7 +2884,7 @@ learn: {
         { id:'cm', label:'Actual distance (cm)', formula:{expr:'dpeta*skala'}, format:'int' },
         { id:'m', label:'Actual distance', formula:{expr:'dpeta*skala/100'}, unit:'m' },
         { id:'km', label:'Actual distance', formula:{expr:'dpeta*skala/100000'}, unit:'km', decimals:3 },
-        { id:'jalan', label:'Walking time (5 km/h)', formula:{expr:'(dpeta*skala/100000)/5*60'}, unit:'menit', decimals:1 }
+        { id:'jalan', label:'Walking time (5 km/h)', formula:{expr:'(dpeta*skala/100000)/5*60'}, unit:'minutes', decimals:1 }
       ]
     }
   }
@@ -2900,13 +2900,13 @@ learn: {
     learn:{ blocks:[
       {t:'h', text:'Your phone has a “balance ear”'},
       {t:'p', text:'A MEMS accelerometer contains a microscopic mass on a silicon spring. When the phone accelerates, the mass shifts and changes capacitance, producing a numerical reading.'},
-      {t:'list', items:['Saat diam: |a| ≈ 9.8 m/s² (mengukur gaya normal, arah "atas")','Saat jatuh bebas: |a| → 0 (itulah rasa "melayang")','Noise & sampling rate menentukan kualitas datamu']},
+      {t:'list', items:['At rest: |a| ≈ 9.8 m/s² (measuring the support force, directed “upward”)','In free fall: |a| → 0 (the basis of apparent weightlessness)','Noise and sampling rate affect data quality']},
       {t:'note', tone:'tip', text:'Record data → export CSV → analyze it in the Statistics module. That is a real scientific workflow.'}
     ]},
     experiment:{ custom:'sensorLab', sensor:'motion',
       fields:[{k:'x',label:'X',color:'#ef4444',range:20},{k:'y',label:'Y',color:'#22c55e',range:20},{k:'z',label:'Z',color:'#3b82f6',range:20},{k:'mag',label:'|a|',color:'#6366f1',range:30}],
       chartFields:['x','y','z'],
-      ideas:['Letakkan HP diam → baca g','Miringkan perlahan 90° → lihat g pindah antar sumbu','Goyang berirama → lihat pola periodik','Taruh di tas saat naik lift → cari percepatan awal/akhir','Simpan di sepeda (aman!) → rekam guncangan jalan'] },
+      ideas:['Place the phone still → read g','Tilt it slowly by 90° → watch g shift between axes','Move it rhythmically → observe the periodic pattern','Put it in a bag while riding an elevator → look for acceleration at the start/end','Secure it safely on a bicycle → record road vibrations'] },
     challenge:{ questions:[
       { q:'When the phone is truly in free fall, the accelerometer magnitude |a| approaches…', type:'choice', options:['9.8 m/s²','0 m/s²','19.6 m/s²'], answer:1, xp:15, why:'The accelerometer senses contact/support forces. In free fall there is no support force, so the reading approaches zero—the basis of apparent weightlessness in orbit.' }
     ]}
@@ -2925,7 +2925,7 @@ learn: {
     experiment:{ custom:'sensorLab', sensor:'orientation',
       fields:[{k:'alpha',label:'α yaw',color:'#f97316',range:360},{k:'beta',label:'β pitch',color:'#8b5cf6',range:180},{k:'gamma',label:'γ roll',color:'#06b6d4',range:90}],
       chartFields:['beta','gamma'],
-      ideas:['Putar HP horizontal → alpha berubah, beta/gamma tetap','Pakai beta sebagai klinometer untuk mengukur kemiringan tangga','Ukur sudut kemiringan jalan/ramp di sekolahmu','Bandingkan dengan aplikasi kompas'] }
+      ideas:['Rotate the phone horizontally → alpha changes while beta/gamma stay similar','Use beta as a clinometer to measure a stair slope','Measure the slope angle of a road/ramp at your school','Compare with a compass app'] }
   }
 },
 {
@@ -2933,18 +2933,18 @@ learn: {
   icon:'fa-magnet', color:'rose', tags:['sensor','magnet','medan'],
   capabilities:['magnetometer'], visual:'chart',
   safety:{ level:'medium', warnings:[
-    {severity:'warning', text:'Gunakan magnet kecil saja dan jangan tempelkan ke HP. Magnet kuat (neodymium) bisa merusak kompas, speaker, atau kartu bermagnet.'}]},
+    {severity:'warning', text:'Use only a small magnet and do not attach it to the phone. Strong neodymium magnets can interfere with the compass, speaker, or magnetic cards.'}]},
   modes:{
     learn:{ blocks:[
       {t:'h', text:'Earth is a giant magnet'},
       {t:'p', text:'Earth’s magnetic field is roughly 25–65 µT. A phone magnetometer uses it to estimate magnetic north.'},
-      {t:'list', items:['Dekat kabel berarus → medan naik (Hukum Ampère)','Dekat speaker/motor listrik → lonjakan besar','Di dalam gedung berkerangka besi → bacaan terganggu']},
+      {t:'list', items:['Near a current-carrying cable → field strength increases (Ampère’s law)','Near a speaker/electric motor → large spikes','Inside a steel-framed building → readings can be distorted']},
       {t:'note', tone:'info', text:'If the phone compass behaves erratically, nearby metal interference is a common cause; the sensor itself may be fine.'}
     ]},
     experiment:{ custom:'sensorLab', sensor:'magnet',
       fields:[{k:'x',label:'Bx',color:'#f43f5e',range:80},{k:'y',label:'By',color:'#10b981',range:80},{k:'z',label:'Bz',color:'#3b82f6',range:80},{k:'mag',label:'|B|',color:'#a855f7',range:120}],
       chartFields:['mag'],
-      ideas:['Cari medan latar di tengah ruangan (≈ 25–65 µT)','Dekatkan magnet kulkas dari jarak 20 cm → catat |B| tiap 5 cm','Sapukan HP di dinding untuk menemukan rangka besi/beton bertulang','Plot |B| vs jarak di modul Statistika → cek apakah turun seperti 1/r³'] }
+      ideas:['Measure the background field in the center of a room (≈ 25–65 µT)','Move a refrigerator magnet toward the phone from 20 cm → record |B| every 5 cm','Sweep the phone across a wall to find steel/reinforced-concrete structures','Plot |B| vs distance in Statistics → check whether it decreases roughly like 1/r³'] }
   }
 },
 {
@@ -2955,13 +2955,13 @@ learn: {
     learn:{ blocks:[
       {t:'h', text:'Decibels use a logarithmic scale'},
       {t:'p', text:'An increase of 10 dB corresponds to 10× greater intensity, while perceived loudness increases much less. This is why very loud sounds can be more hazardous than they feel.'},
-      {t:'kv', items:[['30 dB','kamar sunyi'],['60 dB','percakapan'],['85 dB','batas aman kerja panjang'],['120 dB','konser / sirene — sakit']]},
+      {t:'kv', items:[['30 dB','quiet room'],['60 dB','conversation'],['85 dB','long-duration occupational exposure threshold'],['120 dB','concert / siren — painful']]},
       {t:'note', tone:'warn', text:'The dB value in this app is not calibrated. Use it for comparison, not as an official measurement.'}
     ]},
     experiment:{ custom:'sensorLab', sensor:'sound',
       fields:[{k:'db',label:'Level (dB rel.)',color:'#f59e0b',range:120},{k:'freq',label:'Frekuensi dominan',color:'#0ea5e9',range:2000}],
       chartFields:['db'],
-      ideas:['Bandingkan kebisingan kelas kosong vs jam istirahat','Tepuk tangan → lihat lonjakan lalu peluruhan (gema ruangan)','Bersiul naik-turun → lihat frekuensi bergerak','Ukur frekuensi senar gitar, bandingkan dengan tabel nada'] }
+      ideas:['Compare noise in an empty classroom with recess','Clap → observe the spike and decay (room reverberation)','Whistle up and down → watch the frequency move','Measure a guitar-string frequency and compare it with a note table'] }
   }
 },
 
@@ -2976,7 +2976,7 @@ learn: {
   modes:{
     learn:{ blocks:[
       {t:'h', text:'How can a phone estimate distance?'},
-      {t:'list', items:['<b>AR + Depth</b>: kombinasi kamera + gerak + (kadang) sensor ToF menghasilkan peta kedalaman','<b>Camera + reference object</b>: objek berukuran diketahui memberi skala piksel → meter','<b>Klinometer</b>: sudut dari sensor orientasi + jarak → trigonometri','<b>Manual</b>: kamu ukur sudut & jarak, app menghitung']},
+      {t:'list', items:['<b>AR + Depth</b>: camera + motion + (sometimes) ToF sensing can produce a depth map','<b>Camera + reference object</b>: an object of known size provides a pixel-to-meter scale','<b>Clinometer</b>: orientation-sensor angle + distance → trigonometry','<b>Manual</b>: you measure the angle and distance; the app calculates']},
       {t:'formula', tex:'tinggi = jarak × tan(θ) + tinggi mata', desc:'Trik pengukur pohon dan gedung sejak berabad-abad lalu.'},
       {t:'note', tone:'info', text:'Modules do not disappear on lower-end phones: the app automatically falls back to the best available capability. This is also a lesson in how hardware limits measurement.'}
     ]},
@@ -2991,7 +2991,7 @@ learn: {
         { id:'tinggi', label:'Object height', formula:{expr:'d*tan(theta)+eye'}, unit:'m' },
         { id:'diag', label:'Line-of-sight distance', formula:{expr:'d/cos(theta)'}, unit:'m' },
         { id:'bayang', label:'Shadow length when the sun is at 45°', formula:{expr:'d*tan(theta)+eye'}, unit:'m',
-          hint:'Pada elevasi matahari 45°, panjang bayangan = tinggi objek.' }
+          hint:'At a 45° solar elevation, shadow length equals object height.' }
       ]
     }
   }
@@ -3150,7 +3150,7 @@ const MODE_RENDERERS = {
         
         ${cfg.steps ? `<ol class="space-y-2 mb-3">${cfg.steps.map((s,i)=>`<li class="flex gap-2.5 text-[13px] text-slate-600"><span class="shrink-0 w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 text-[10px] font-black flex items-center justify-center">${i+1}</span><span>${s}</span></li>`).join('')}</ol>` : ''}
         ${cfg.note ? `<div class="bg-blue-50 border border-blue-200 rounded-xl p-3 mt-3 flex gap-2.5"><i class="fa-solid fa-circle-info text-blue-500 mt-0.5"></i><p class="text-[12px] text-blue-800">${cfg.note}</p></div>` : ''}
-        <button onclick="Progress.add(15, APP.state.moduleId+':manual'); this.innerHTML='<i class=\\'fa-solid fa-check mr-1\\'></i>Selesai! (+15 XP)'; this.classList.replace('bg-indigo-600','bg-emerald-500'); this.disabled=true;" class="w-full mt-4 bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-sm shadow transition-colors"><i class="fa-solid fa-clipboard-check mr-1"></i>Tandai Selesai (+15 XP)</button>
+        <button onclick="Progress.add(15, APP.state.moduleId+':manual'); this.innerHTML='<i class=\\'fa-solid fa-check mr-1\\'></i>Done! (+15 XP)'; this.classList.replace('bg-indigo-600','bg-emerald-500'); this.disabled=true;" class="w-full mt-4 bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-sm shadow transition-colors"><i class="fa-solid fa-clipboard-check mr-1"></i>Mark Complete (+15 XP)</button>
       </div>`;
     }
     
@@ -3168,7 +3168,7 @@ const MODE_RENDERERS = {
       <div class="card p-5 mb-3">
         <span class="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full uppercase">Sains harian</span>
         <h3 class="font-extrabold text-slate-800 text-[15px] mt-2 mb-3">${it.q}</h3>
-        <p class="text-[11px] font-bold text-slate-400 uppercase mb-2">Tebak dulu sebelum lihat jawaban 👇</p>
+        <p class="text-[11px] font-bold text-slate-400 uppercase mb-2">Predict first before revealing the answer 👇</p>
         <div class="space-y-2" id="ev-${i}">
           ${it.options.map((o,j)=>`<button onclick="Quiz.answerScenario(${i},${j},${it.answer},'${mod.id}')" class="w-full text-left text-[13px] px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-amber-300 hover:bg-amber-50 transition font-semibold text-slate-700" data-opt="${j}">${String.fromCharCode(65+j)}. ${o}</button>`).join('')}
         </div>
@@ -3235,18 +3235,18 @@ const MODE_RENDERERS = {
       <h3 class="font-bold text-slate-700 text-sm mb-3"><i class="fa-solid fa-cube text-fuchsia-500 mr-1.5"></i>Sesi AR (WebXR)</h3>
       <button onclick="ARLab.start()" ${Capabilities.has('ar')?'':'disabled'} class="w-full ${Capabilities.has('ar')?'bg-gradient-to-r from-fuchsia-500 to-violet-500':'bg-slate-200 text-slate-400'} text-white font-bold py-3 rounded-xl text-sm shadow">
         <i class="fa-solid fa-vr-cardboard mr-1"></i>${Capabilities.has('ar')?'Mulai Ukur di AR':'AR is not available on this device'}</button>
-      <p class="text-[11px] text-slate-400 mt-2">Ketuk permukaan untuk titik 1 dan 2. Butuh Chrome Android + ARCore. Di APK, bisa diperkuat lewat native bridge (ARCore Depth).</p>
+      <p class="text-[11px] text-slate-400 mt-2">Tap the surface for points 1 and 2. Requires Chrome on Android + ARCore. In an APK, this can be enhanced through the native bridge (ARCore Depth).</p>
     </div>
 
     <div class="card p-5 mb-3">
       <h3 class="font-bold text-slate-700 text-sm mb-2"><i class="fa-solid fa-camera text-fuchsia-500 mr-1.5"></i>Mode Camera + Objek Acuan</h3>
-      <p class="text-[11px] text-slate-500 mb-3">Buka panel visual: kalibrasi dengan benda berukuran diketahui, lalu ukur jarak/sudut dengan mengetuk layar.</p>
+      <p class="text-[11px] text-slate-500 mb-3">Open the visual panel: calibrate with an object of known size, then measure distance/angle by tapping the screen.</p>
       <button onclick="Experiments.camStart()" class="w-full bg-slate-800 text-white font-bold py-2.5 rounded-xl text-sm"><i class="fa-solid fa-video mr-1"></i>Turn on Camera</button>
     </div>
 
     <div class="card p-5">
       <h3 class="font-bold text-slate-700 text-sm mb-2"><i class="fa-solid fa-ruler-vertical text-fuchsia-500 mr-1.5"></i>Klinometer (sensor orientasi)</h3>
-      <p class="text-[11px] text-slate-500 mb-3">Sandarkan HP tegak, arahkan sisi atasnya ke puncak objek, lalu tekan Tahan.</p>
+      <p class="text-[11px] text-slate-500 mb-3">Hold the phone upright, aim its top edge at the top of the object, then tap Hold.</p>
       <div class="grid grid-cols-2 gap-2 mb-3">
         <div><label class="text-[10px] font-bold text-slate-400 uppercase">Distance to object (m)</label>
           <input type="number" id="clino-d" value="10" step="0.1" oninput="Clino.calc()" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 font-bold num"></div>
@@ -3260,10 +3260,10 @@ const MODE_RENDERERS = {
         <p id="clino-h" class="text-xl font-black text-slate-700 num">—</p>
       </div>
       <div class="flex gap-2">
-        <button onclick="Clino.start()" class="flex-1 bg-fuchsia-600 text-white font-bold py-2.5 rounded-xl text-sm">Mulai sensor</button>
+        <button onclick="Clino.start()" class="flex-1 bg-fuchsia-600 text-white font-bold py-2.5 rounded-xl text-sm">Start sensor</button>
         <button onclick="Clino.hold()" class="flex-1 bg-slate-100 text-slate-700 font-bold py-2.5 rounded-xl text-sm">Tahan / Lepas</button>
       </div>
-      <p class="text-[10px] text-slate-400 mt-2">Estimasi edukatif — akurasi tergantung kalibrasi sensor & kestabilan tanganmu.</p>
+      <p class="text-[10px] text-slate-400 mt-2">Educational estimate — accuracy depends on sensor calibration and hand stability.</p>
     </div>`;
   }
 
@@ -4187,7 +4187,7 @@ const UI = {
         <span class="text-[12px] font-bold text-slate-600">Sensor simulation mode<br><span class="font-normal text-slate-400 text-[11px]">For practice on a laptop / phone without sensors</span></span>
         <input type="checkbox" ${APP.simulateSensors?'checked':''} onchange="APP.simulateSensors=this.checked;UI.toast('Sensor simulation '+(this.checked?'ON':'OFF'))" class="w-5 h-5 accent-indigo-600">
       </label>
-      <button onclick="if(confirm('Reset XP & progres?')){localStorage.removeItem('psl.progress');location.reload()}" class="w-full bg-rose-50 border border-rose-200 text-rose-700 font-bold py-2.5 rounded-xl text-sm">Reset progress</button>
+      <button onclick="if(confirm('Reset XP & progress?')){localStorage.removeItem('psl.progress');location.reload()}" class="w-full bg-rose-50 border border-rose-200 text-rose-700 font-bold py-2.5 rounded-xl text-sm">Reset progress</button>
       <p class="text-[10px] text-slate-400 mt-3 text-center">Living Heritage in Education v0.2 · offline-first · engine modular</p>`);
   },
   constantsModal(){

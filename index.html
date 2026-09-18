@@ -2997,6 +2997,200 @@ learn: {
   }
 }
 
+{
+  id:'life-tepa-selira', category:'Living & Social Learning',
+  title:'Tepa Selira — Think Before You Speak', subtitle:'Perspective-taking in everyday life',
+  icon:'fa-people-arrows', color:'violet',
+  tags:['tepa selira','empathy','social ethics','perspective taking'],
+  capabilities:['calculator'], visual:'none',
+  modes:{
+    learn:{ blocks:[
+      {t:'h', text:'Before you say it, consider what happens to the other person.'},
+      {t:'p', text:'<b>Tepa selira</b> is a Javanese expression associated with social ethics: before acting toward others, place yourself in their position and consider how your action may affect them.'},
+      {t:'p', text:'The lesson is not “never say anything difficult.” It is: <b>do not make yourself the only reference point</b>. Consider the other person’s resources, dignity, circumstances, and ability to respond.'},
+      {t:'kv', items:[
+        ['My perspective','What do I know, want, or assume?'],
+        ['Their perspective','What might they know, feel, afford, or need?'],
+        ['The gap','What am I assuming simply because it is normal for me?'],
+        ['The action','Can I choose a way that keeps the other person’s dignity intact?']
+      ]},
+      {t:'note', tone:'tip', text:'Tepa selira is not mind-reading. You do not know another person’s situation automatically. Ask, offer choices, and leave room for them to say no.'}
+    ]},
+    everyday:{
+      items:[
+        {
+          q:'You invite a friend to dinner and choose an expensive restaurant because “I can afford it, so they probably can too.” What should you do first?',
+          options:[
+            'Assume they can afford it unless they complain',
+            'Ask about their preference or budget and offer an option that does not put them in an awkward position',
+            'Pay for everyone without asking'
+          ],
+          answer:1,
+          explain:'The issue is not whether paying is generous. The key is avoiding an assumption that another person has the same resources or comfort level as you.',
+          concepts:['perspective taking','dignity','resource awareness'],
+          tryIt:'Before your next invitation, offer at least two realistic options instead of assuming your own preferred option works for everyone.'
+        },
+        {
+          q:'A colleague makes a mistake in front of other people. Which response better reflects tepa selira?',
+          options:[
+            'Correct them publicly so everyone learns the lesson',
+            'Consider the situation first, then correct the issue in a way that solves the problem without unnecessary humiliation',
+            'Ignore every mistake'
+          ],
+          answer:1,
+          explain:'Tepa selira does not require silence. It asks you to consider the effect of how you deliver correction, not only whether the correction is technically right.',
+          concepts:['social awareness','correction','dignity'],
+          tryIt:'Take one sentence you would normally say publicly and rewrite it so the same message can be delivered privately and respectfully.'
+        },
+        {
+          q:'Someone cannot join an event because of cost, transport, family obligations, or another constraint. What is the more useful question?',
+          options:[
+            'Why can’t they be like me?',
+            'What can I change about the invitation so participation is genuinely possible?',
+            'How do I persuade them to accept my original plan?'
+          ],
+          answer:1,
+          explain:'A practical response changes the design of the interaction when the original arrangement creates a barrier. That is perspective-taking turned into action.',
+          concepts:['accessibility','adaptation','consideration'],
+          tryIt:'Look at one activity you organize regularly. Identify one hidden cost or assumption and create a lower-barrier option.'
+        }
+      ]
+    },
+    challenge:{
+      questions:[
+        {
+          q:'You planned a group outing at a place everyone can technically enter, but one member would need to spend a large part of their monthly discretionary money to join. What is the most useful next step?',
+          type:'choice',
+          options:[
+            'Tell them not to come',
+            'Ask the group to consider a more affordable option or multiple options',
+            'Tell them to save more money'
+          ],
+          answer:1, xp:15,
+          why:'The goal is not to judge the person’s finances. It is to notice whether the group’s default choice creates an avoidable barrier.'
+        },
+        {
+          q:'A statement is factually correct but likely to embarrass someone in public. Is “I am right” enough to justify saying it immediately?',
+          type:'choice',
+          options:['Yes','No, timing and delivery also matter','Only if everyone is watching'],
+          answer:1, xp:15,
+          why:'Tepa selira adds social context to factual correctness: what is true can still be communicated with unnecessary harm.'
+        }
+      ]
+    },
+    explore:{
+      html:`<div class="space-y-3">
+        <div class="card p-4"><h3 class="font-bold text-slate-700 text-sm">The Tepa Selira Pause</h3>
+          <p class="text-[12px] text-slate-600 mt-2 leading-relaxed">Before speaking or deciding, pause for three questions:</p>
+          <ol class="text-[12px] text-slate-600 mt-2 space-y-1 list-decimal ml-5">
+            <li>What am I assuming?</li>
+            <li>What might be different for the other person?</li>
+            <li>Can I offer a choice instead of forcing my default?</li>
+          </ol>
+        </div>
+        <div class="card p-4 bg-violet-50 border-violet-200">
+          <p class="text-[12px] text-violet-900"><b>Practice:</b> Replace “Why can’t they just…?” with “What constraint might they be dealing with, and what could I change?”</p>
+        </div>
+      </div>`
+    }
+  }
+},
+{
+  id:'life-kobo-fude', category:'Living & Social Learning',
+  title:'Kōbō Fude o Erabazu — Learn to Use the Tool', subtitle:'Adaptability instead of blame',
+  icon:'fa-wand-magic-sparkles', color:'indigo',
+  tags:['Kūkai','Kōbō fude o erabazu','adaptability','problem solving'],
+  capabilities:['calculator'], visual:'none',
+  modes:{
+    learn:{ blocks:[
+      {t:'h', text:'A master does not depend on perfect tools.'},
+      {t:'p', text:'<b>「弘法筆を選ばず」(Kōbō fude o erabazu)</b> is a Japanese proverb commonly understood as a skilled person being able to produce good work without blaming the quality of the tools. The expression is associated with Kōbō Daishi (Kūkai), the famous Buddhist monk and calligrapher.'},
+      {t:'p', text:'There is an important educational nuance: this does <b>not</b> mean that tools, constraints, or working conditions never matter. Historical sources also note that Kūkai himself discussed choosing brushes carefully. The useful lesson is about <b>adaptive skill</b>, not pretending every tool is equally good.'},
+      {t:'formula', tex:'Constraint + Skill + Adaptation → Action', desc:'When the environment changes, change the way you operate.'},
+      {t:'list', items:[
+        '<b>Not:</b> “I must learn how to drive this exact chariot.”',
+        '<b>But:</b> “I should learn how to operate whatever the journey requires.”',
+        'A motorcycle. A machine. A kitchen. A camera. A map.',
+        'A spreadsheet. A database. A piece of code. An AI system.',
+        'A project. A team. An institution. An idea. Or a problem nobody has solved yet.'
+      ]},
+      {t:'p', text:'The deeper skill is not worshipping the tool. It is learning the controls, understanding the environment, compensating for limitations, and changing technique when conditions change.'},
+      {t:'note', tone:'tip', text:'This principle is about adaptive agency, not accepting unsafe or unjust conditions. Some limitations really do require better tools, more resources, or a system-level fix.'},
+      {t:'note', tone:'info', text:'The proverb’s standard wording is 「弘法筆を択ばず」/「弘法筆を選ばず」. Modern explanations commonly gloss it as a master being able to work with different tools. citeturn321746search0turn321746search3'}
+    ]},
+    everyday:{
+      items:[
+        {
+          q:'Your team gives you a spreadsheet template that is awkward but usable. What is the adaptive response?',
+          options:[
+            'Spend the whole project complaining about the template',
+            'Learn how it works, build a safer workflow around its limits, and improve the tool where improvement is practical',
+            'Pretend the limitations do not exist'
+          ],
+          answer:1,
+          explain:'Adaptation means learning the operating constraints and designing a workflow that works within them, while still improving the system when appropriate.',
+          concepts:['adaptation','workflow design','systems thinking'],
+          tryIt:'Take one tool you dislike. Write down three constraints, then design one workaround for each.'
+        },
+        {
+          q:'A camera, map, or database behaves differently from what you expected. What is the first useful question?',
+          options:[
+            'Why is this thing so stupid?',
+            'What are its actual operating rules and limitations?',
+            'Who should I blame?'
+          ],
+          answer:1,
+          explain:'Understanding the operating rules turns frustration into actionable information.',
+          concepts:['debugging','systems thinking','adaptability'],
+          tryIt:'Choose one tool you use every week and document five things it can do, three things it cannot do, and two ways to adapt your workflow.'
+        }
+      ]
+    },
+    challenge:{
+      questions:[
+        {
+          q:'A tool cannot do exactly what your original plan expected. Which sequence is most adaptive?',
+          type:'choice',
+          options:[
+            'Complain → stop → blame the tool',
+            'Observe constraints → learn controls → change technique → continue',
+            'Ignore constraints → hope it works'
+          ],
+          answer:1, xp:15,
+          why:'Adaptation is an operating skill: understand the environment, then change the method.'
+        },
+        {
+          q:'Which statement best captures the useful lesson of Kōbō fude o erabazu?',
+          type:'choice',
+          options:[
+            'Tools never matter',
+            'Skill includes the ability to adapt to tools and constraints',
+            'Experts should never ask for better tools'
+          ],
+          answer:1, xp:15,
+          why:'The educational lesson is adaptability, not denial of real differences between tools.'
+        }
+      ]
+    },
+    explore:{
+      html:`<div class="space-y-3">
+        <div class="card p-4"><h3 class="font-bold text-slate-700 text-sm">The Charioteer Test</h3>
+          <p class="text-[12px] text-slate-600 mt-2 leading-relaxed">When something fails, classify the problem:</p>
+          <div class="space-y-1.5 mt-3 text-[12px] text-slate-600">
+            <div><b>Tool limitation</b> → Can I adapt?</div>
+            <div><b>Skill gap</b> → What do I need to learn?</div>
+            <div><b>Workflow gap</b> → Can I redesign the process?</div>
+            <div><b>System constraint</b> → Do I need a better tool, more resources, or organizational change?</div>
+          </div>
+        </div>
+        <div class="card p-4 bg-indigo-50 border-indigo-200">
+          <p class="text-[12px] text-indigo-900"><b>Example:</b> cloud synchronization produces conflicting file states. Instead of treating the system as an enemy, use versioning, explicit working copies, and a recovery workflow.</p>
+        </div>
+      </div>`
+    }
+  }
+}
+
 /* ✚ ADD NEW MODULE HERE (copas blok di atas, ganti id & isinya) */
 ];
 

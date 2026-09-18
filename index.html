@@ -349,6 +349,7 @@
     </div>
 
     <div class="flex-1 p-3 relative bg-slate-50 flex flex-col overflow-hidden">
+
       <!-- welcome -->
       <div id="visual-welcome" class="flex-1 flex flex-col items-center justify-center text-center p-6 fade-in">
         <div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-indigo-100 to-cyan-100 flex items-center justify-center mb-4 border border-indigo-200 shadow-inner">
@@ -363,6 +364,28 @@
           <div class="card p-2"><i class="fa-solid fa-wave-square text-amber-500 block mb-1"></i>Sensor</div>
         </div>
       </div>
+
+      <!-- slides / 3-phase explanation -->
+      <div id="visual-slides" class="hidden w-full h-full flex flex-col fade-in p-3">
+        <h4 id="slide-header" class="text-[11px] font-bold text-indigo-500 text-center mb-2 uppercase tracking-wide">Interactive Learning</h4>
+        <div class="flex-1 card flex flex-col items-center justify-center text-center p-6 relative overflow-hidden bg-white">
+          <div id="slide-icon" class="w-20 h-20 rounded-3xl bg-gradient-to-br from-indigo-100 to-cyan-100 text-indigo-500 flex items-center justify-center text-4xl mb-5 shadow-inner pop">
+            <i class="fa-solid fa-lightbulb"></i>
+          </div>
+          <h3 id="slide-title" class="font-extrabold text-slate-800 text-lg mb-2"></h3>
+          <p id="slide-desc" class="text-sm text-slate-600 leading-relaxed px-2"></p>
+        </div>
+        
+        <!-- Slide Controls -->
+        <div class="flex justify-between items-center mt-3 bg-white card p-2">
+          <button onclick="SlideEngine.prev()" class="px-4 py-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 rounded-lg font-bold text-xs transition-colors"><i class="fa-solid fa-chevron-left mr-1"></i> Prev</button>
+          <div id="slide-dots" class="flex gap-1.5">
+            <!-- Dots akan di-generate oleh JS -->
+          </div>
+          <button onclick="SlideEngine.next()" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg font-bold text-xs transition-colors shadow-sm shadow-indigo-200">Next <i class="fa-solid fa-chevron-right ml-1"></i></button>
+        </div>
+      </div>
+
       <!-- map -->
       <div id="visual-map" class="hidden w-full h-full relative fade-in">
         <div id="map-wrapper"><div id="map" class="shadow-inner border border-slate-300"></div></div>
@@ -400,73 +423,24 @@
     <!-- HOME -->
     <div id="view-home" class="p-4 md:p-7 fade-in">
 
-      <!-- ===== HOME INFORMATION ===== -->
-      <div
-        class="relative overflow-hidden rounded-2xl
-              bg-gradient-to-br from-teal-700 via-cyan-700 to-emerald-600
-              p-4 sm:p-5
-              text-white
-              shadow-lg shadow-teal-200/60
-              mb-5"
-      >
+<!-- ===== DYNAMIC HERO SLIDER ===== -->
+      <div class="relative w-full rounded-2xl overflow-hidden shadow-sm mb-3 h-[170px] sm:h-[180px] bg-slate-900 group" id="home-slider-container">
+        
+        <!-- Track Slider -->
+        <div id="home-slider-track" class="w-full h-full relative"></div>
+        
+        <!-- Dots Indikator -->
+        <div id="home-slider-dots" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20"></div>
+        
+        <!-- Tombol Panah (Muncul saat di-hover) -->
+        <button onclick="HomeSlider.prev()" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/20 text-white backdrop-blur opacity-0 group-hover:opacity-100 transition-opacity z-20"><i class="fa-solid fa-chevron-left"></i></button>
+        <button onclick="HomeSlider.next()" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/20 text-white backdrop-blur opacity-0 group-hover:opacity-100 transition-opacity z-20"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
 
-        <!-- subtle decorative glow -->
-        <div
-          class="absolute -right-10 -top-10
-                w-32 h-32 rounded-full
-                bg-cyan-300/10 blur-2xl pointer-events-none"
-        ></div>
-
-        <div
-          class="absolute -left-10 -bottom-10
-                w-28 h-28 rounded-full
-                bg-indigo-300/10 blur-2xl pointer-events-none"
-        ></div>
-
-
-        <!-- LABEL -->
-        <div class="relative">
-          <p
-            class="text-[10px] sm:text-[11px]
-                  font-bold uppercase tracking-[0.14em]
-                  text-teal-100/80"
-          >
-            Phase 2 · Maintaining Harmony
-          </p>
-
-
-          <!-- MAIN TITLE -->
-          <h2
-            class="mt-1.5
-                  text-[18px] sm:text-xl
-                  leading-[1.25]
-                  font-extrabold
-                  tracking-tight
-                  max-w-xl"
-          >
-            How do we preserve the relationship?
-          </h2>
-
-
-          <!-- DESCRIPTION -->
-          <p
-            class="text-[11px] sm:text-xs
-                  leading-relaxed
-                  text-blue-50/85
-                  mt-2
-                  max-w-lg"
-          >
-            Learn how to maintain relationships: prevent unnecessary escalation, live with differences, use goodwill wisely, and repair harm when harmony breaks.
-          </p>
-
-
-          <!-- CAPABILITIES -->
-          <div
-            id="home-caps"
-            class="flex flex-wrap gap-1.5 mt-3.5"
-          ></div>
-
-        </div>
+      <!-- CAPABILITIES BAR (Dipisah agar selalu terlihat) -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-white border border-slate-200 rounded-xl p-3 mb-5 gap-3 shadow-sm">
+        <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider shrink-0"><i class="fa-solid fa-microchip text-indigo-500 mr-1"></i>Device Sensors</span>
+        <div id="home-caps" class="flex flex-wrap gap-1.5 justify-start sm:justify-end"></div>
       </div>
 
       <div class="flex gap-2 mb-3">
@@ -477,16 +451,7 @@
       </div>
       <div id="cat-chips" class="flex gap-1.5 overflow-x-auto pb-2 mb-3"></div>
       <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3" id="module-grid"></div>
-      <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div class="card p-4 border-violet-100 bg-violet-50/60">
-          <p class="text-[10px] font-black uppercase tracking-wider text-violet-600">Phase 1 · Learning How to Live</p>
-          <p class="text-[12px] text-violet-900 mt-1 leading-relaxed">How should we live, respond, adapt, and act with awareness? Start with <b>Tepa Selira</b> and <b>Kōbō Fude o Erabazu</b>.</p>
-        </div>
-        <div class="card p-4 border-teal-100 bg-teal-50/60">
-          <p class="text-[10px] font-black uppercase tracking-wider text-teal-600">Phase 2 · Maintaining Harmony</p>
-          <p class="text-[12px] text-teal-900 mt-1 leading-relaxed">How do we preserve the relationship? Explore <b>Wa</b>, <b>He</b>, <b>Jeong</b>, and <b>Shazai</b>.</p>
-        </div>
-      </div>
+
       <p class="text-[10px] text-slate-400 mt-4 text-center">All camera/sensor measurements are <b>educational estimates</b>, not laboratory-grade measurements.</p>
     </div>
 
@@ -1870,6 +1835,64 @@ const SIM_ENGINES = {
       return [['f',f,'cm'],['s (object)',p.do_,'cm'],["s' (image)",di,'cm'],['M',m,'×'],
               ['h′',m*p.ho,'cm'],[di>0?'Nyata':'Maya',1,'']]; }
   }, // <--- TAMBAHKAN KOMA DI SINI
+};
+
+/* ═════════ SLIDE ENGINE (Untuk Penjelasan Berfase) ═════════ */
+const SlideEngine = {
+  data: [],
+  currentIndex: 0,
+  
+  load(slidesData, categoryName = "Interactive Learning") {
+    this.data = slidesData || [];
+    this.currentIndex = 0;
+    const header = document.getElementById('slide-header');
+    if(header) header.textContent = categoryName;
+    
+    // Tampilkan panel slides, sembunyikan yang lain (ini biasanya ditangani UI.js Anda, tapi kita pastikan di sini)
+    ['welcome', 'map', 'chart', 'sim', 'camera'].forEach(id => {
+      const el = document.getElementById(`visual-${id}`);
+      if(el) el.classList.add('hidden');
+    });
+    const slidePanel = document.getElementById('visual-slides');
+    if(slidePanel) slidePanel.classList.remove('hidden');
+    
+    this.render();
+  },
+  
+  render() {
+    if (!this.data.length) return;
+    const s = this.data[this.currentIndex];
+    
+    // Animasikan masuk
+    const iconEl = document.getElementById('slide-icon');
+    iconEl.innerHTML = `<i class="fa-solid ${s.icon || 'fa-lightbulb'}"></i>`;
+    iconEl.classList.remove('pop');
+    void iconEl.offsetWidth; // trigger reflow
+    iconEl.classList.add('pop');
+    
+    document.getElementById('slide-title').textContent = s.title;
+    document.getElementById('slide-desc').innerHTML = s.desc;
+    
+    // Update dots (indikator)
+    const dotsHTML = this.data.map((_, i) => 
+      `<div class="h-2 rounded-full transition-all duration-300 ${i === this.currentIndex ? 'bg-indigo-500 w-5' : 'bg-slate-200 w-2'}"></div>`
+    ).join('');
+    document.getElementById('slide-dots').innerHTML = dotsHTML;
+  },
+  
+  next() {
+    if (this.currentIndex < this.data.length - 1) {
+      this.currentIndex++;
+      this.render();
+    }
+  },
+  
+  prev() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+      this.render();
+    }
+  }
 };
 
 /* Runtime simulasi */
@@ -3605,7 +3628,24 @@ learn: {
   title:'Tepa Selira — Think Before You Speak', subtitle:'Perspective-taking in everyday life',
   icon:'fa-people-arrows', color:'violet',
   tags:['tepa selira','empathy','social ethics','perspective taking'],
-  capabilities:['calculator'], visual:'none',
+  capabilities:['calculator'], visual:'slides', // <-- UBAH DI SINI
+  slides: [ // <-- TAMBAHKAN DATA 3 PHASE PENJELASAN
+    {
+      icon: "fa-user",
+      title: "Phase 1: Perspektif Diri",
+      desc: "Apa yang saya ketahui, inginkan, atau asumsikan? Seringkali kita bertindak berdasarkan apa yang normal atau mudah bagi kita sendiri."
+    },
+    {
+      icon: "fa-user-group",
+      title: "Phase 2: Perspektif Orang Lain",
+      desc: "Apa yang mungkin mereka ketahui, rasakan, atau butuhkan? Tepa selira menuntut kita untuk menyeberang ke sisi lawan bicara sebelum bertindak."
+    },
+    {
+      icon: "fa-handshake-angle",
+      title: "Phase 3: Celah & Tindakan",
+      desc: "Apakah tindakan saya akan menjatuhkan martabat mereka? Pilih cara penyampaian yang tetap menjaga kehormatan lawan bicara."
+    }
+  ],
   modes:{
     learn:{ blocks:[
       {t:'h', text:'Before you say it, consider what happens to the other person.'},
@@ -5614,6 +5654,90 @@ const MapLab = {
   }
 };
 
+/* ═════════ HOME SLIDER ENGINE ═════════ */
+const HomeSlider = {
+  data: [
+    {
+      label: 'Beyond Traditional LMS',
+      title: 'A Learning Journey for Life',
+      desc: 'Not only knowledge, but the skills to live, relate, and make sense of the world. Start from real practice: Observe, Question, Investigate, Practice, and Reflect.',
+      bg: 'from-blue-700 via-indigo-600 to-violet-600',
+      glow: 'bg-indigo-300'
+    },
+    {
+      label: 'Phase 1 · Self',
+      title: 'Learning How to Live',
+      desc: 'Start with yourself. Develop awareness, adapt, and act wisely. Explore concepts like Tepa Selira (Think Before You Speak) and Kōbō Fude o Erabazu.',
+      bg: 'from-violet-700 via-fuchsia-600 to-purple-500',
+      glow: 'bg-fuchsia-300'
+    },
+    {
+      label: 'Phase 2 · Relationship',
+      title: 'Maintaining Harmony',
+      desc: 'Learn to live with others. Prevent escalation, embrace differences, and repair harm through Wa, He, Jeong, and Shazai.',
+      bg: 'from-teal-700 via-emerald-600 to-green-500',
+      glow: 'bg-emerald-300'
+    },
+    {
+      label: 'Phase 3 · World',
+      title: 'Learning Through Living Heritage',
+      desc: 'Explore the world. Use real cultural practices (Gong, Batik, Subak) to discover science, social knowledge, and real impact.',
+      bg: 'from-cyan-700 via-sky-600 to-blue-500',
+      glow: 'bg-cyan-300'
+    }
+  ],
+  currentIndex: 0,
+  timer: null,
+
+  init() {
+    this.render();
+    this.startAuto();
+  },
+  render() {
+    const track = document.getElementById('home-slider-track');
+    const dots = document.getElementById('home-slider-dots');
+    if (!track || !dots) return;
+
+    track.innerHTML = this.data.map((s, i) => `
+      <div class="absolute inset-0 transition-opacity duration-700 ease-in-out bg-gradient-to-br ${s.bg} p-5 sm:p-6 text-white flex flex-col justify-center ${i === this.currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}">
+        <div class="absolute -right-10 -top-10 w-32 h-32 rounded-full ${s.glow}/20 blur-2xl pointer-events-none"></div>
+        <div class="absolute -left-10 -bottom-10 w-28 h-28 rounded-full ${s.glow}/10 blur-2xl pointer-events-none"></div>
+        <div class="relative z-10">
+          <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-white/80">${s.label}</p>
+          <h2 class="mt-1.5 text-[17px] sm:text-xl leading-[1.25] font-extrabold tracking-tight max-w-xl">${s.title}</h2>
+          <p class="text-[11px] sm:text-xs leading-relaxed text-white/90 mt-2 max-w-lg">${s.desc}</p>
+        </div>
+      </div>
+    `).join('');
+
+    dots.innerHTML = this.data.map((_, i) => `
+      <button onclick="HomeSlider.goTo(${i})" class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${i === this.currentIndex ? 'bg-white w-4 sm:w-5' : 'bg-white/40 hover:bg-white/70'}"></button>
+    `).join('');
+  },
+  next() {
+    this.currentIndex = (this.currentIndex + 1) % this.data.length;
+    this.render();
+    this.resetAuto();
+  },
+  prev() {
+    this.currentIndex = (this.currentIndex - 1 + this.data.length) % this.data.length;
+    this.render();
+    this.resetAuto();
+  },
+  goTo(i) {
+    this.currentIndex = i;
+    this.render();
+    this.resetAuto();
+  },
+  startAuto() {
+    this.timer = setInterval(() => this.next(), 6000);
+  },
+  resetAuto() {
+    clearInterval(this.timer);
+    this.startAuto();
+  }
+};
+
 /* ═════════ §19 UI + ROUTER ═════════ */
 const UI = {
   activeCat:'All',
@@ -5658,13 +5782,14 @@ const UI = {
     </div>`;
   },
 
-  homeCaps(){
+homeCaps(){
     const keys=['camera','motion','orientation','magnetometer','microphone','ar','depth','nativeBridge'];
     $('home-caps').innerHTML = keys.map(k=>{
       const on=Capabilities.has(k);
-      return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${on?'bg-white/25 text-white':'bg-white/10 text-white/50'} backdrop-blur">
-        <i class="fa-solid ${on?'fa-check':'fa-xmark'} mr-1"></i>${({camera:'Camera',motion:'Accelerometer',orientation:'Gyroscope',magnetometer:'Magnetometer',microphone:'Microphone',ar:'AR',depth:'Depth',nativeBridge:'Native'})[k]}</span>`;
-    }).join('') + `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white text-indigo-600">Level ${Capabilities.level()} · ${Capabilities.levelName()}</span>`;
+      // Ubah warna badge: hijau terang jika aktif, abu-abu jika tidak aktif
+      return `<span class="text-[9px] font-bold px-2 py-0.5 rounded-full border ${on?'bg-emerald-50 text-emerald-700 border-emerald-200':'bg-slate-50 text-slate-400 border-slate-200'}">
+        <i class="fa-solid ${on?'fa-check':'fa-xmark'} mr-1"></i>${({camera:'Camera',motion:'Accel',orientation:'Gyro',magnetometer:'Magnet',microphone:'Mic',ar:'AR',depth:'Depth',nativeBridge:'Native'})[k]}</span>`;
+    }).join('') + `<span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">Level ${Capabilities.level()}</span>`;
     $('cap-count').textContent = Object.values(Capabilities.state).filter(Boolean).length+' features';
   },
   mobileView(view){
@@ -5865,6 +5990,7 @@ document.addEventListener('keydown', e=>{
   try{ Progress.paint(); }catch(e){ console.warn('Progress initialization skipped:', e); }
   try{ await Capabilities.detect(); }catch(e){ console.warn('Capability detection skipped:', e); }
   try{ UI.homeCaps(); }catch(e){ console.warn('Home capability UI skipped:', e); }
+  try{ HomeSlider.init(); }catch(e){ console.warn('Slider failed:', e); }
   try{ UI.renderHome(); }catch(e){ console.error('Home catalog failed to render:', e); }
   try{ Router.home(); }catch(e){ console.error('Home router failed:', e); }
   console.log('%cLiving Heritage LAB v0.3','background:#4f46e5;color:#fff;padding:2px 8px;border-radius:4px',

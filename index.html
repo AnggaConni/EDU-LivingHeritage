@@ -494,6 +494,7 @@
           </div>
         </div>
         <div id="m-caps" class="flex flex-wrap gap-1 mt-2"></div>
+        <div id="m-ich" class="mx-0 mt-3 hidden"></div>
         <div class="flex gap-1 overflow-x-auto text-xs font-semibold mt-2 -mb-px" id="tab-container"></div>
       </div>
       <div id="safety-banner" class="hidden mx-4 md:mx-6 mt-4"></div>
@@ -3550,6 +3551,177 @@ id:'life-tepa-selira', category:'Living & Social Learning',
   }
 },
 
+
+/* ───────── LIVING HERITAGE CONNECTIONS ───────── */
+{
+  id:'ich-learning-map', category:'Living Heritage Connections',
+  title:'Living Heritage → Learning Map', subtitle:'Start with cultural practice, then investigate the concept',
+  icon:'fa-route', color:'teal', tags:['ICH','living heritage','interdisciplinary learning','culture'],
+  capabilities:[], visual:'none',
+  modes:{
+    learn:{ blocks:[
+      {t:'h', text:'Start with a living practice. Then ask what it can teach.'},
+      {t:'p', text:'A living heritage context can become the starting point for science, mathematics, ecology, geography, or social learning. The learner begins with something people actually do, make, remember, or transmit—and then investigates the phenomenon underneath it.'},
+      {t:'table', head:['Living Heritage','Discipline','Concepts to explore'], rows:[
+        ['Gong / gamelan','Physics','Waves, frequency, resonance, acoustics'],
+        ['Batik','Chemistry','Pigments, solutions, wax resist, material properties'],
+        ['Subak Bali','Ecology + Social Science','Water management, common-pool resources, governance'],
+        ['Tepa selira','Social Science','Empathy, social norms, conflict resolution'],
+        ['Gotong royong','Sociology','Collective action, social capital, cooperation'],
+        ['Jamu','Biology / Chemistry','Medicinal plants, extraction, metabolites'],
+        ['Traditional houses','Physics / Architecture','Structure, thermal comfort, passive cooling, materials'],
+        ['Traditional navigation','Geography / Physics','Direction, astronomy, spatial knowledge'],
+        ['Weaving','Mathematics','Patterns, symmetry, geometry, algorithms'],
+        ['Coastal stewardship traditions','Ecology','Sustainability, carrying capacity, conservation']
+      ]},
+      {t:'note', tone:'tip', text:'Teaching sequence: Living Heritage → Observation / Practice → Academic Concept → Inquiry → Reflection → Contemporary Application.'},
+      {t:'note', tone:'info', text:'These are learning contexts. Inclusion here does not by itself mean that a tradition is formally inscribed on a UNESCO list.'}
+    ]},
+    everyday:{items:[{q:'A student learns the physics of a gong. Which starting point best fits this platform?',options:['Memorize frequency first and ignore the instrument','Begin with the gong as a living practice, observe its sound, then use physics to explain what is happening','Only study the history of the gong'],answer:1,explain:'The heritage practice provides the phenomenon. Academic concepts then give the learner tools to investigate it.',concepts:['living heritage','inquiry-based learning','interdisciplinary learning'],tryIt:'Choose one object or practice in your community and write one scientific question about it.'}]},
+    challenge:{questions:[{q:'What is the core learning move in a Living Heritage → Learning connection?',type:'choice',options:['Replace cultural practice with textbook theory','Use a living practice as the starting point for investigation and connect it to an academic concept','Teach cultural facts without observation'],answer:1,xp:15,why:'The heritage practice is the entry point into observation, inquiry, and application.'}]}
+  }
+},
+{
+  id:'ich-gong-physics', category:'Living Heritage Connections',
+  title:'Gong / Gamelan — Sound as Living Physics', subtitle:'Frequency, resonance, amplitude, and acoustics',
+  icon:'fa-music', color:'cyan', tags:['gong','gamelan','sound','physics','acoustics'], capabilities:[], visual:'none',
+  modes:{
+    learn:{blocks:[
+      {t:'h',text:'The gong is not only an example of sound. It is the phenomenon.'},
+      {t:'p',text:'Start by listening to a gong or gamelan performance. Learners can investigate frequency, amplitude, damping, resonance, timbre, and how vibrations become sound.'},
+      {t:'formula',tex:'f = 1 / T',desc:'Frequency is the number of cycles per second; T is the period of one cycle.'},
+      {t:'list',items:['Observe pitch → connect it to frequency.','Observe loudness and decay → connect them to amplitude and damping.','Observe the instrument body → ask how material, shape, and resonance affect the sound.']},
+      {t:'note',tone:'tip',text:'Do not reduce the lesson to “a gong has a frequency.” Ask what makes its sound distinctive and how the physical system produces it.'}
+    ]},
+    everyday:{items:[{q:'Two people strike the same gong, but one produces a stronger and longer sound. What could students investigate?',options:['Only the age of the player','How striking force, position, material, geometry, and damping affect the vibration and sound','Nothing; the sound cannot be studied'],answer:1,explain:'The cultural practice gives a real phenomenon that can be connected to measurable physical variables.',concepts:['amplitude','resonance','damping','acoustics'],tryIt:'Record a gong-like sound or another resonant object and compare the decay of two strikes.'}]},
+    challenge:{questions:[{q:'Why start with the gong before teaching frequency?',type:'choice',options:['Because the gong is easier to memorize','Because learners can observe and question a real cultural phenomenon before naming the physics concept','Because frequency is not scientific'],answer:1,xp:15,why:'The phenomenon comes first; the concept becomes a tool for explaining it.'}]}
+  }
+},
+{
+  id:'ich-batik-chemistry', category:'Living Heritage Connections',
+  title:'Batik — Chemistry of Color and Wax Resist', subtitle:'Pigments, solutions, wax, and material properties',
+  icon:'fa-palette', color:'fuchsia', tags:['batik','chemistry','pigment','wax','materials'], capabilities:[], visual:'none',
+  modes:{
+    learn:{blocks:[
+      {t:'h',text:'A pattern can become a chemistry laboratory.'},
+      {t:'p',text:'Batik can introduce questions about pigments, solvents, mixtures, diffusion, wax resist, temperature, and material properties. Learners investigate why wax can block a dye or coloring solution from reaching selected parts of a fabric.'},
+      {t:'list',items:['Pigment / dye → What gives the color its optical properties?','Solution → What happens when a material dissolves or disperses?','Wax resist → How can a material create a selective barrier?','Fabric → How do fibers interact with liquids and colorants?']},
+      {t:'note',tone:'info',text:'The cultural technique remains visible as the learning context; chemistry is a tool for investigating the material behavior.'}
+    ]},
+    everyday:{items:[{q:'Why is wax useful in a resist technique?',options:['It makes every part of the fabric absorb more dye','It can act as a barrier so selected areas receive less of the coloring solution','It creates sound waves'],answer:1,explain:'The resist creates spatial control over where the coloring material can reach the fabric.',concepts:['material properties','solution','resist'],tryIt:'Observe how a water-repellent layer changes the way a liquid spreads on a surface.'}]},
+    challenge:{questions:[{q:'Which chemistry question best grows from batik practice?',type:'choice',options:['Why do people make patterns?','How do pigment, solution, wax, temperature, and fiber properties affect the final color and pattern?','Why should chemistry be separated from culture?'],answer:1,xp:15,why:'The practice can generate authentic questions about materials and chemical processes.'}]}
+  }
+},
+{
+  id:'ich-subak', category:'Living Heritage Connections',
+  title:'Subak Bali — Water, Ecology, and Governance', subtitle:'Water management and common-pool resources',
+  icon:'fa-droplet', color:'emerald', tags:['Subak','Bali','water','ecology','governance'], capabilities:[], visual:'none',
+  modes:{
+    learn:{blocks:[
+      {t:'h',text:'Water is both a physical resource and a social system.'},
+      {t:'p',text:'Subak can be used to explore irrigation, agricultural ecosystems, shared resources, cooperation, and local governance. The learning question is not only “how does water flow?” but also “how do people coordinate access to it?”'},
+      {t:'kv',items:[['Ecology','How water availability changes the agricultural system.'],['Physics','How flow, elevation, channels, and pressure affect movement.'],['Social science','How communities coordinate a shared resource.'],['Governance','How rules help people manage competing needs.']]},
+      {t:'note',tone:'tip',text:'A shared resource can fail physically or socially. Learners can investigate both at the same time.'}
+    ]},
+    everyday:{items:[{q:'Two farms depend on the same limited water source. What is the useful learning question?',options:['Who can take the most water?','How can the community design a system that keeps the resource usable for everyone?','Why should each farm ignore the others?'],answer:1,explain:'The issue combines resource limits with cooperation and governance.',concepts:['common-pool resources','cooperation','water management'],tryIt:'Map one shared resource at school or in your neighborhood and identify who uses it and what rules keep it working.'}]},
+    challenge:{questions:[{q:'Why is Subak useful for interdisciplinary learning?',type:'choice',options:['It is only about farming','It connects physical water movement with ecology, agriculture, cooperation, and governance','It cannot be studied scientifically'],answer:1,xp:15,why:'The same living system can be investigated through several disciplines.'}]}
+  }
+},
+{
+  id:'ich-gotong-royong', category:'Living Heritage Connections',
+  title:'Gotong Royong — The Science of Cooperation', subtitle:'Collective action, social capital, coordination, and fairness',
+  icon:'fa-people-carry-box', color:'violet', tags:['gotong royong','cooperation','sociology','collective action'], capabilities:[], visual:'none',
+  modes:{
+    learn:{blocks:[
+      {t:'h',text:'A group can sometimes achieve what individuals cannot.'},
+      {t:'p',text:'Gotong royong provides a living context for learning about cooperation, collective action, role allocation, trust, social capital, and coordination. Learners can ask how many individual contributions become one shared outcome.'},
+      {t:'formula',tex:'Collective capacity ≈ people × coordination × trust',desc:'An educational model rather than a universal scientific equation.'},
+      {t:'list',items:['Who does what?','How are tasks divided?','What happens when one person cannot contribute?','How does trust affect coordination?']},
+      {t:'note',tone:'tip',text:'The lesson also examines workload, fairness, voice, and whether participation is genuinely voluntary.'}
+    ]},
+    everyday:{items:[{q:'A class needs to clean a shared area. Which design best demonstrates collective action?',options:['One student secretly does everything','Tasks are divided clearly, people coordinate, and the group checks the shared result','Everyone waits for someone else'],answer:1,explain:'Collective action depends on coordination, not simply the number of people present.',concepts:['collective action','coordination','social capital'],tryIt:'Run a five-minute task with assigned roles, then compare the result with an unstructured group attempt.'}]},
+    challenge:{questions:[{q:'What should students examine alongside the success of gotong royong?',type:'choice',options:['Only speed','Fairness, workload, participation, and coordination','Nothing; groups are always fair'],answer:1,xp:15,why:'Cooperation is a social system, so how benefits and burdens are distributed matters too.'}]}
+  }
+},
+{
+  id:'ich-jamu', category:'Living Heritage Connections',
+  title:'Jamu — Plants, Extraction, and Evidence', subtitle:'Biology and chemistry through traditional herbal practice',
+  icon:'fa-leaf', color:'amber', tags:['jamu','medicinal plants','biology','chemistry','extraction'], capabilities:[], visual:'none',
+  modes:{
+    learn:{blocks:[
+      {t:'h',text:'A traditional preparation can become a question about molecules and evidence.'},
+      {t:'p',text:'Jamu can introduce plant identification, plant parts, extraction, solubility, concentration, metabolites, preparation methods, and questions about evidence. The cultural practice is the starting point; learners then separate observation, mechanism, and health claims.'},
+      {t:'kv',items:[['Biology','Which plant, which part, and which biological compounds?'],['Chemistry','What is extracted, by what solvent, and under what conditions?'],['Evidence','What can be observed directly, and what requires controlled testing?']]},
+      {t:'note',tone:'warn',text:'A traditional use is not automatically proof that a preparation treats a disease. Distinguish cultural knowledge from experimentally established medical claims.'}
+    ]},
+    everyday:{items:[{q:'Two preparations use the same plant but different solvents. What could students compare?',options:['Only the color of the container','Which compounds may be extracted under different conditions and how preparation changes the resulting mixture','Nothing measurable'],answer:1,explain:'Extraction depends on material properties and conditions such as solvent, temperature, and time.',concepts:['extraction','solubility','metabolites'],tryIt:'Compare how safe food ingredients release different properties into water versus oil without making health claims.'}]},
+    challenge:{questions:[{q:'What scientific habit should be practiced when studying jamu?',type:'choice',options:['Treat every traditional claim as experimentally proven','Respect the cultural practice while separating observation, mechanism, and evidence','Reject the practice before investigating it'],answer:1,xp:15,why:'Good inquiry can respect living heritage while still asking disciplined questions about evidence.'}]}
+  }
+},
+{
+  id:'ich-traditional-house', category:'Living Heritage Connections',
+  title:'Traditional Houses — Architecture as Physics', subtitle:'Structure, thermal comfort, passive cooling, and materials',
+  icon:'fa-house', color:'orange', tags:['traditional house','architecture','thermal comfort','passive cooling'], capabilities:[], visual:'none',
+  modes:{
+    learn:{blocks:[
+      {t:'h',text:'A house is a system for handling forces, heat, light, and air.'},
+      {t:'p',text:'Traditional houses can be investigated as physical systems: how loads are carried, how materials behave, how roof geometry changes airflow, how openings affect heat, and how shaded surfaces influence thermal comfort.'},
+      {t:'formula',tex:'Q̇ = k · A · (ΔT / d)',desc:'A simplified conduction relationship: conductivity, area, temperature difference, and layer thickness affect heat transfer.'},
+      {t:'list',items:['Structure → forces and load paths','Materials → conductivity, strength, and mass','Openings → ventilation and airflow','Roof and shade → solar heat and thermal comfort']},
+      {t:'note',tone:'tip',text:'Compare two buildings under similar conditions and identify which design choices change the indoor environment.'}
+    ]},
+    everyday:{items:[{q:'Why might a building with high ceilings and well-placed openings feel cooler?',options:['Because high ceilings create electricity','Because geometry and openings can influence air movement and heat distribution','Because the walls stop all heat'],answer:1,explain:'Building geometry and ventilation pathways can affect airflow and heat accumulation.',concepts:['convection','ventilation','thermal comfort'],tryIt:'Observe how opening or closing windows changes airflow in a safe indoor demonstration.'}]},
+    challenge:{questions:[{q:'What makes traditional architecture useful for physics learning?',type:'choice',options:['It is only decorative','Its real structure and environmental responses can be observed and analyzed with physics','It should never be measured'],answer:1,xp:15,why:'The building is a real physical system that can generate measurable questions.'}]}
+  }
+},
+{
+  id:'ich-navigation', category:'Living Heritage Connections',
+  title:'Traditional Navigation — Direction, Sky, and Space', subtitle:'Geography, astronomy, and spatial knowledge',
+  icon:'fa-compass', color:'blue', tags:['navigation','astronomy','geography','spatial knowledge'], capabilities:[], visual:'none',
+  modes:{
+    learn:{blocks:[
+      {t:'h',text:'Navigation is knowledge about where you are and how to move.'},
+      {t:'p',text:'Traditional navigation can connect cultural knowledge with direction, landmarks, stars, waves, winds, currents, maps, and spatial reasoning. Learners can compare different ways of representing and finding position.'},
+      {t:'kv',items:[['Direction','How is orientation established?'],['Astronomy','What information can the sky provide?'],['Environment','How do wind, waves, currents, and landmarks act as signals?'],['Mapping','How is local spatial knowledge represented?']]},
+      {t:'note',tone:'info',text:'Document and analyze navigation knowledge respectfully rather than assuming that one modern instrument is the only valid way to know a place.'}
+    ]},
+    everyday:{items:[{q:'A learner wants to test a navigation method. What is the strongest approach?',options:['Use one landmark once and declare it perfect','Record observations repeatedly and compare the result with a known reference method','Avoid recording anything'],answer:1,explain:'Repeated observations allow learners to examine consistency and limitations.',concepts:['measurement','orientation','spatial reasoning'],tryIt:'Walk a familiar route and record two different ways of describing the same path.'}]},
+    challenge:{questions:[{q:'What can traditional navigation contribute to geography and physics learning?',type:'choice',options:['Only historical trivia','Practical spatial knowledge that can generate questions about direction, motion, astronomy, and environment','Nothing measurable'],answer:1,xp:15,why:'Navigation is an applied knowledge system with observable spatial and environmental variables.'}]}
+  }
+},
+{
+  id:'ich-weaving-math', category:'Living Heritage Connections',
+  title:'Weaving — Patterns as Mathematics', subtitle:'Symmetry, geometry, repetition, and algorithms',
+  icon:'fa-border-all', color:'indigo', tags:['weaving','patterns','symmetry','geometry','algorithms'], capabilities:[], visual:'none',
+  modes:{
+    learn:{blocks:[
+      {t:'h',text:'A woven pattern can be read like an algorithm.'},
+      {t:'p',text:'Weaving can open questions about repetition, symmetry, tessellation, sequences, counting, transformations, ratios, and rules. Learners can reverse-engineer a visible pattern into a sequence of operations.'},
+      {t:'formula',tex:'Pattern rule → repetition → transformation → visible structure',desc:'A conceptual model for turning a craft pattern into a mathematical investigation.'},
+      {t:'list',items:['Find the repeating unit.','Count the sequence.','Identify reflection, rotation, translation, or scaling.','Ask whether a computer could reproduce the rule.']},
+      {t:'note',tone:'tip',text:'The mathematical object is already present in the craft. The learner learns to see and formalize it.'}
+    ]},
+    everyday:{items:[{q:'A textile pattern repeats every 8 units. What can students do with that observation?',options:['Only memorize the number 8','Build a sequence, model the repetition, and test how the pattern changes when the rule changes','Ignore the repetition'],answer:1,explain:'A repeating unit can become the seed of a mathematical or computational model.',concepts:['sequence','periodicity','algorithm','symmetry'],tryIt:'Draw a simple repeating motif and write a rule that a classmate could use to reproduce it.'}]},
+    challenge:{questions:[{q:'Why is weaving useful for mathematics?',type:'choice',options:['Because mathematics and crafts are unrelated','Because visible patterns can be analyzed using counting, geometry, symmetry, and algorithms','Because patterns cannot be formalized'],answer:1,xp:15,why:'Formal mathematical descriptions can grow directly from a practiced visual pattern.'}]}
+  }
+},
+{
+  id:'ich-coastal-stewardship', category:'Living Heritage Connections',
+  title:'Coastal Stewardship Traditions — Ecology in Practice', subtitle:'Sustainability, carrying capacity, and conservation',
+  icon:'fa-fish-fins', color:'emerald', tags:['coastal','marine','ecology','sustainability','conservation'], capabilities:[], visual:'none',
+  modes:{
+    learn:{blocks:[
+      {t:'h',text:'Environmental knowledge is often a practiced system, not just a textbook concept.'},
+      {t:'p',text:'Traditional coastal stewardship can be used to investigate seasons, species, habitat, resource limits, conservation rules, carrying capacity, and community monitoring. Learners compare ecological observations with contemporary measurement methods.'},
+      {t:'formula',tex:'Resource pressure ≈ demand / regenerative capacity',desc:'A conceptual model: pressure rises when use approaches or exceeds the system’s ability to recover.'},
+      {t:'kv',items:[['Ecology','What species and habitats are present?'],['Limits','How much can be harvested without degrading the system?'],['Rules','What local practices regulate timing, place, or amount?'],['Monitoring','What evidence shows whether the system is recovering?']]},
+      {t:'note',tone:'tip',text:'Combine local observation with transparent measurement rather than treating either one as automatically sufficient.'}
+    ]},
+    everyday:{items:[{q:'A community notices that a fishing area needs time to recover. What can students investigate?',options:['Only the number of fish caught yesterday','Population trends, habitat condition, seasonal patterns, and whether rules change resource pressure','Nothing because ecology is too complex'],answer:1,explain:'Ecological stewardship can be examined through data, observation, and the rules people use to manage pressure.',concepts:['carrying capacity','conservation','population dynamics'],tryIt:'Create a simple observation log for one local species, habitat, or shoreline condition.'}]},
+    challenge:{questions:[{q:'What makes stewardship a strong ecology learning context?',type:'choice',options:['It removes the need for measurement','It connects resource use, ecological limits, community rules, and monitoring','It proves every traditional practice is scientifically optimal'],answer:1,xp:15,why:'Students can study ecological mechanisms and social management without making unsupported claims about effectiveness.'}]}
+  }
+},
+
 /* ✚ ADD NEW MODULE HERE (copas blok di atas, ganti id & isinya) */
 ];
 
@@ -3569,10 +3741,60 @@ const MODE_META = {
 };
 const MODE_ORDER = ['learn','calculate','explore','simulate','experiment','ar','everyday','challenge'];
 
+
+const ICH_CONNECTIONS = {
+  'phys-wave': {
+    title:'Gong / Gamelan → Physics', icon:'fa-music', color:'cyan',
+    text:'Start with a living gong or gamelan practice, then investigate frequency, amplitude, resonance, damping, timbre, and acoustics.',
+    bridge:'Living Heritage → Sound Observation → Wave Physics → Measurement'
+  },
+  'chem-solution': {
+    title:'Batik → Chemistry', icon:'fa-palette', color:'fuchsia',
+    text:'Use batik as a starting point for pigments, solutions, wax resist, diffusion, and material properties.',
+    bridge:'Living Heritage → Material Practice → Chemistry → Experiment'
+  },
+  'env-waterfilter': {
+    title:'Water Management Traditions → Ecology', icon:'fa-droplet', color:'emerald',
+    text:'Connect water-flow experiments with the broader question of how communities organize, share, and monitor water resources.',
+    bridge:'Living Heritage → Water Practice → Ecology + Social Science → Reflection'
+  },
+  'math-social': {
+    title:'Gotong Royong → Sociology', icon:'fa-people-carry-box', color:'violet',
+    text:'Use collective work as a context for studying coordination, task allocation, cooperation, social capital, and fairness.',
+    bridge:'Living Heritage → Collective Action → Sociology → Contemporary Application'
+  },
+  'phys-thermo-cpu': {
+    title:'Traditional Houses → Physics / Architecture', icon:'fa-house', color:'orange',
+    text:'Compare thermal comfort, airflow, shade, materials, and passive cooling in traditional and modern buildings.',
+    bridge:'Living Heritage → Building Observation → Heat + Airflow → Design Inquiry'
+  },
+  'geo-distance': {
+    title:'Traditional Navigation → Geography / Physics', icon:'fa-compass', color:'blue',
+    text:'Connect local navigation knowledge with direction, maps, spatial reasoning, astronomy, and measurement.',
+    bridge:'Living Heritage → Spatial Knowledge → Geography / Physics → Mapping'
+  },
+  'math-graph': {
+    title:'Weaving → Mathematics', icon:'fa-border-all', color:'indigo',
+    text:'Treat repeating textile motifs as mathematical structures: sequences, symmetry, transformations, geometry, and algorithms.',
+    bridge:'Living Heritage → Pattern Observation → Mathematics → Algorithm'
+  },
+  'bio-populasi': {
+    title:'Coastal Stewardship → Ecology', icon:'fa-fish-fins', color:'emerald',
+    text:'Use local stewardship practices to discuss population dynamics, carrying capacity, conservation, and monitoring.',
+    bridge:'Living Heritage → Ecological Observation → Biology → Conservation'
+  },
+  'life-tepa-selira': {
+    title:'Tepa Selira → Social Science', icon:'fa-people-arrows', color:'violet',
+    text:'Tepa selira becomes a lived context for perspective-taking, social norms, empathy, and conflict prevention.',
+    bridge:'Living Heritage → Social Practice → Social Science → Relationship Skills'
+  }
+};
+
 function normalizeModule(m){
   const n = { ...m };
   n.visual = n.visual || n.visualType || 'none';         // legacy: visualType
   n.capabilities = n.capabilities || ['calculator'];
+  n.ich = n.ich || ICH_CONNECTIONS[n.id] || null;
   n.modes = { ...(n.modes||{}) };
   if(n.modes.understand){ n.modes.learn = n.modes.understand; delete n.modes.understand; } // legacy
   return n;
@@ -4618,6 +4840,7 @@ const Viz = {
 const MapLab = {
   map:null, markers:[], line:null,
   init(){
+    if(typeof L==='undefined'){ console.warn('Leaflet unavailable; map features remain disabled.'); return; }
     this.map = L.map('map',{ zoomControl:false }).setView([-2.5,118],5);
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
       { attribution:'Tiles © Esri', maxZoom:18 }).addTo(this.map);
@@ -4681,6 +4904,25 @@ const UI = {
       </div>`;
     }).join('') : `<p class="text-sm text-slate-400 col-span-3 text-center py-8">No matching modules. Try another keyword.</p>`;
   },
+  ichPanel(mod){
+    const box=$('m-ich');
+    if(!box) return;
+    if(!mod.ich){ box.classList.add('hidden'); box.innerHTML=''; return; }
+    box.classList.remove('hidden');
+    const x=mod.ich;
+    box.innerHTML=\`<div class="rounded-xl border border-\${x.color}-200 bg-\${x.color}-50/70 p-3.5">
+      <div class="flex items-start gap-2.5">
+        <div class="w-9 h-9 rounded-lg bg-white border border-\${x.color}-200 text-\${x.color}-600 flex items-center justify-center shrink-0"><i class="fa-solid \${x.icon}"></i></div>
+        <div class="min-w-0">
+          <p class="text-[9px] font-black uppercase tracking-[0.12em] text-\${x.color}-600">Living Heritage Connection</p>
+          <h3 class="text-[12px] font-extrabold text-\${x.color}-900 mt-0.5">\${x.title}</h3>
+          <p class="text-[11px] text-\${x.color}-900/80 leading-relaxed mt-1">\${x.text}</p>
+          <p class="text-[10px] font-bold text-\${x.color}-700 mt-2">\${x.bridge}</p>
+        </div>
+      </div>
+    </div>\`;
+  },
+
   homeCaps(){
     const keys=['camera','motion','orientation','magnetometer','microphone','ar','depth','nativeBridge'];
     $('home-caps').innerHTML = keys.map(k=>{
@@ -4786,6 +5028,7 @@ const Router = {
     $('m-sub').textContent=mod.subtitle||'';
     $('m-caps').innerHTML = Capabilities.badge((mod.capabilities||[]).filter(c=>['camera','motion','orientation','magnetometer','microphone','ar','depth'].includes(c)));
     UI.safety(mod);
+    UI.ichPanel(mod);
     const modes = MODE_ORDER.filter(m=>mod.modes[m]);
     $('tab-container').innerHTML = modes.map(m=>`
       <button class="dtab px-3.5 py-2.5 rounded-t-lg border-b-2 whitespace-nowrap transition ${'text-slate-500 border-transparent hover:text-slate-700'}" data-tab="${m}" onclick="Router.tab('${m}')">
@@ -4827,12 +5070,12 @@ document.addEventListener('keydown', e=>{
 });
 
 (async function boot(){
-  MapLab.init();
-  Progress.paint();
-  await Capabilities.detect();
-  UI.homeCaps();
-  UI.renderHome();
-  Router.home();
+  try{ MapLab.init(); }catch(e){ console.warn('Map initialization skipped:', e); }
+  try{ Progress.paint(); }catch(e){ console.warn('Progress initialization skipped:', e); }
+  try{ await Capabilities.detect(); }catch(e){ console.warn('Capability detection skipped:', e); }
+  try{ UI.homeCaps(); }catch(e){ console.warn('Home capability UI skipped:', e); }
+  try{ UI.renderHome(); }catch(e){ console.error('Home catalog failed to render:', e); }
+  try{ Router.home(); }catch(e){ console.error('Home router failed:', e); }
   console.log('%cLiving Heritage LAB v0.3','background:#4f46e5;color:#fff;padding:2px 8px;border-radius:4px',
     '\nModul:',Registry.all.length,'· Engine simulasi:',Object.keys(SIM_ENGINES).length,
     '\nTambah modul di §14 MODULE REGISTRY.');

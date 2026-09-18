@@ -2996,18 +2996,17 @@ learn: {
         { id:'eye', label:'Eye / phone height (m)', default:1.5, step:0.05 }
       ],
       outputs:[
-        { id:'tinggi', label:'Object height', formula:{expr:'d*tan(theta)+eye'}, unit:'m' },
-        { id:'diag', label:'Line-of-sight distance', formula:{expr:'d/cos(theta)'}, unit:'m' },
-        { id:'bayang', label:'Shadow length when the sun is at 45°', formula:{expr:'d*tan(theta)+eye'}, unit:'m',
-          hint:'At a 45° solar elevation, shadow length equals object height.' }
-      ]
+          { id:'tinggi', label:'Object height', formula:{expr:'d*tan(theta)+eye'}, unit:'m' },
+          { id:'diag', label:'Line-of-sight distance', formula:{expr:'d/cos(theta)'}, unit:'m' },
+          { id:'bayang', label:'Shadow length when the sun is at 45°', formula:{expr:'d*tan(theta)+eye'}, unit:'m',
+            hint:'At a 45° solar elevation, shadow length equals object height.' }
+        ]
+      }
     }
-  }
-}
+},
 
-,
-
-id:'life-tepa-selira', category:'Living & Social Learning',
+{
+  id:'life-tepa-selira', category:'Living & Social Learning',
   title:'Tepa Selira — Think Before You Speak', subtitle:'Perspective-taking in everyday life',
   icon:'fa-people-arrows', color:'violet',
   tags:['tepa selira','empathy','social ethics','perspective taking'],
@@ -3193,17 +3192,16 @@ id:'life-tepa-selira', category:'Living & Social Learning',
           </div>
         </div>
         <div class="card p-4 bg-indigo-50 border-indigo-200">
-          <p class="text-[12px] text-indigo-900"><b>Example:</b> cloud synchronization produces conflicting file states. Instead of treating the system as an enemy, use versioning, explicit working copies, and a recovery workflow.</p>
-        </div>
-      </div>`
-    }
-  }
-}
+              <p class="text-[12px] text-indigo-900"><b>Example:</b> cloud synchronization produces conflicting file states. Instead of treating the system as an enemy, use versioning, explicit working copies, and a recovery workflow.</p>
+            </div>
+          </div>`
+        }
+      }
+    },
 
-
-/* ───────── PHASE 2 · MAINTAINING HARMONY ───────── */
-{
-  id:'life-wa', category:'Living & Social Learning',
+    /* ───────── PHASE 2 · MAINTAINING HARMONY ───────── */
+    {
+      id:'life-wa', category:'Living & Social Learning',
   title:'Wa (和) — Harmony Before Winning',
   subtitle:'Protect the relationship when disagreement appears',
   icon:'fa-people-group', color:'teal',
@@ -3270,7 +3268,7 @@ id:'life-tepa-selira', category:'Living & Social Learning',
       }
     ]},
     explore:{
-      html:\`<div class="space-y-3">
+      html: `<div class="space-y-3">
         <div class="card p-4">
           <h3 class="font-bold text-slate-700 text-sm">The Relationship-After Test</h3>
           <p class="text-[12px] text-slate-600 mt-2 leading-relaxed">Before escalating a disagreement, ask:</p>
@@ -3283,7 +3281,7 @@ id:'life-tepa-selira', category:'Living & Social Learning',
         <div class="card p-4 bg-teal-50 border-teal-200">
           <p class="text-[12px] text-teal-900"><b>Practice:</b> Take “I must win this argument” and turn it into “I need the problem solved without making the relationship harder to repair.”</p>
         </div>
-      </div>\`
+      </div>`
     }
   }
 },
@@ -3359,7 +3357,7 @@ id:'life-tepa-selira', category:'Living & Social Learning',
       }
     ]},
     explore:{
-      html:\`<div class="space-y-3">
+      html: `<div class="space-y-3">
         <div class="card p-4">
           <h3 class="font-bold text-slate-700 text-sm">The Difference Test</h3>
           <p class="text-[12px] text-slate-600 mt-2 leading-relaxed">Classify the situation:</p>
@@ -3372,7 +3370,7 @@ id:'life-tepa-selira', category:'Living & Social Learning',
         <div class="card p-4 bg-amber-50 border-amber-200">
           <p class="text-[12px] text-amber-900"><b>Practice:</b> Replace “Which one of us is right?” with “What can remain different, and what do we need to coordinate?”</p>
         </div>
-      </div>\`
+      </div>`
     }
   }
 },
@@ -3447,7 +3445,7 @@ id:'life-tepa-selira', category:'Living & Social Learning',
       }
     ]},
     explore:{
-      html:\`<div class="space-y-3">
+      html: `<div class="space-y-3">
         <div class="card p-4">
           <h3 class="font-bold text-slate-700 text-sm">The Pattern Test</h3>
           <p class="text-[12px] text-slate-600 mt-2 leading-relaxed">Before deciding what a mistake “means,” ask:</p>
@@ -3460,7 +3458,7 @@ id:'life-tepa-selira', category:'Living & Social Learning',
         <div class="card p-4 bg-rose-50 border-rose-200">
           <p class="text-[12px] text-rose-900"><b>Practice:</b> Replace “They are a bad person” with “Something went wrong. What pattern and context should I understand before I decide what it means?”</p>
         </div>
-      </div>\`
+      </div>`
     }
   }
 },
@@ -3533,7 +3531,7 @@ id:'life-tepa-selira', category:'Living & Social Learning',
       }
     ]},
     explore:{
-      html:\`<div class="space-y-3">
+      html: `<div class="space-y-3">
         <div class="card p-4">
           <h3 class="font-bold text-slate-700 text-sm">The Safety-Valve Test</h3>
           <p class="text-[12px] text-slate-600 mt-2 leading-relaxed">When someone says “let’s keep the peace,” ask:</p>
@@ -3546,7 +3544,7 @@ id:'life-tepa-selira', category:'Living & Social Learning',
         <div class="card p-4 bg-slate-50 border-slate-300">
           <p class="text-[12px] text-slate-700"><b>Repair formula:</b> Recognize → Acknowledge → Repair → Change.</p>
         </div>
-      </div>\`
+      </div>`
     }
   }
 },
@@ -4910,17 +4908,17 @@ const UI = {
     if(!mod.ich){ box.classList.add('hidden'); box.innerHTML=''; return; }
     box.classList.remove('hidden');
     const x=mod.ich;
-    box.innerHTML=\`<div class="rounded-xl border border-\${x.color}-200 bg-\${x.color}-50/70 p-3.5">
+    box.innerHTML=`<div class="rounded-xl border border-${x.color}-200 bg-${x.color}-50/70 p-3.5">
       <div class="flex items-start gap-2.5">
-        <div class="w-9 h-9 rounded-lg bg-white border border-\${x.color}-200 text-\${x.color}-600 flex items-center justify-center shrink-0"><i class="fa-solid \${x.icon}"></i></div>
+        <div class="w-9 h-9 rounded-lg bg-white border border-${x.color}-200 text-${x.color}-600 flex items-center justify-center shrink-0"><i class="fa-solid ${x.icon}"></i></div>
         <div class="min-w-0">
-          <p class="text-[9px] font-black uppercase tracking-[0.12em] text-\${x.color}-600">Living Heritage Connection</p>
-          <h3 class="text-[12px] font-extrabold text-\${x.color}-900 mt-0.5">\${x.title}</h3>
-          <p class="text-[11px] text-\${x.color}-900/80 leading-relaxed mt-1">\${x.text}</p>
-          <p class="text-[10px] font-bold text-\${x.color}-700 mt-2">\${x.bridge}</p>
+          <p class="text-[9px] font-black uppercase tracking-[0.12em] text-${x.color}-600">Living Heritage Connection</p>
+          <h3 class="text-[12px] font-extrabold text-${x.color}-900 mt-0.5">${x.title}</h3>
+          <p class="text-[11px] text-${x.color}-900/80 leading-relaxed mt-1">${x.text}</p>
+          <p class="text-[10px] font-bold text-${x.color}-700 mt-2">${x.bridge}</p>
         </div>
       </div>
-    </div>\`;
+    </div>`;
   },
 
   homeCaps(){

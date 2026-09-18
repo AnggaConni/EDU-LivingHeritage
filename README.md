@@ -1,10 +1,10 @@
-# Living Heritage in Education
+# Living Heritage LAB — Pocket Learning in Living Heritage
 
 ![Platform](https://img.shields.io/badge/platform-Web%20%7C%20PWA-success.svg)
 ![Language](https://img.shields.io/badge/interface-English-blue.svg)
 ![Stack](https://img.shields.io/badge/stack-Vanilla%20JS%20%7C%20TailwindCSS-orange.svg)
 
-**Living Heritage in Education** is a modular, browser-based learning environment designed to connect observation, experimentation, science, and social learning with living heritage.
+**Living Heritage LAB** is a modular, browser-based learning environment designed to connect observation, experimentation, science, and social learning with living heritage.
 
 The current application contains interactive learning modules for mathematics, physics, biology, chemistry, climate and environment, geography, sensors, mapping, camera-based measurement, and AR-capable workflows. The architecture is intentionally modular so living heritage contexts and ICH-based learning activities can be added without replacing the core learning engine.
 
@@ -12,13 +12,13 @@ The current application contains interactive learning modules for mathematics, p
 
 ## Learning approach
 
-The platform is built around an inquiry loop:
+The platform combines an inquiry loop for science with a practice-and-reflection loop for living heritage and social learning:
 
-**Ask → Predict → Calculate → Simulate → Measure → Compare → Reflect**
+**Observe → Learn → Practice → Reflect → Apply**
 
 The goal is not only to provide answers, but to help learners connect concepts with observable phenomena, measurements, experiments, and real-world contexts.
 
-A future ICH layer can use the same structure to connect living heritage with academic concepts—for example, a gong with acoustics and wave physics, or *tepa slira* with social science, empathy, and interpersonal relationships.
+The platform now uses living heritage not only as a source of academic examples, but also as a source of practical knowledge about how people live, adapt, cooperate, and maintain relationships.
 
 ## Phase 1 — Learning How to Live
 
@@ -45,6 +45,30 @@ The lesson is deliberately not “tools never matter.” Historical commentary n
 This principle is applied beyond physical tools: motorcycles, kitchens, cameras, maps, spreadsheets, databases, code, AI systems, projects, teams, institutions, and unfamiliar problems.
 
 **Adaptation also has a boundary:** when a limitation is genuinely unsafe, unfair, or structurally damaging, the appropriate response may be a better tool, additional resources, or a system-level change.
+
+## Phase 2 — Maintaining Harmony in Relationships
+
+The second learning layer focuses on how children can keep relationships workable without demanding sameness, suppressing disagreement, or protecting the appearance of peace at the expense of repair.
+
+### 1. Wa (和) — Harmony Before Winning
+
+Wa is used here as a framework for preventing unnecessary escalation. Learners practice asking what needs to be solved, what relationship they want to preserve, whether the timing is appropriate, and whether a private repair conversation would be more constructive.
+
+### 2. He (和) — Harmony Without Sameness
+
+The phrase **和而不同 (he er bu tong)** is used to teach that cooperation does not require identical opinions. Students learn to let differences remain visible while coordinating around shared goals.
+
+### 3. Jeong (정) — The Bond That Softens Judgment
+
+Jeong is introduced as accumulated relational goodwill built through shared experience. Students learn to distinguish an isolated mistake from a repeated pattern, giving context a place without turning goodwill into unlimited permission.
+
+### 4. Shazai (謝罪) — When Harmony Needs a Safety Valve
+
+Shazai is presented as a repair mechanism when harm has already occurred. The lesson distinguishes healthy harmony from “toxic harmony,” where silence or pressure to forget can preserve appearances while the harmed person remains without recognition or repair.
+
+The common mechanism across the four lessons is:
+
+**Prevent unnecessary escalation → Allow difference → Interpret with context → Repair harm.**
 
 ## Current capabilities
 
@@ -92,9 +116,9 @@ Because camera, sensors, geolocation, and WebXR require secure browser contexts,
 
 ## Status
 
-The LMS interface and public-facing metadata are now in English. The current science-learning modules remain available as the technical learning foundation.
+The LMS interface and public-facing metadata are now in English. The current science-learning modules remain available as the technical learning foundation, while Phase 1 and Phase 2 add living and social learning layers.
 
-The next development layer is the integration of **Intangible Cultural Heritage (ICH)** and **living heritage-based learning**, including cross-disciplinary examples such as:
+The next development layer is deeper integration of **Intangible Cultural Heritage (ICH)** and living-heritage-based learning across science, social learning, field practice, and community contexts.
 
-**Living Heritage → Observation / Practice → Academic Concept → Experiment / Inquiry → Reflection → Contemporary Application**
+**Living Heritage → Practice / Relationship → Learning Concept → Practice / Inquiry → Reflection → Contemporary Application**
 

@@ -1,13 +1,13 @@
 {
-  "name": "Living Heritage in Education",
-  "short_name": "Living Heritage",
-  "description": "A learning platform connecting living heritage with science, social learning, observation, experimentation, and reflection.",
+  "name": "Living Heritage LAB",
+  "short_name": "Living Heritage LAB",
+  "description": "A pocket learning lab connecting living heritage with science, social learning, observation, experimentation, and reflection.",
   "start_url": "/EDU-LivingHeritage/",
   "scope": "/EDU-LivingHeritage/",
   "id": "/EDU-LivingHeritage/",
   "display": "standalone",
   "background_color": "#f6f8fc",
-  "theme_color": "#4f46e5",
+  "theme_color": "#0f766e",
   "orientation": "portrait-primary",
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },

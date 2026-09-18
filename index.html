@@ -424,13 +424,13 @@
     <div id="view-home" class="p-4 md:p-7 fade-in">
 
 <!-- ===== DYNAMIC HERO SLIDER ===== -->
-      <div class="relative w-full rounded-2xl overflow-hidden shadow-sm mb-3 h-[170px] sm:h-[180px] bg-slate-900 group" id="home-slider-container">
+      <div class="relative w-full rounded-2xl overflow-hidden shadow-sm mb-3 h-[195px] sm:h-[205px] bg-slate-900 group" id="home-slider-container">
         
         <!-- Track Slider -->
         <div id="home-slider-track" class="w-full h-full relative"></div>
         
         <!-- Dots Indikator -->
-        <div id="home-slider-dots" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20"></div>
+        <div id="home-slider-dots" class="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex gap-1.5 z-20"></div>
         
         <!-- Tombol Panah (Muncul saat di-hover) -->
         <button onclick="HomeSlider.prev()" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/20 text-white backdrop-blur opacity-0 group-hover:opacity-100 transition-opacity z-20"><i class="fa-solid fa-chevron-left"></i></button>
@@ -5673,16 +5673,16 @@ const HomeSlider = {
     if(!track||!dots)return;
     track.innerHTML=this.data.map((s,i)=>{
       const active=i===this.currentIndex;
-      return '<div class="absolute inset-0 transition-opacity duration-700 ease-in-out bg-gradient-to-br '+s.bg+' p-5 sm:p-6 text-white flex flex-col justify-center overflow-hidden '+(active?'opacity-100 z-10':'opacity-0 z-0 pointer-events-none')+'">'+
+      return '<div class="absolute inset-0 transition-opacity duration-700 ease-in-out bg-gradient-to-br '+s.bg+' p-6 sm:p-7 text-white flex flex-col justify-center overflow-hidden '+(active?'opacity-100 z-10':'opacity-0 z-0 pointer-events-none')+'">'+
         '<div class="absolute -right-10 -top-10 w-40 h-40 rounded-full '+s.glow+'/20 blur-2xl pointer-events-none"></div>'+
         '<div class="absolute -left-10 -bottom-10 w-36 h-36 rounded-full '+s.glow+'/10 blur-2xl pointer-events-none"></div>'+
         '<div class="absolute right-5 bottom-4 text-white/10 text-7xl sm:text-8xl pointer-events-none"><i class="fa-solid '+s.icon+'"></i></div>'+
         '<div class="relative z-10 max-w-2xl">'+
           '<div class="flex items-center gap-2 flex-wrap"><p class="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.14em] text-white/80">'+s.label+'</p><span class="text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.12em] px-2 py-0.5 rounded-full bg-white/15 border border-white/20">'+s.eyebrow+'</span></div>'+
-          '<h2 class="mt-1.5 text-[19px] sm:text-2xl leading-[1.18] font-extrabold tracking-tight">'+s.title+'</h2>'+
-          '<p class="text-[11px] sm:text-xs leading-relaxed text-white/90 mt-2 max-w-xl">'+s.desc+'</p>'+
-          '<div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-w-xl">'+s.bullets.map(b=>'<div class="flex items-start gap-1.5 text-[9px] sm:text-[10px] leading-snug text-white/90"><i class="fa-solid fa-check mt-0.5 text-white/70"></i><span>'+b+'</span></div>').join('')+'</div>'+
-          '<div class="mt-3 inline-flex items-center gap-1.5 text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/15 border border-white/20"><i class="fa-solid fa-arrow-right"></i>'+s.cta+'</div>'+
+          '<h2 class="mt-2 text-[20px] sm:text-2xl leading-[1.2] font-extrabold tracking-tight">'+s.title+'</h2>'+
+          '<p class="text-[11px] sm:text-xs leading-relaxed text-white/90 mt-2.5 max-w-xl">'+s.desc+'</p>'+
+          '<div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2 max-w-xl">'+s.bullets.map(b=>'<div class="flex items-start gap-1.5 text-[9px] sm:text-[10px] leading-relaxed text-white/90"><i class="fa-solid fa-check mt-0.5 text-white/70"></i><span>'+b+'</span></div>').join('')+'</div>'+
+          '<div class="mt-4 inline-flex items-center gap-1.5 text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/15 border border-white/20"><i class="fa-solid fa-arrow-right"></i>'+s.cta+'</div>'+
         '</div></div>';
     }).join('');
     dots.innerHTML=this.data.map((s,i)=>'<button aria-label="Go to slide '+(i+1)+': '+s.title+'" onclick="HomeSlider.goTo('+i+')" class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 '+(i===this.currentIndex?'bg-white w-4 sm:w-5':'bg-white/40 hover:bg-white/70')+'"></button>').join('');

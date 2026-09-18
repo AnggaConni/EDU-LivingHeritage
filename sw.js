@@ -1,4 +1,4 @@
-const CACHE_NAME = 'living-heritage-cache-v4';
+const CACHE_NAME = 'living-heritage-cache-v6';
 
 // Core files to cache on first install
 const URLS_TO_CACHE = [

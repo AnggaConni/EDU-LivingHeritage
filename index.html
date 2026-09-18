@@ -5657,85 +5657,41 @@ const MapLab = {
 /* ═════════ HOME SLIDER ENGINE ═════════ */
 const HomeSlider = {
   data: [
-    {
-      label: 'Beyond Traditional LMS',
-      title: 'A Learning Journey for Life',
-      desc: 'Not only knowledge, but the skills to live, relate, and make sense of the world. Start from real practice: Observe, Question, Investigate, Practice, and Reflect.',
-      bg: 'from-blue-700 via-indigo-600 to-violet-600',
-      glow: 'bg-indigo-300'
-    },
-    {
-      label: 'Phase 1 · Self',
-      title: 'Learning How to Live',
-      desc: 'Start with yourself. Develop awareness, adapt, and act wisely. Explore concepts like Tepa Selira (Think Before You Speak) and Kōbō Fude o Erabazu.',
-      bg: 'from-violet-700 via-fuchsia-600 to-purple-500',
-      glow: 'bg-fuchsia-300'
-    },
-    {
-      label: 'Phase 2 · Relationship',
-      title: 'Maintaining Harmony',
-      desc: 'Learn to live with others. Prevent escalation, embrace differences, and repair harm through Wa, He, Jeong, and Shazai.',
-      bg: 'from-teal-700 via-emerald-600 to-green-500',
-      glow: 'bg-emerald-300'
-    },
-    {
-      label: 'Phase 3 · World',
-      title: 'Learning Through Living Heritage',
-      desc: 'Explore the world. Use real cultural practices (Gong, Batik, Subak) to discover science, social knowledge, and real impact.',
-      bg: 'from-cyan-700 via-sky-600 to-blue-500',
-      glow: 'bg-cyan-300'
-    }
+    {label:'Beyond the Traditional LMS',title:'A Learning Journey for Life',eyebrow:'CULTURE → KNOWLEDGE → SKILLS → ACTION',desc:'Learning should not stop at remembering information. Living Heritage LAB connects real practices with curiosity, investigation, reflection, and everyday action.',bullets:['Observe what is already around you','Ask questions before memorizing answers','Connect practice with science and social knowledge'],cta:'Explore the Learning Journey',icon:'fa-compass',bg:'from-blue-700 via-indigo-600 to-violet-600',glow:'bg-indigo-300'},
+    {label:'Phase 1 · Learning How to Live',title:'Learning How to Live',eyebrow:'SELF',desc:'Before children manage tools or relationships, they learn to manage themselves: perspective-taking, awareness, adaptation, and thoughtful action.',bullets:['Tepa Selira · Think Before You Speak','Kōbō Fude o Erabazu · Adapt to the Tool','Pause → Consider → Adapt → Act'],cta:'Discover Phase 1',icon:'fa-person-circle-check',bg:'from-violet-700 via-fuchsia-600 to-purple-500',glow:'bg-fuchsia-300'},
+    {label:'Phase 2 · Maintaining Harmony',title:'Maintaining Harmony',eyebrow:'RELATIONSHIP',desc:'Relationships need more than agreement. Learn to prevent unnecessary escalation, live with differences, understand context, and repair harm when needed.',bullets:['Wa · Harmony Before Winning','He · Harmony Without Sameness','Jeong · Goodwill & Context','Shazai · Repair & Accountability'],cta:'Explore Phase 2',icon:'fa-people-group',bg:'from-teal-700 via-emerald-600 to-green-500',glow:'bg-emerald-300'},
+    {label:'Phase 3 · Learning Through Living Heritage',title:'Learning Through Living Heritage',eyebrow:'WORLD',desc:'Start from what communities already do, make, remember, and practice — then investigate the science, mathematics, ecology, geography, and social knowledge inside it.',bullets:['Gong / Gamelan → Physics','Batik → Chemistry','Subak → Ecology & Governance','Gotong Royong → Sociology'],cta:'Explore Living Heritage',icon:'fa-leaf',bg:'from-cyan-700 via-sky-600 to-blue-500',glow:'bg-cyan-300'},
+    {label:'Learning by Doing',title:'From Phenomenon to Understanding',eyebrow:'OBSERVE → QUESTION → INVESTIGATE',desc:'A gong can become physics. A woven pattern can become mathematics. A traditional house can become architecture and thermal science. Culture becomes a doorway to inquiry.',bullets:['Real practice creates authentic questions','Academic concepts explain what learners observe','Reflection turns knowledge into understanding'],cta:'See the ICH Connections',icon:'fa-flask',bg:'from-emerald-700 via-teal-600 to-cyan-500',glow:'bg-teal-300'},
+    {label:'Beyond Content',title:'Build Human Capabilities',eyebrow:'KNOW · RESPECT · CURIOSITY · COLLABORATION',desc:'The platform is designed to develop habits that remain useful beyond school: adaptability, communication, critical thinking, cooperation, and the ability to learn from changing conditions.',bullets:['Adapt instead of blaming the tool','Verify before passing information onward','Preserve relationships while solving problems'],cta:'Why These Skills Matter',icon:'fa-people-arrows',bg:'from-amber-600 via-orange-500 to-rose-500',glow:'bg-amber-200'},
+    {label:'Living Heritage LAB',title:'A Pocket Learning Environment',eyebrow:'LEARN · CALCULATE · SIMULATE · EXPERIMENT · REFLECT',desc:'Use one place to move between explanation, simulation, measurement, challenges, and cultural connections — on a phone, tablet, or desktop.',bullets:['Modular learning experiences','Science + social learning + ICH','Designed for exploration, not passive consumption'],cta:'Open the Catalog',icon:'fa-microscope',bg:'from-slate-800 via-blue-900 to-teal-700',glow:'bg-cyan-300'}
   ],
-  currentIndex: 0,
-  timer: null,
-
-  init() {
-    this.render();
-    this.startAuto();
+  currentIndex:0,
+  timer:null,
+  init(){this.render();this.startAuto();},
+  render(){
+    const track=document.getElementById('home-slider-track'),dots=document.getElementById('home-slider-dots');
+    if(!track||!dots)return;
+    track.innerHTML=this.data.map((s,i)=>{
+      const active=i===this.currentIndex;
+      return '<div class="absolute inset-0 transition-opacity duration-700 ease-in-out bg-gradient-to-br '+s.bg+' p-5 sm:p-6 text-white flex flex-col justify-center overflow-hidden '+(active?'opacity-100 z-10':'opacity-0 z-0 pointer-events-none')+'">'+
+        '<div class="absolute -right-10 -top-10 w-40 h-40 rounded-full '+s.glow+'/20 blur-2xl pointer-events-none"></div>'+
+        '<div class="absolute -left-10 -bottom-10 w-36 h-36 rounded-full '+s.glow+'/10 blur-2xl pointer-events-none"></div>'+
+        '<div class="absolute right-5 bottom-4 text-white/10 text-7xl sm:text-8xl pointer-events-none"><i class="fa-solid '+s.icon+'"></i></div>'+
+        '<div class="relative z-10 max-w-2xl">'+
+          '<div class="flex items-center gap-2 flex-wrap"><p class="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.14em] text-white/80">'+s.label+'</p><span class="text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.12em] px-2 py-0.5 rounded-full bg-white/15 border border-white/20">'+s.eyebrow+'</span></div>'+
+          '<h2 class="mt-1.5 text-[19px] sm:text-2xl leading-[1.18] font-extrabold tracking-tight">'+s.title+'</h2>'+
+          '<p class="text-[11px] sm:text-xs leading-relaxed text-white/90 mt-2 max-w-xl">'+s.desc+'</p>'+
+          '<div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-w-xl">'+s.bullets.map(b=>'<div class="flex items-start gap-1.5 text-[9px] sm:text-[10px] leading-snug text-white/90"><i class="fa-solid fa-check mt-0.5 text-white/70"></i><span>'+b+'</span></div>').join('')+'</div>'+
+          '<div class="mt-3 inline-flex items-center gap-1.5 text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/15 border border-white/20"><i class="fa-solid fa-arrow-right"></i>'+s.cta+'</div>'+
+        '</div></div>';
+    }).join('');
+    dots.innerHTML=this.data.map((s,i)=>'<button aria-label="Go to slide '+(i+1)+': '+s.title+'" onclick="HomeSlider.goTo('+i+')" class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 '+(i===this.currentIndex?'bg-white w-4 sm:w-5':'bg-white/40 hover:bg-white/70')+'"></button>').join('');
   },
-  render() {
-    const track = document.getElementById('home-slider-track');
-    const dots = document.getElementById('home-slider-dots');
-    if (!track || !dots) return;
-
-    track.innerHTML = this.data.map((s, i) => `
-      <div class="absolute inset-0 transition-opacity duration-700 ease-in-out bg-gradient-to-br ${s.bg} p-5 sm:p-6 text-white flex flex-col justify-center ${i === this.currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}">
-        <div class="absolute -right-10 -top-10 w-32 h-32 rounded-full ${s.glow}/20 blur-2xl pointer-events-none"></div>
-        <div class="absolute -left-10 -bottom-10 w-28 h-28 rounded-full ${s.glow}/10 blur-2xl pointer-events-none"></div>
-        <div class="relative z-10">
-          <p class="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-white/80">${s.label}</p>
-          <h2 class="mt-1.5 text-[17px] sm:text-xl leading-[1.25] font-extrabold tracking-tight max-w-xl">${s.title}</h2>
-          <p class="text-[11px] sm:text-xs leading-relaxed text-white/90 mt-2 max-w-lg">${s.desc}</p>
-        </div>
-      </div>
-    `).join('');
-
-    dots.innerHTML = this.data.map((_, i) => `
-      <button onclick="HomeSlider.goTo(${i})" class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${i === this.currentIndex ? 'bg-white w-4 sm:w-5' : 'bg-white/40 hover:bg-white/70'}"></button>
-    `).join('');
-  },
-  next() {
-    this.currentIndex = (this.currentIndex + 1) % this.data.length;
-    this.render();
-    this.resetAuto();
-  },
-  prev() {
-    this.currentIndex = (this.currentIndex - 1 + this.data.length) % this.data.length;
-    this.render();
-    this.resetAuto();
-  },
-  goTo(i) {
-    this.currentIndex = i;
-    this.render();
-    this.resetAuto();
-  },
-  startAuto() {
-    this.timer = setInterval(() => this.next(), 6000);
-  },
-  resetAuto() {
-    clearInterval(this.timer);
-    this.startAuto();
-  }
+  next(){this.currentIndex=(this.currentIndex+1)%this.data.length;this.render();this.resetAuto();},
+  prev(){this.currentIndex=(this.currentIndex-1+this.data.length)%this.data.length;this.render();this.resetAuto();},
+  goTo(i){if(i<0||i>=this.data.length)return;this.currentIndex=i;this.render();this.resetAuto();},
+  startAuto(){clearInterval(this.timer);this.timer=setInterval(()=>this.next(),7000);},
+  resetAuto(){this.startAuto();}
 };
 
 /* ═════════ §19 UI + ROUTER ═════════ */

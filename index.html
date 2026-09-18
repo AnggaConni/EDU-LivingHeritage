@@ -1629,105 +1629,105 @@ const MODULES = [
 /* ───────── Biologi ───────── */
 
 {
-  id:'bio-populasi', category:'Biology', title:'Pertumbuhan Bakteri', subtitle:'Fase eksponensial pembelahan sel',
-  icon:'fa-bacteria', color:'emerald', tags:['biologi','bakteri','populasi','eksponensial'],
+  id:'bio-populasi', category:'Biology', title:'Bacterial Growth', subtitle:'Exponential cell-division phase',
+  icon:'fa-bacteria', color:'emerald', tags:['biologi','bakteri','populasi','exponential growth'],
   capabilities:['calculator'], visual:'chart',
   modes:{
     learn:{ blocks:[
       {t:'h', text:'Bacteria reproduce by binary fission'},
-      {t:'p', text:'Sebagian besar bakteri berkembang biak dengan membelah satu sel menjadi dua. Jika suhunya pas dan makanannya melimpah, pertumbuhannya meledak sangat cepat (eksponensial).'},
-      {t:'formula', tex:'N = N₀ × 2^(t / g)', desc:'N₀ = populasi awal, t = waktu pengamatan, g = waktu generasi (waktu butuh untuk 1x membelah).'},
-      {t:'note', tone:'warn', text:'Di dunia nyata, pertumbuhan eksponensial ini akan berhenti saat nutrisi habis atau tempatnya penuh (disebut fase stasioner).'}
+      {t:'p', text:'Most bacteria reproduce by splitting one cell into two. When conditions are favorable and nutrients are abundant, the population can grow rapidly and exponentially.'},
+      {t:'formula', tex:'N = N₀ × 2^(t / g)', desc:'N₀ = initial population, t = observation time, g = generation time (time required for one division).'},
+      {t:'note', tone:'warn', text:'In the real world, exponential growth eventually stops when nutrients are depleted or space becomes limited (the stationary phase).'}
     ]},
     calculate:{
       inputs:[
-        { id:'N0', label:'Populasi awal (jumlah sel)', default:10, min:1, step:1 },
-        { id:'g', label:'Time generasi (menit)', default:20, min:1, step:1 },
-        { id:'t', label:'Time pengamatan (menit)', default:120, min:0, step:10 }
+        { id:'N0', label:'Initial population (cells)', default:10, min:1, step:1 },
+        { id:'g', label:'Generation time (minutes)', default:20, min:1, step:1 },
+        { id:'t', label:'Observation time (minutes)', default:120, min:0, step:10 }
       ],
       outputs:[
-        { id:'siklus', label:'Jumlah siklus pembelahan', formula:{expr:'t/g'}, decimals:1 },
-        { id:'N', label:'Populasi akhir (sel)', formula:{expr:'N0 * 2^(t/g)'}, format:'int', hint:'Perhatikan betapa cepat angkanya meledak seiring berjalannya waktu.' }
+        { id:'siklus', label:'Number of division cycles', formula:{expr:'t/g'}, decimals:1 },
+        { id:'N', label:'Final population (cells)', formula:{expr:'N0 * 2^(t/g)'}, format:'int', hint:'Notice how quickly the number grows as time passes.' }
       ],
-      chart:{ title:'Kurva Pertumbuhan Bakteri', xLabel:'Time (menit)', yLabel:'Jumlah Sel',
+      chart:{ title:'Bacterial Growth Curve', xLabel:'Time (minutes)', yLabel:'Cell Count',
         x:{ id:'t', from:0, to:180, steps:18 },
         series:[{ label:'Populasi (N)', expr:'N0 * 2^(t/g)', color:'#10b981' }] }
     },
     everyday:{ items:[
-      { q:'Jika kamu punya 1 bakteri E. coli (membelah tiap 20 menit), berapa jumlahnya setelah 24 jam?',
+      { q:'If you start with 1 E. coli bacterium that divides every 20 minutes, how many would there be after 24 hours?',
         options:['Sekitar 1.000 sel','Lebih dari 1 miliar sel','Cukup untuk menutupi seluruh permukaan Bumi'],
-        answer:2, concepts:['eksponensial','batas ekologi'],
-        explain:'Secara matematika murni, 1 sel setelah 24 jam (72 siklus) menjadi 2^72 sel (4,7 x 10^21). Massnya mencapai ribuan ton! Tapi hal ini unavailable terjadi karena di dunia nyata mereka kehabisan makanan sebelum mencapai jumlah itu.',
-        tryIt:'Masuk ke tab Calculate, ubah populasi awal jadi 1, dan waktu pengamatan jadi 1440 menit (24 jam).' }
+        answer:2, concepts:['exponential growth','ecological limits'],
+        explain:'In pure mathematics, 1 cell after 24 hours (72 cycles) becomes 2^72 cells (4.7 × 10^21). The mass would reach thousands of tonnes. This does not happen in reality because resources run out long before that.',
+        tryIt:'Open the Calculate tab, set the initial population to 1, and set observation time to 1440 minutes (24 hours).' }
     ]}
   }
 }, // <--- JANGAN LUPA KOMA INI
 
 // --- MODUL BIOLOGI 2: FISIOLOGI (KALORI & METABOLISME) ---
 {
-  id:'bio-bmr', category:'Biology', title:'Metabolisme & BMR', subtitle:'Calculate kalori untuk bertahan hidup',
+  id:'bio-bmr', category:'Biology', title:'Metabolism & BMR', subtitle:'Calculate calories for basic survival',
   icon:'fa-heart-pulse', color:'rose', tags:['biologi','manusia','kalori','kesehatan'],
   capabilities:['calculator'], visual:'chart',
   modes:{
     learn:{ blocks:[
-      {t:'h', text:'Tubuhmu Membakar Kalori Bahkan Saat Tidur'},
-      {t:'p', text:'BMR (Basal Metabolic Rate) adalah jumlah kalori minimum yang dibutuhkan tubuhmu untuk sekadar hidup (bernapas, memompa darah, kerja otak, suhu tubuh) tanpa melakukan aktivitas fisik apapun.'},
+      {t:'h', text:'Your Body Burns Calories Even While You Sleep'},
+      {t:'p', text:'BMR (Basal Metabolic Rate) is the minimum energy your body needs to sustain basic functions such as breathing, circulation, brain activity, and temperature regulation at rest.'},
       {t:'formula', tex:'Pria: 10W + 6.25H - 5A + 5', desc:'W = berat (kg), H = tinggi (cm), A = umur (tahun)'},
       {t:'formula', tex:'Wanita: 10W + 6.25H - 5A - 161', desc:'Persamaan metabolisme Mifflin-St Jeor.'},
-      {t:'note', tone:'info', text:'Tahukah kamu? Otak manusia menghabiskan sekitar 20% dari total kalori harian, meskipun beratnya hanya 2% dari tubuh!'}
+      {t:'note', tone:'info', text:'Did you know? The human brain uses roughly 20% of daily energy while representing only about 2% of body mass!'}
     ]},
     calculate:{
       inputs:[
-        { id:'bb', label:'Berat Badan (kg)', default:60, min:20, step:1 },
-        { id:'tb', label:'Tinggi Badan (cm)', default:165, min:100, step:1 },
-        { id:'umur', label:'Umur (tahun)', default:20, type:'range', min:10, max:80, step:1 },
-        { id:'gender', label:'Jenis Kelamin', default:5, type:'select', options:[{label:'Pria', value:5}, {label:'Wanita', value:-161}] }
+        { id:'bb', label:'Body Weight (kg)', default:60, min:20, step:1 },
+        { id:'tb', label:'Height (cm)', default:165, min:100, step:1 },
+        { id:'umur', label:'Age (years)', default:20, type:'range', min:10, max:80, step:1 },
+        { id:'gender', label:'Sex', default:5, type:'select', options:[{label:'Male', value:5}, {label:'Female', value:-161}] }
       ],
       outputs:[
-        { id:'bmr', label:'BMR (Kalori Dasar / Hari)', formula:{expr:'10*bb + 6.25*tb - 5*umur + gender'}, unit:'Kkal', decimals:0 },
-        { id:'ringan', label:'TDEE Aktivitas Ringan (Jarang olahraga)', formula:{expr:'(10*bb + 6.25*tb - 5*umur + gender) * 1.375'}, unit:'Kkal', decimals:0 },
-        { id:'berat', label:'TDEE Aktivitas Berat (Olahraga rutin)', formula:{expr:'(10*bb + 6.25*tb - 5*umur + gender) * 1.725'}, unit:'Kkal', decimals:0, hint:'Jika makan kalori lebih banyak dari TDEE, tubuh akan menyimpannya sebagai lemak.' }
+        { id:'bmr', label:'BMR (Base Calories / Day)', formula:{expr:'10*bb + 6.25*tb - 5*umur + gender'}, unit:'Kkal', decimals:0 },
+        { id:'ringan', label:'TDEE Light Activity (Little Exercise)', formula:{expr:'(10*bb + 6.25*tb - 5*umur + gender) * 1.375'}, unit:'Kkal', decimals:0 },
+        { id:'berat', label:'TDEE Heavy Activity (Regular Exercise)', formula:{expr:'(10*bb + 6.25*tb - 5*umur + gender) * 1.725'}, unit:'Kkal', decimals:0, hint:'Eating more calories than TDEE can result in excess energy being stored as fat.' }
       ],
-      chart:{ title:'Penurunan BMR vs Bertambahnya Umur', xLabel:'Umur (Tahun)', yLabel:'BMR (Kkal)',
+      chart:{ title:'BMR vs Age', xLabel:'Age (Years)', yLabel:'BMR (kcal)',
         x:{ id:'umur', from:15, to:75, steps:15 },
         series:[{ label:'BMR', expr:'10*bb + 6.25*tb - 5*umur + gender', color:'#e11d48' }] }
     },
     everyday:{ items:[
-      { q:'Kenapa orang yang lebih berotot bisa makan lebih banyak tanpa cepat gemuk?',
+      { q:'Why can people with more muscle sometimes eat more without gaining weight as quickly?',
         options:['Karena otot langsung menyerap lemak','Karena jaringan otot membutuhkan lebih banyak kalori untuk dipelihara (BMR lebih tinggi) dibanding lemak','Karena orang berotot punya pencernaan lebih cepat'],
-        answer:1, concepts:['metabolisme','otot'],
-        explain:'Jaringan otot sangat aktif secara metabolik. Artinya, hanya untuk mempertahankan keberadaan otot tersebut tanpa melakukan apapun, tubuh harus membakar kalori ekstra setiap hari.',
-        tryIt:'Di tab Calculate, ubah umur dari 20 ke 60 pada grafik. Lihat bagaimana kebutuhan kalori tubuh otomatis menurun seiring menuanya sel.' }
+        answer:1, concepts:['metabolism','muscle'],
+        explain:'Muscle tissue is metabolically active, so maintaining more lean tissue generally requires additional energy even at rest.',
+        tryIt:'In the Calculate tab, change age from 20 to 60 and observe how the estimated energy requirement changes with age.' }
     ]}
   }
 },
 
 // --- MODUL BIOLOGI 3: GENETIKA (HARDY-WEINBERG) ---
 {
-  id:'bio-genetika', category:'Biology', title:'Genetika Populasi', subtitle:'Hukum Hardy-Weinberg & DNA',
+  id:'bio-genetika', category:'Biology', title:'Population Genetics', subtitle:'Hardy-Weinberg principle & DNA',
   icon:'fa-dna', color:'fuchsia', tags:['biologi','genetika','DNA','evolusi'],
   capabilities:['calculator'], visual:'none',
   modes:{
     learn:{ blocks:[
       {t:'h', text:'The Mathematics Behind Inheritance'},
-      {t:'p', text:'Hukum Hardy-Weinberg digunakan untuk menghitung frekuensi genotipe dalam suatu populasi yang stabil. Ini memungkinkan kita menebak berapa banyak orang normal yang diam-diam membawa gen penyakit keturunan (Carrier).'},
-      {t:'formula', tex:'p + q = 1', desc:'p = frekuensi alel dominan, q = frekuensi alel resesif.'},
-      {t:'formula', tex:'p² + 2pq + q² = 1', desc:'p² = homozigot dominan, 2pq = heterozigot (Carrier), q² = homozigot resesif.'},
+      {t:'p', text:'The Hardy-Weinberg principle is used to calculate genotype frequencies in a stable population. It can help estimate how many phenotypically unaffected individuals may carry a recessive allele.'},
+      {t:'formula', tex:'p + q = 1', desc:'p = dominant-allele frequency, q = recessive-allele frequency.'},
+      {t:'formula', tex:'p² + 2pq + q² = 1', desc:'p² = homozygous dominant, 2pq = heterozygous, q² = homozygous recessive.'},
       {t:'list', items:['Banyak dipakai di kedokteran untuk memprediksi sebaran penyakit genetik seperti Albino atau Buta Warna.']}
     ]},
     calculate:{
       inputs:[
-        { id:'q2', label:'Persentase Individu Resesif (q² dalam %)', default:4, type:'range', min:0.1, max:99, step:0.1 }
+        { id:'q2', label:'Percentage of Recessive Individuals (q², %)', default:4, type:'range', min:0.1, max:99, step:0.1 }
       ],
       outputs:[
-        { id:'q', label:'Frekuensi Alel Resesif (q)', formula:{expr:'sqrt(q2/100)'}, decimals:4 },
-        { id:'p', label:'Frekuensi Alel Dominan (p)', formula:{expr:'1 - sqrt(q2/100)'}, decimals:4 },
-        { id:'p2', label:'Persen Murni Dominan (p²)', formula:{expr:'(1 - sqrt(q2/100))^2 * 100'}, unit:'%', decimals:1 },
-        { id:'hetero', label:'Persen Pembawa Sifat / Carrier (2pq)', formula:{expr:'2 * (1 - sqrt(q2/100)) * sqrt(q2/100) * 100'}, unit:'%', decimals:1, hint:'Inilah yang berbahaya. Individu 2pq tampak luar normal, tapi mewariskan gen resesif ke anaknya.' }
+        { id:'q', label:'Recessive Allele Frequency (q)', formula:{expr:'sqrt(q2/100)'}, decimals:4 },
+        { id:'p', label:'Dominant Allele Frequency (p)', formula:{expr:'1 - sqrt(q2/100)'}, decimals:4 },
+        { id:'p2', label:'Homozygous Dominant (%)', formula:{expr:'(1 - sqrt(q2/100))^2 * 100'}, unit:'%', decimals:1 },
+        { id:'hetero', label:'Carrier Frequency (2pq, %)', formula:{expr:'2 * (1 - sqrt(q2/100)) * sqrt(q2/100) * 100'}, unit:'%', decimals:1, hint:'Heterozygous carriers may show no recessive phenotype but can pass the recessive allele to their offspring.' }
       ]
     },
     challenge:{ questions:[
-      { q:'Dalam populasi 1000 orang, terdapat 90 orang kidal (kidal adalah sifat resesif). Berapa nilai frekuensi alel kidal (q)?', type:'numeric', answer:0.3, tol:0.01, xp:15, hint:'Persentase resesif (q²) = 90/1000 = 0.09. Ingat, q adalah akar dari q².' }
+      { q:'In a population of 1,000 people, 90 are left-handed (treat left-handedness as a recessive trait for this exercise). What is the allele frequency q?', type:'numeric', answer:0.3, tol:0.01, xp:15, hint:'The recessive proportion (q²) = 90/1000 = 0.09. Remember: q is the square root of q².' }
     ]}
   }
 },

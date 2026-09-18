@@ -161,11 +161,11 @@
       "Visualization"
     ],
     "keywords": [
+      "Living Heritage",
+      "Intangible Cultural Heritage",
+      "Heritage Education",
       "STEM",
-      "Science Education",
-      "Science Calculator",
-      "Scientific Instruments",
-      "Mobile Science Lab"
+      "Inquiry-Based Learning"
     ]
   }
   </script>
@@ -1393,7 +1393,7 @@ const CameraLab = {
   },
   startTracking(){ if(!this.color){ UI.toast('Choose a color bola dulu','amber'); return; }
     this.samples=[]; this.tracking=true; this.t0=performance.now(); $('cam-status').textContent='● MEREKAM'; },
-  stopTracking(){ this.tracking=false; $('cam-status').textContent=`Selesai · ${this.samples.length} titik`; },
+  stopTracking(){ this.tracking=false; $('cam-status').textContent=`Complete · ${this.samples.length} points`; },
   analyze(){
     if(this.samples.length<6){ UI.toast('Data kurang, rekam lagi','amber'); return null; }
     if(!this.calib.pxPerM){ UI.toast('Butuh kalibrasi','amber'); return null; }
@@ -2403,7 +2403,7 @@ learn: {
 /* ───────── FISIKA ───────── */
 {
   id:'phys-projectile', category:'Physics', title:'Projectile Motion', subtitle:'Calculate → simulate → measure with the camera',
-  icon:'fa-baseball', color:'orange', tags:['parabola','proyektil','kinematika','kamera'],
+  icon:'fa-baseball', color:'orange', tags:['parabola','projectile','kinematics','camera'],
   capabilities:['calculator','simulation','camera','game'], visual:'sim',
   safety:{ level:'medium', warnings:[
     {severity:'warning', text:'Throw the ball only in an open area. Keep away from glass, other people, and traffic.'},
@@ -2705,7 +2705,7 @@ learn: {
 },
 {
   id:'phys-lens', category:'Physics', title:'Lenses & Optics', subtitle:'Interactive ray diagram',
-  icon:'fa-glasses', color:'teal', tags:['optik','lensa','cahaya','bayangan'],
+  icon:'fa-glasses', color:'teal', tags:['optics','lenses','light','images'],
   capabilities:['calculator','simulation'], visual:'sim',
   modes:{
     learn:{ blocks:[
@@ -2794,7 +2794,7 @@ learn: {
 /* ───────── KIMIA ───────── */
 {
   id:'chem-solution', category:'Chemistry', title:'Moles & Concentration', subtitle:'Molarity, dilution, ppm',
-  icon:'fa-vial', color:'emerald', tags:['kimia','mol','molaritas','larutan'],
+  icon:'fa-vial', color:'emerald', tags:['chemistry','moles','molarity','solutions'],
   capabilities:['calculator'], visual:'chart',
   modes:{
     learn:{ blocks:[
@@ -2832,7 +2832,7 @@ learn: {
 },
 {
   id:'chem-gas', category:'Chemistry', title:'Ideal Gas (PV = nRT)', subtitle:'Pressure, volume, temperature',
-  icon:'fa-wind', color:'blue', tags:['gas','tekanan','suhu','termodinamika'],
+  icon:'fa-wind', color:'blue', tags:['gas','pressure','temperature','thermodynamics'],
   capabilities:['calculator'], visual:'chart',
   modes:{
     learn:{ blocks:[
@@ -2968,7 +2968,7 @@ learn: {
 /* ───────── AR LAB ───────── */
 {
   id:'ar-measure', category:'AR Lab', title:'AR & Camera Measurement Tools', subtitle:'Distance, height, angle — with fallbacks',
-  icon:'fa-ruler-combined', color:'fuchsia', tags:['ar','kamera','pengukuran','klinometer'],
+  icon:'fa-ruler-combined', color:'fuchsia', tags:['ar','camera','measurement','clinometer'],
   capabilities:['ar','depth','camera','orientation'], visual:'camera',
   safety:{ level:'medium', warnings:[
     {severity:'warning', text:'Watch your surroundings when pointing the camera. Do not walk while looking at the screen.'},
@@ -3334,7 +3334,7 @@ const Experiments = {
             <p id="ex-${k}" class="text-sm font-black text-slate-700 num">—</p></div>`).join('')}
         </div>
         <div class="flex gap-2">
-          <button id="ex-start" onclick="Experiments.sensorStart('${cfg.sensor}','${cfg.field}')" class="flex-1 bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2.5 rounded-xl text-sm shadow"><i class="fa-solid fa-play mr-1"></i>Mulai</button>
+          <button id="ex-start" onclick="Experiments.sensorStart('${cfg.sensor}','${cfg.field}')" class="flex-1 bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2.5 rounded-xl text-sm shadow"><i class="fa-solid fa-play mr-1"></i>Start</button>
           <button onclick="Experiments.sensorStop(${JSON.stringify(cfg).replace(/"/g,'&quot;')})" class="flex-1 bg-slate-100 text-slate-700 font-bold py-2.5 rounded-xl text-sm"><i class="fa-solid fa-stop mr-1"></i>Stop & analisis</button>
         </div>
         <div class="flex gap-2 mt-2">
@@ -3397,7 +3397,7 @@ const Experiments = {
           <p id="tm-count" class="text-[11px] text-slate-400 mt-1">0 lap</p>
         </div>
         <div class="flex gap-2 mt-3">
-          <button onclick="Timer.toggle()" id="tm-btn" class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold py-2.5 rounded-xl text-sm shadow">Mulai</button>
+          <button onclick="Timer.toggle()" id="tm-btn" class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold py-2.5 rounded-xl text-sm shadow">Start</button>
           <button onclick="Timer.lap()" class="flex-1 bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-sm">Lap</button>
           <button onclick="Timer.reset()" class="px-4 bg-slate-100 text-slate-600 font-bold rounded-xl text-sm"><i class="fa-solid fa-rotate-left"></i></button>
         </div>
@@ -3439,7 +3439,7 @@ const Experiments = {
       btn('<i class="fa-solid fa-eye-dropper mr-1"></i>Choose a color','CameraLab.setMode(\'pick\')','violet')+
       btn('<i class="fa-solid fa-circle mr-1"></i>Rekam','CameraLab.startTracking()','rose')+
       btn('<i class="fa-solid fa-stop mr-1"></i>Stop','CameraLab.stopTracking()','slate')+
-      btn('<i class="fa-solid fa-chart-line mr-1"></i>Analisis','Experiments.camAnalyze()','indigo')+
+      btn('<i class="fa-solid fa-chart-line mr-1"></i>Analyze','Experiments.camAnalyze()','indigo')+
       btn('<i class="fa-solid fa-arrows-left-right mr-1"></i>Ukur','CameraLab.setMode(\'measure\')','cyan')+
       btn('<i class="fa-solid fa-drafting-compass mr-1"></i>Angle','CameraLab.setMode(\'angle\')','amber');
     CameraLab.camCfg = cfg;
@@ -3677,7 +3677,7 @@ const CUSTOM_VIEWS = {
       </div>
     </div>
     <div class="card p-5">
-      <h3 class="font-bold text-slate-700 text-sm mb-3"><i class="fa-solid fa-crosshairs text-violet-500 mr-1.5"></i>Evaluasi titik</h3>
+      <h3 class="font-bold text-slate-700 text-sm mb-3"><i class="fa-solid fa-crosshairs text-violet-500 mr-1.5"></i>Point Evaluation</h3>
       <div class="flex gap-2">
         <input id="g-x" type="number" value="2" step="0.1" oninput="Grapher.evalAt()" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold num">
         <button onclick="Grapher.evalAt()" class="bg-violet-600 text-white font-bold px-4 rounded-xl text-sm">Calculate</button>
@@ -3916,7 +3916,7 @@ const StatsView = {
     }
     const s=Stats.describe(d.vals); if(!s) return;
     out.innerHTML = `<div class="card p-5">
-      <h3 class="font-bold text-slate-700 text-sm mb-3"><i class="fa-solid fa-calculator text-cyan-500 mr-1.5"></i>Ringkasan (n = ${s.n})</h3>
+      <h3 class="font-bold text-slate-700 text-sm mb-3"><i class="fa-solid fa-calculator text-cyan-500 mr-1.5"></i>Summary (n = ${s.n})</h3>
       <div class="grid grid-cols-2 gap-2">
         ${[['Rata-rata',s.mean],['Median',s.median],['Modus',s.mode.length?s.mode.join(', '):'—'],['Jangkauan',s.range],
            ['Minimum',s.min],['Maksimum',s.max],['Variansi (s²)',s.varS],['Std dev (s)',s.sdS],

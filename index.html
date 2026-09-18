@@ -1515,14 +1515,14 @@ const MODULES = [
 
 /* ───────── MATEMATIKA ───────── */
 {
-  id:'math-scicalc', category:'Matematika', title:'Kalkulator Sains', subtitle:'Parser ekspresi, konstanta, DEG/RAD/GRAD',
+  id:'math-scicalc', category:'Mathematics', title:'Science Calculator', subtitle:'Expression parser, constants, DEG/RAD/GRAD',
   icon:'fa-calculator', color:'indigo', tags:['kalkulator','trigonometri','logaritma'],
   capabilities:['calculator'], visual:'none',
   modes:{
     calculate:{ custom:'sciCalc' },
     learn:{ blocks:[
       {t:'h', text:'A calculator is a thinking tool, not a cheating tool'},
-      {t:'p', text:'Kalkulator ini unavailable memakai <code>eval()</code>. Ekspresimu dipecah jadi token → dirakit jadi pohon sintaks (AST) → baru dihitung. Sama seperti cara komputer memahami bahasa.'},
+      {t:'p', text:'This calculator does not use <code>eval()</code>. Your expression is split into tokens → assembled into a syntax tree (AST) → then evaluated, similar to how computers process language.'},
       {t:'formula', tex:'sin(45)^2 + sqrt(25)', desc:'Try this expression, then switch DEG ↔ RAD and observe how the result changes.'},
       {t:'list', items:['Fungsi: sin cos tan asin acos atan ln log sqrt cbrt abs exp min max hypot nCr nPr','Konstanta: pi e phi g c G h k Na R','Faktorial: 5! · pangkat: 2^10 · perkalian implisit: 2pi, 3(4+1)']},
       {t:'note', tone:'tip', text:'Ans stores the last result — use it for chained calculations.'}
@@ -1530,21 +1530,21 @@ const MODULES = [
   }
 },
 {
-  id:'math-graph', category:'Matematika', title:'Kalkulator Grafik', subtitle:'y = f(x), banding beberapa fungsi',
+  id:'math-graph', category:'Mathematics', title:'Graphing Calculator', subtitle:'y = f(x), compare multiple functions',
   icon:'fa-chart-line', color:'violet', tags:['grafik','fungsi','aljabar'],
   capabilities:['calculator'], visual:'chart',
   modes:{
     explore:{ custom:'grapher' },
     learn:{ blocks:[
-      {t:'h', text:'Fungsi = mesin angka'},
-      {t:'p', text:'Masukkan x, keluar y. Grafik adalah "foto" dari semua pasangan (x, y) yang mungkin. Bentuk grafik langsung memberi tahu sifat fungsinya.'},
+      {t:'h', text:'A function is a number machine'},
+      {t:'p', text:'Enter x and get y. A graph is a snapshot of all possible (x, y) pairs. Its shape reveals the behavior of the function.'},
       {t:'kv', items:[['y = 2x + 4','garis lurus (linear)'],['y = x^2','parabola (kuadrat)'],['y = sin(x)','gelombang (periodik)'],['y = e^x','ledakan (eksponensial)'],['y = 1/x','hiperbola (asimtot)']]},
-      {t:'note', tone:'info', text:'Ubah satu angka pada rumus, lihat grafik bergeser. Itu inti dari "memahami parameter".'}
+      {t:'note', tone:'info', text:'Change one value in the formula and watch the graph shift. That is the essence of understanding parameters.'}
     ]}
   }
 },
 {
-  id:'math-stats', category:'Matematika', title:'Statistika & Regresi', subtitle:'Rata-rata, SD, histogram, garis terbaik',
+  id:'math-stats', category:'Mathematics', title:'Statistics & Regression', subtitle:'Mean, SD, histogram, best-fit line',
   icon:'fa-chart-simple', color:'cyan', tags:['statistika','data','regresi'],
   capabilities:['calculator'], visual:'chart',
   modes:{
@@ -1552,65 +1552,65 @@ const MODULES = [
     learn:{ blocks:[
       {t:'h', text:'Raw data → a story'},
       {t:'list', items:['<b>Mean</b>: pusat data, tapi mudah tertipu outlier','<b>Median</b>: nilai tengah, tahan outlier','<b>Standar deviasi</b>: seberapa "menyebar" datanya','<b>Regresi</b>: garis terbaik untuk pasangan (x, y)']},
-      {t:'formula', tex:'σ = √( Σ(xᵢ − x̄)² / n )', desc:'Semakin besar σ, semakin unavailable konsisten hasil pengukuranmu.'},
-      {t:'note', tone:'tip', text:'Setelah eksperimen sensor, tempel datanya di sini untuk menghitung keunavailablepastian pengukuranmu.'}
+      {t:'formula', tex:'σ = √( Σ(xᵢ − x̄)² / n )', desc:'The larger σ is, the less consistent your measurements are.'},
+      {t:'note', tone:'tip', text:'After a sensor experiment, bring the data here to explore measurement uncertainty.'}
     ]},
     everyday:{ items:[
-      { q:'Nilai rata-rata kelas 70, tapi kamu dapat 70 dan merasa "di bawah rata-rata". Mungkinkah?',
+      { q:'The class average is 70, but you scored 70 and feel "below average." Is that possible?',
         options:['Tidak mungkin','Mungkin, jika sebagian besar siswa bernilai lebih tinggi dari 70','Hanya jika gurunya salah hitung'],
-        answer:1, concepts:['mean vs median','distribusi miring'],
-        explain:'Mean bisa ditarik turun oleh beberapa nilai sangat rendah. Bisa jadi median kelas 78 walau mean 70 — jadi 70 tetap di bawah "mayoritas".',
-        tryIt:'Coba data: 20, 25, 78, 79, 80, 82 → hitung mean & median di tab Calculate.' }
+        answer:1, concepts:['mean vs median','skewed distribution'],
+        explain:'The mean can be pulled down by a few very low values. The class median could be 78 even when the mean is 70 — so 70 can still be below the majority.',
+        tryIt:'Try this data: 20, 25, 78, 79, 80, 82 → calculate the mean and median in the Calculate tab.' }
     ]}
   }
 },
 {
-  id:'math-units', category:'Matematika', title:'Konversi Satuan', subtitle:'17 keluarga satuan, basis SI',
+  id:'math-units', category:'Mathematics', title:'Unit Conversion', subtitle:'17 unit families, SI-based',
   icon:'fa-arrow-right-arrow-left', color:'teal', tags:['satuan','konversi','SI'],
   capabilities:['calculator'], visual:'none',
   modes:{
     calculate:{ custom:'unitConverter' },
     learn:{ blocks:[
       {t:'h', text:'Numbers without units have little meaning'},
-      {t:'p', text:'Semua nilai di app ini dinormalkan dulu ke satuan basis SI, dihitung, baru ditampilkan ulang ke satuan pilihanmu. Itu sebabnya 72 km/jam bisa langsung dipakai dalam rumus yang butuh m/s.'},
-      {t:'formula', tex:'72 km/jam × (1000 m / 3600 s) = 20 m/s', desc:'Konversi = mengalikan dengan "1" dalam bentuk pintar.'},
-      {t:'note', tone:'warn', text:'Temperature bukan sekadar perkalian: °C → K butuh penjumlahan 273.15 (ada offset).'}
+      {t:'p', text:'All values in the app are first normalized to SI base units, calculated, then displayed in your chosen units. That is why 72 km/h can be used directly in a formula that requires m/s.'},
+      {t:'formula', tex:'72 km/h × (1000 m / 3600 s) = 20 m/s', desc:'Conversion = multiplying by "1" in a clever form.'},
+      {t:'note', tone:'warn', text:'Temperature is not just multiplication: °C → K requires adding 273.15 (there is an offset).'}
     ]}
   }
 },
 {
-  id:'math-vector', category:'Matematika', title:'Vektor 3D', subtitle:'Dot, cross, magnitudo, sudut',
+  id:'math-vector', category:'Mathematics', title:'3D Vectors', subtitle:'Dot product, cross product, magnitude, angle',
   icon:'fa-arrows-up-down-left-right', color:'fuchsia', tags:['vektor','geometri','fisika'],
   capabilities:['calculator'], visual:'none',
   modes:{
     calculate:{ custom:'vector' },
     learn:{ blocks:[
-      {t:'h', text:'Vektor = besar + arah'},
+      {t:'h', text:'A vector = magnitude + direction'},
       {t:'kv', items:[['a · b','skalar; nol berarti tegak lurus'],['a × b','vektor baru, tegak lurus keduanya'],['|a|','panjang vektor'],['â','vektor satuan (panjang 1)']]},
-      {t:'p', text:'Dipakai untuk gaya, kecepatan, medan listrik, grafika 3D, sampai arah kiblat.'}
+      {t:'p', text:'Vectors are used for forces, velocity, electric fields, 3D graphics, and navigation.'}
     ]}
   }
 },
 {
-  id:'math-social', category:'Matematika', title:'Aritmatika Sosial', subtitle:'Diskon, pajak, bunga, untung-rugi',
+  id:'math-social', category:'Mathematics', title:'Social Arithmetic', subtitle:'Discounts, tax, interest, profit and loss',
   icon:'fa-percent', color:'rose', tags:['persen','diskon','bunga','uang'],
   capabilities:['calculator'], visual:'chart',
   modes:{
     calculate:{
       inputs:[
-        { id:'harga', label:'Harga asli (Rp)', default:150000, min:0, step:1000 },
-        { id:'diskon', label:'Diskon (%)', default:20, type:'range', min:0, max:90, step:1 },
-        { id:'pajak', label:'PPN (%)', default:11, type:'range', min:0, max:20, step:1 }
+        { id:'harga', label:'Original price (IDR)', default:150000, min:0, step:1000 },
+        { id:'diskon', label:'Discount (%)', default:20, type:'range', min:0, max:90, step:1 },
+        { id:'pajak', label:'VAT (%)', default:11, type:'range', min:0, max:20, step:1 }
       ],
       outputs:[
-        { id:'potongan', label:'Potongan harga', formula:{op:'percentOf', args:['harga','diskon']}, format:'currency' },
-        { id:'setelah', label:'Harga setelah diskon', formula:{op:'subtract', args:['harga','potongan']}, format:'currency' },
+        { id:'potongan', label:'Discount amount', formula:{op:'percentOf', args:['harga','diskon']}, format:'currency' },
+        { id:'setelah', label:'Price after discount', formula:{op:'subtract', args:['harga','potongan']}, format:'currency' },
         { id:'ppn', label:'PPN', formula:{op:'percentOf', args:['setelah','pajak']}, format:'currency' },
-        { id:'bayar', label:'Total bayar', formula:{expr:'setelah + ppn'}, format:'currency', hint:'Diskon dihitung lebih dulu, lalu pajak dikenakan pada harga setelah diskon.' }
+        { id:'bayar', label:'Total payment', formula:{expr:'setelah + ppn'}, format:'currency', hint:'The discount is applied first, then tax is calculated on the discounted price.' }
       ],
       chart:{ title:'Total bayar vs besarnya diskon', xLabel:'Diskon (%)', yLabel:'Rupiah',
         x:{ id:'diskon', from:0, to:90, steps:18 },
-        series:[{ label:'Total bayar', expr:'(harga - harga*diskon/100) * (1 + pajak/100)', color:'#e11d48' }] }
+        series:[{ label:'Total payment', expr:'(harga - harga*diskon/100) * (1 + pajak/100)', color:'#e11d48' }] }
     },
     everyday:{ items:[
       { q:'Mana lebih murah: diskon 50% lalu tambahan 20%, atau langsung diskon 70%?',
@@ -1629,7 +1629,7 @@ const MODULES = [
 /* ───────── Biologi ───────── */
 
 {
-  id:'bio-populasi', category:'Biologi', title:'Pertumbuhan Bakteri', subtitle:'Fase eksponensial pembelahan sel',
+  id:'bio-populasi', category:'Biology', title:'Pertumbuhan Bakteri', subtitle:'Fase eksponensial pembelahan sel',
   icon:'fa-bacteria', color:'emerald', tags:['biologi','bakteri','populasi','eksponensial'],
   capabilities:['calculator'], visual:'chart',
   modes:{
@@ -1665,7 +1665,7 @@ const MODULES = [
 
 // --- MODUL BIOLOGI 2: FISIOLOGI (KALORI & METABOLISME) ---
 {
-  id:'bio-bmr', category:'Biologi', title:'Metabolisme & BMR', subtitle:'Calculate kalori untuk bertahan hidup',
+  id:'bio-bmr', category:'Biology', title:'Metabolisme & BMR', subtitle:'Calculate kalori untuk bertahan hidup',
   icon:'fa-heart-pulse', color:'rose', tags:['biologi','manusia','kalori','kesehatan'],
   capabilities:['calculator'], visual:'chart',
   modes:{
@@ -1704,7 +1704,7 @@ const MODULES = [
 
 // --- MODUL BIOLOGI 3: GENETIKA (HARDY-WEINBERG) ---
 {
-  id:'bio-genetika', category:'Biologi', title:'Genetika Populasi', subtitle:'Hukum Hardy-Weinberg & DNA',
+  id:'bio-genetika', category:'Biology', title:'Genetika Populasi', subtitle:'Hukum Hardy-Weinberg & DNA',
   icon:'fa-dna', color:'fuchsia', tags:['biologi','genetika','DNA','evolusi'],
   capabilities:['calculator'], visual:'none',
   modes:{
@@ -1734,7 +1734,7 @@ const MODULES = [
 
 // --- MODUL CRAFTING 1: PIROLISIS & BIOCHAR ---
 {
-  id:'env-pyrolysis', category:'Iklim & Lingkungan', title:'Pirolisis & Biochar', subtitle:'Membakar kayu tanpa oksigen',
+  id:'env-pyrolysis', category:'Climate & Environment', title:'Pirolisis & Biochar', subtitle:'Membakar kayu tanpa oksigen',
   icon:'fa-fire-flame-curved', color:'orange', tags:['lingkungan','iklim','karbon','arang','crafting'],
   capabilities:['calculator'], visual:'chart',
   safety:{ level:'high', warnings:[
@@ -1882,7 +1882,7 @@ const MODULES = [
 
 // --- MODUL CRAFTING 2: FILTER AIR SEDERHANA ---
 {
-  id:'env-waterfilter', category:'Iklim & Lingkungan', title:'Filter Air Alami', subtitle:'Crafting sistem penjernih air',
+  id:'env-waterfilter', category:'Climate & Environment', title:'Filter Air Alami', subtitle:'Crafting sistem penjernih air',
   icon:'fa-droplet', color:'cyan', tags:['lingkungan','air','filter','crafting','adsorpsi'],
   capabilities:['calculator'], visual:'none',
   safety:{ level:'medium', warnings:[
@@ -2053,7 +2053,7 @@ const MODULES = [
 
 // --- MODUL FISIKA: TERMODINAMIKA & THERMAL PASTE ---
 {
-  id:'phys-thermo-cpu', category:'Fisika', title:'Termodinamika Thermal Paste', subtitle:'Hukum Fourier pada CPU komputer',
+  id:'phys-thermo-cpu', category:'Physics', title:'Termodinamika Thermal Paste', subtitle:'Hukum Fourier pada CPU komputer',
   icon:'fa-microchip', color:'rose', tags:['termodinamika','kalor','suhu','cpu','komputer'],
   capabilities:['calculator'], visual:'chart',
   modes:{
@@ -2402,7 +2402,7 @@ learn: {
 
 /* ───────── FISIKA ───────── */
 {
-  id:'phys-projectile', category:'Fisika', title:'Gerak Parabola', subtitle:'Calculate → simulasi → ukur pakai kamera',
+  id:'phys-projectile', category:'Physics', title:'Gerak Parabola', subtitle:'Calculate → simulasi → ukur pakai kamera',
   icon:'fa-baseball', color:'orange', tags:['parabola','proyektil','kinematika','kamera'],
   capabilities:['calculator','simulation','camera','game'], visual:'sim',
   safety:{ level:'medium', warnings:[
@@ -2475,7 +2475,7 @@ learn: {
   }
 },
 {
-  id:'phys-freefall', category:'Fisika', title:'Jatuh Bebas & Gravitasi', subtitle:'Ukur g dengan sensor HP',
+  id:'phys-freefall', category:'Physics', title:'Jatuh Bebas & Gravitasi', subtitle:'Ukur g dengan sensor HP',
   icon:'fa-arrow-down-long', color:'blue', tags:['gravitasi','jatuh bebas','akselerometer'],
   capabilities:['calculator','simulation','motion'], visual:'sim',
   safety:{ level:'medium', warnings:[{severity:'critical', text:'JANGAN menjatuhkan atau melempar HP. Eksperimen ini cukup dengan HP diam di meja.'}]},
@@ -2522,7 +2522,7 @@ learn: {
   }
 },
 {
-  id:'phys-pendulum', category:'Fisika', title:'Ayunan Sederhana', subtitle:'Ukur periode → hitung g',
+  id:'phys-pendulum', category:'Physics', title:'Ayunan Sederhana', subtitle:'Ukur periode → hitung g',
   icon:'fa-stopwatch', color:'emerald', tags:['pendulum','periode','osilasi'],
   capabilities:['calculator','simulation'], visual:'sim',
   modes:{
@@ -2571,7 +2571,7 @@ learn: {
   }
 },
 {
-  id:'phys-ohm', category:'Fisika', title:'Hukum Ohm & Power', subtitle:'V, I, R, dan biaya listrik',
+  id:'phys-ohm', category:'Physics', title:'Hukum Ohm & Power', subtitle:'V, I, R, dan biaya listrik',
   icon:'fa-bolt', color:'amber', tags:['listrik','ohm','daya','rangkaian'],
   capabilities:['calculator'], visual:'chart',
   modes:{
@@ -2615,7 +2615,7 @@ learn: {
   }
 },
 {
-  id:'phys-circular', category:'Fisika', title:'Gerak Melingkar', subtitle:'Sentripetal, ω, dan tikungan',
+  id:'phys-circular', category:'Physics', title:'Gerak Melingkar', subtitle:'Sentripetal, ω, dan tikungan',
   icon:'fa-arrows-spin', color:'violet', tags:['melingkar','sentripetal','rotasi'],
   capabilities:['calculator','simulation'], visual:'sim',
   modes:{
@@ -2661,7 +2661,7 @@ learn: {
   }
 },
 {
-  id:'phys-wave', category:'Fisika', title:'Gelombang & Bunyi', subtitle:'v = λf + ukur frekuensi pakai mikrofon',
+  id:'phys-wave', category:'Physics', title:'Gelombang & Bunyi', subtitle:'v = λf + ukur frekuensi pakai mikrofon',
   icon:'fa-wave-square', color:'cyan', tags:['gelombang','bunyi','frekuensi','mikrofon'],
   capabilities:['calculator','simulation','microphone'], visual:'sim',
   modes:{
@@ -2704,7 +2704,7 @@ learn: {
   }
 },
 {
-  id:'phys-lens', category:'Fisika', title:'Lensa & Optik', subtitle:'Diagram sinar interaktif',
+  id:'phys-lens', category:'Physics', title:'Lensa & Optik', subtitle:'Diagram sinar interaktif',
   icon:'fa-glasses', color:'teal', tags:['optik','lensa','cahaya','bayangan'],
   capabilities:['calculator','simulation'], visual:'sim',
   modes:{
@@ -2747,7 +2747,7 @@ learn: {
   }
 },
 {
-  id:'phys-faraday', category:'Fisika', title:'Sangkar Faraday 2.0', subtitle:'Simulasi perisai medan listrik',
+  id:'phys-faraday', category:'Physics', title:'Sangkar Faraday 2.0', subtitle:'Simulasi perisai medan listrik',
   icon:'fa-car-side', color:'rose', tags:['listrik statis','perisai','petir','keselamatan'],
   capabilities:['simulation'], visual:'sim',
   safety:{ level:'high', warnings:[
@@ -2793,7 +2793,7 @@ learn: {
 
 /* ───────── KIMIA ───────── */
 {
-  id:'chem-solution', category:'Kimia', title:'Mol & Konsentrasi', subtitle:'Molaritas, pengenceran, ppm',
+  id:'chem-solution', category:'Chemistry', title:'Mol & Konsentrasi', subtitle:'Molaritas, pengenceran, ppm',
   icon:'fa-vial', color:'emerald', tags:['kimia','mol','molaritas','larutan'],
   capabilities:['calculator'], visual:'chart',
   modes:{
@@ -2831,7 +2831,7 @@ learn: {
   }
 },
 {
-  id:'chem-gas', category:'Kimia', title:'Gas Ideal (PV = nRT)', subtitle:'Pressure, volume, suhu',
+  id:'chem-gas', category:'Chemistry', title:'Gas Ideal (PV = nRT)', subtitle:'Pressure, volume, suhu',
   icon:'fa-wind', color:'blue', tags:['gas','tekanan','suhu','termodinamika'],
   capabilities:['calculator'], visual:'chart',
   modes:{
@@ -2863,7 +2863,7 @@ learn: {
 
 /* ───────── GEOGRAFI ───────── */
 {
-  id:'geo-distance', category:'Geografi', title:'Peta, Skala & Jarak', subtitle:'Haversine di peta satelit',
+  id:'geo-distance', category:'Geography', title:'Peta, Skala & Jarak', subtitle:'Haversine di peta satelit',
   icon:'fa-earth-asia', color:'emerald', tags:['peta','skala','jarak','gis'],
   capabilities:['map'], visual:'map',
   modes:{

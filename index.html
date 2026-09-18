@@ -2863,16 +2863,16 @@ learn: {
 
 /* ───────── GEOGRAFI ───────── */
 {
-  id:'geo-distance', category:'Geography', title:'Peta, Skala & Jarak', subtitle:'Haversine di peta satelit',
+  id:'geo-distance', category:'Geography', title:'Maps, Scale & Distance', subtitle:'Haversine on satellite maps',
   icon:'fa-earth-asia', color:'emerald', tags:['peta','skala','jarak','gis'],
   capabilities:['map'], visual:'map',
   modes:{
     learn:{ blocks:[
       {t:'h', text:'A map = a flattened Earth'},
-      {t:'formula', tex:'Jarak sebenarnya = jarak di peta × skala', desc:'Skala 1:50.000 → 1 cm di peta = 500 m nyata.'},
-      {t:'p', text:'Karena Bumi bulat, jarak dua titik dihitung sebagai jarak lingkaran besar (rumus Haversine), bukan garis lurus penggaris.'},
+      {t:'formula', tex:'Jarak sebenarnya = jarak di peta × skala', desc:'Scale 1:50,000 → 1 cm on the map = 500 m on the ground.'},
+      {t:'p', text:'Because Earth is curved, the distance between two points can be calculated as a great-circle distance using the Haversine formula, rather than a simple ruler line.'},
       {t:'formula', tex:'d = 2R·asin( √( sin²(Δφ/2) + cosφ₁cosφ₂sin²(Δλ/2) ) )', desc:'R ≈ 6371 km.'},
-      {t:'note', tone:'info', text:'Setiap proyeksi peta selalu mendistorsi sesuatu: bentuk, luas, arah, atau jarak. Tidak ada peta datar yang sempurna.'}
+      {t:'note', tone:'info', text:'Every map projection distorts something: shape, area, direction, or distance. No flat map is perfect.'}
     ]},
     explore:{ custom:'mapDistance' },
     calculate:{
@@ -2882,9 +2882,9 @@ learn: {
       ],
       outputs:[
         { id:'cm', label:'Actual distance (cm)', formula:{expr:'dpeta*skala'}, format:'int' },
-        { id:'m', label:'Jarak sebenarnya', formula:{expr:'dpeta*skala/100'}, unit:'m' },
-        { id:'km', label:'Jarak sebenarnya', formula:{expr:'dpeta*skala/100000'}, unit:'km', decimals:3 },
-        { id:'jalan', label:'Time jalan kaki (5 km/jam)', formula:{expr:'(dpeta*skala/100000)/5*60'}, unit:'menit', decimals:1 }
+        { id:'m', label:'Actual distance', formula:{expr:'dpeta*skala/100'}, unit:'m' },
+        { id:'km', label:'Actual distance', formula:{expr:'dpeta*skala/100000'}, unit:'km', decimals:3 },
+        { id:'jalan', label:'Walking time (5 km/h)', formula:{expr:'(dpeta*skala/100000)/5*60'}, unit:'menit', decimals:1 }
       ]
     }
   }
@@ -2892,35 +2892,35 @@ learn: {
 
 /* ───────── SENSOR LAB ───────── */
 {
-  id:'sensor-accel', category:'Sensor Lab', title:'Lab Accelerometer', subtitle:'Rekam percepatan X/Y/Z',
+  id:'sensor-accel', category:'Sensor Lab', title:'Accelerometer Lab', subtitle:'Record X/Y/Z acceleration',
   icon:'fa-gauge-high', color:'indigo', tags:['sensor','percepatan','gerak','data'],
   capabilities:['motion'], visual:'chart',
-  safety:{ level:'medium', warnings:[{severity:'critical', text:'Do not throw or drop the phone. Gunakan gerakan aman: goyang di tangan, taruh di tas/sepeda dengan pengaman.'}]},
+  safety:{ level:'medium', warnings:[{severity:'critical', text:'Do not throw or drop the phone. Use safe movements: gently move it in your hand or secure it in a bag/bike mount.'}]},
   modes:{
     learn:{ blocks:[
-      {t:'h', text:'HP-mu punya "telinga keseimbangan"'},
-      {t:'p', text:'Accelerometer MEMS berisi massa mikroskopis pada pegas silikon. Saat HP dipercepat, massa itu bergeser dan kapasitansinya berubah → jadi angka.'},
+      {t:'h', text:'Your phone has a “balance ear”'},
+      {t:'p', text:'A MEMS accelerometer contains a microscopic mass on a silicon spring. When the phone accelerates, the mass shifts and changes capacitance, producing a numerical reading.'},
       {t:'list', items:['Saat diam: |a| ≈ 9.8 m/s² (mengukur gaya normal, arah "atas")','Saat jatuh bebas: |a| → 0 (itulah rasa "melayang")','Noise & sampling rate menentukan kualitas datamu']},
-      {t:'note', tone:'tip', text:'Rekam data → export CSV → analisis di modul Statistika. Itu alur kerja ilmuwan sungguhan.'}
+      {t:'note', tone:'tip', text:'Record data → export CSV → analyze it in the Statistics module. That is a real scientific workflow.'}
     ]},
     experiment:{ custom:'sensorLab', sensor:'motion',
       fields:[{k:'x',label:'X',color:'#ef4444',range:20},{k:'y',label:'Y',color:'#22c55e',range:20},{k:'z',label:'Z',color:'#3b82f6',range:20},{k:'mag',label:'|a|',color:'#6366f1',range:30}],
       chartFields:['x','y','z'],
       ideas:['Letakkan HP diam → baca g','Miringkan perlahan 90° → lihat g pindah antar sumbu','Goyang berirama → lihat pola periodik','Taruh di tas saat naik lift → cari percepatan awal/akhir','Simpan di sepeda (aman!) → rekam guncangan jalan'] },
     challenge:{ questions:[
-      { q:'Saat HP benar-benar jatuh bebas, pembacaan |a| akselerometer mendekati…', type:'choice', options:['9.8 m/s²','0 m/s²','19.6 m/s²'], answer:1, xp:15, why:'Accelerometer mengukur gaya kontak. Dalam jatuh bebas unavailable ada gaya kontak, jadi bacaannya nol — itu prinsip "tanpa bobot" di ISS.' }
+      { q:'When the phone is truly in free fall, the accelerometer magnitude |a| approaches…', type:'choice', options:['9.8 m/s²','0 m/s²','19.6 m/s²'], answer:1, xp:15, why:'The accelerometer senses contact/support forces. In free fall there is no support force, so the reading approaches zero—the basis of apparent weightlessness in orbit.' }
     ]}
   }
 },
 {
-  id:'sensor-gyro', category:'Sensor Lab', title:'Lab Gyroscope & Orientasi', subtitle:'Alpha, beta, gamma',
+  id:'sensor-gyro', category:'Sensor Lab', title:'Gyroscope & Orientation Lab', subtitle:'Alpha, beta, gamma',
   icon:'fa-compass', color:'orange', tags:['sensor','rotasi','orientasi','sudut'],
   capabilities:['orientation'], visual:'chart',
   modes:{
     learn:{ blocks:[
       {t:'h', text:'Three angles for one direction'},
       {t:'kv', items:[['alpha','arah kompas / yaw (0–360°)'],['beta','maju-mundur / pitch (−180…180°)'],['gamma','miring kiri-kanan / roll (−90…90°)']]},
-      {t:'p', text:'Kombinasi giroskop (kecepatan sudut) + akselerometer (arah gravitasi) + magnetometer (utara) disatukan lewat "sensor fusion" agar orientasi stabil. Ini juga fondasi AR.'}
+      {t:'p', text:'Gyroscope (angular velocity), accelerometer (gravity direction), and magnetometer (magnetic north) can be combined through sensor fusion to stabilize orientation. This is also a foundation of AR.'}
     ]},
     experiment:{ custom:'sensorLab', sensor:'orientation',
       fields:[{k:'alpha',label:'α yaw',color:'#f97316',range:360},{k:'beta',label:'β pitch',color:'#8b5cf6',range:180},{k:'gamma',label:'γ roll',color:'#06b6d4',range:90}],
@@ -2929,17 +2929,17 @@ learn: {
   }
 },
 {
-  id:'sensor-mag', category:'Sensor Lab', title:'Lab Magnetometer', subtitle:'Peta medan magnet sekitarmu',
+  id:'sensor-mag', category:'Sensor Lab', title:'Lab Magnetometer', subtitle:'Map the magnetic field around you',
   icon:'fa-magnet', color:'rose', tags:['sensor','magnet','medan'],
   capabilities:['magnetometer'], visual:'chart',
   safety:{ level:'medium', warnings:[
     {severity:'warning', text:'Gunakan magnet kecil saja dan jangan tempelkan ke HP. Magnet kuat (neodymium) bisa merusak kompas, speaker, atau kartu bermagnet.'}]},
   modes:{
     learn:{ blocks:[
-      {t:'h', text:'Bumi adalah magnet raksasa'},
-      {t:'p', text:'Medan magnet Bumi sekitar 25–65 µT. Magnetometer HP memakainya untuk menentukan arah utara.'},
+      {t:'h', text:'Earth is a giant magnet'},
+      {t:'p', text:'Earth’s magnetic field is roughly 25–65 µT. A phone magnetometer uses it to estimate magnetic north.'},
       {t:'list', items:['Dekat kabel berarus → medan naik (Hukum Ampère)','Dekat speaker/motor listrik → lonjakan besar','Di dalam gedung berkerangka besi → bacaan terganggu']},
-      {t:'note', tone:'info', text:'Kalau kompas HP sering ngawur, biasanya karena distorsi logam di sekitarnya — bukan sensornya rusak.'}
+      {t:'note', tone:'info', text:'If the phone compass behaves erratically, nearby metal interference is a common cause; the sensor itself may be fine.'}
     ]},
     experiment:{ custom:'sensorLab', sensor:'magnet',
       fields:[{k:'x',label:'Bx',color:'#f43f5e',range:80},{k:'y',label:'By',color:'#10b981',range:80},{k:'z',label:'Bz',color:'#3b82f6',range:80},{k:'mag',label:'|B|',color:'#a855f7',range:120}],
@@ -2948,15 +2948,15 @@ learn: {
   }
 },
 {
-  id:'sensor-sound', category:'Sensor Lab', title:'Lab Bunyi & Kebisingan', subtitle:'Level relatif + frekuensi dominan',
+  id:'sensor-sound', category:'Sensor Lab', title:'Sound & Noise Lab', subtitle:'Relative level + dominant frequency',
   icon:'fa-volume-high', color:'amber', tags:['sensor','bunyi','frekuensi','kebisingan'],
   capabilities:['microphone'], visual:'chart',
   modes:{
     learn:{ blocks:[
-      {t:'h', text:'Desibel itu skala logaritmik'},
-      {t:'p', text:'Naik 10 dB berarti intensitas 10× lebih besar, tapi telinga hanya merasa "2× lebih keras". Itu sebabnya suara 100 dB jauh lebih berbahaya dari yang terasa.'},
+      {t:'h', text:'Decibels use a logarithmic scale'},
+      {t:'p', text:'An increase of 10 dB corresponds to 10× greater intensity, while perceived loudness increases much less. This is why very loud sounds can be more hazardous than they feel.'},
       {t:'kv', items:[['30 dB','kamar sunyi'],['60 dB','percakapan'],['85 dB','batas aman kerja panjang'],['120 dB','konser / sirene — sakit']]},
-      {t:'note', tone:'warn', text:'Nilai dB di app ini belum terkalibrasi. Pakai untuk membandingkan, bukan sebagai bukti resmi.'}
+      {t:'note', tone:'warn', text:'The dB value in this app is not calibrated. Use it for comparison, not as an official measurement.'}
     ]},
     experiment:{ custom:'sensorLab', sensor:'sound',
       fields:[{k:'db',label:'Level (dB rel.)',color:'#f59e0b',range:120},{k:'freq',label:'Frekuensi dominan',color:'#0ea5e9',range:2000}],
@@ -2967,7 +2967,7 @@ learn: {
 
 /* ───────── AR LAB ───────── */
 {
-  id:'ar-measure', category:'AR Lab', title:'Alat Ukur AR & Kamera', subtitle:'Jarak, tinggi, sudut — dengan fallback',
+  id:'ar-measure', category:'AR Lab', title:'AR & Camera Measurement Tools', subtitle:'Distance, height, angle — with fallbacks',
   icon:'fa-ruler-combined', color:'fuchsia', tags:['ar','kamera','pengukuran','klinometer'],
   capabilities:['ar','depth','camera','orientation'], visual:'camera',
   safety:{ level:'medium', warnings:[
@@ -2978,19 +2978,19 @@ learn: {
       {t:'h', text:'How can a phone estimate distance?'},
       {t:'list', items:['<b>AR + Depth</b>: kombinasi kamera + gerak + (kadang) sensor ToF menghasilkan peta kedalaman','<b>Camera + reference object</b>: objek berukuran diketahui memberi skala piksel → meter','<b>Klinometer</b>: sudut dari sensor orientasi + jarak → trigonometri','<b>Manual</b>: kamu ukur sudut & jarak, app menghitung']},
       {t:'formula', tex:'tinggi = jarak × tan(θ) + tinggi mata', desc:'Trik pengukur pohon dan gedung sejak berabad-abad lalu.'},
-      {t:'note', tone:'info', text:'Modul unavailable akan hilang di HP murah: app otomatis turun ke level fallback yang available. Itu juga pelajaran: kemampuan hardware menentukan kemampuan pengukuran.'}
+      {t:'note', tone:'info', text:'Modules do not disappear on lower-end phones: the app automatically falls back to the best available capability. This is also a lesson in how hardware limits measurement.'}
     ]},
     ar:{ tools:['distance','height','angle'] },
     calculate:{
       inputs:[
-        { id:'d', label:'Jarak horizontal ke objek', default:10, unit:{family:'length', base:'m', options:['m','cm','ft']} },
-        { id:'theta', label:'Angle elevasi (°)', default:35, type:'range', min:0, max:89, step:1 },
-        { id:'eye', label:'Tinggi mata / HP (m)', default:1.5, step:0.05 }
+        { id:'d', label:'Horizontal distance to object', default:10, unit:{family:'length', base:'m', options:['m','cm','ft']} },
+        { id:'theta', label:'Elevation angle (°)', default:35, type:'range', min:0, max:89, step:1 },
+        { id:'eye', label:'Eye / phone height (m)', default:1.5, step:0.05 }
       ],
       outputs:[
-        { id:'tinggi', label:'Tinggi objek', formula:{expr:'d*tan(theta)+eye'}, unit:'m' },
-        { id:'diag', label:'Jarak garis pandang', formula:{expr:'d/cos(theta)'}, unit:'m' },
-        { id:'bayang', label:'Length bayangan jika matahari 45°', formula:{expr:'d*tan(theta)+eye'}, unit:'m',
+        { id:'tinggi', label:'Object height', formula:{expr:'d*tan(theta)+eye'}, unit:'m' },
+        { id:'diag', label:'Line-of-sight distance', formula:{expr:'d/cos(theta)'}, unit:'m' },
+        { id:'bayang', label:'Shadow length when the sun is at 45°', formula:{expr:'d*tan(theta)+eye'}, unit:'m',
           hint:'Pada elevasi matahari 45°, panjang bayangan = tinggi objek.' }
       ]
     }
@@ -3009,7 +3009,7 @@ const MODE_META = {
   calculate:  { label:'Calculate',    icon:'fa-calculator' },
   explore:    { label:'Jelajahi',  icon:'fa-compass' },
   simulate:   { label:'Simulasi',  icon:'fa-atom' },
-  experiment: { label:'Eksperimen',icon:'fa-flask' },
+  experiment: { label:'Experiment',icon:'fa-flask' },
   ar:         { label:'AR',        icon:'fa-cube' },
   everyday:   { label:'Everyday Science', icon:'fa-lightbulb' },
   challenge:  { label:'Tantangan', icon:'fa-trophy' }
